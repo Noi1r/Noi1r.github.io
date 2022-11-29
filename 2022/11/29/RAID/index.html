@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>RAID | Noir's Blog</title><meta name="author" content="Noir"><meta name="copyright" content="Noir"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RAID详解简介RAID是英文Redundant Array of Inexpensive Disks的缩写，中文简称为磁盘阵列。其实，从RAID的英文原意中，我们已经能够多少知道RAID就是一种由多块廉价磁盘构成的冗余阵列。虽然RAID包含多块磁盘，但是在操作系统下是作为一个独立的大型存储设备出现。RAID技术分为几种不同的等级，分别可以提供不同的速度，安全性和性价比。人们在开发RAID时主要是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAID">
+<meta property="og:url" content="http://example.com/2022/11/29/RAID/index.html">
+<meta property="og:site_name" content="Noir&#39;s Blog">
+<meta property="og:description" content="RAID详解简介RAID是英文Redundant Array of Inexpensive Disks的缩写，中文简称为磁盘阵列。其实，从RAID的英文原意中，我们已经能够多少知道RAID就是一种由多块廉价磁盘构成的冗余阵列。虽然RAID包含多块磁盘，但是在操作系统下是作为一个独立的大型存储设备出现。RAID技术分为几种不同的等级，分别可以提供不同的速度，安全性和性价比。人们在开发RAID时主要是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsznVGV3QqlH-Fzv2Qhp_Dv5gR6cH56n4WhQ&usqp=CAU">
+<meta property="article:published_time" content="2022-11-28T18:41:46.000Z">
+<meta property="article:modified_time" content="2022-11-29T00:57:54.844Z">
+<meta property="article:author" content="Noir">
+<meta property="article:tag" content="电子数据取证">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsznVGV3QqlH-Fzv2Qhp_Dv5gR6cH56n4WhQ&usqp=CAU"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/11/29/RAID/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RAID',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-29 08:57:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar_image.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsznVGV3QqlH-Fzv2Qhp_Dv5gR6cH56n4WhQ&amp;usqp=CAU')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Noir's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RAID</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-28T18:41:46.000Z" title="发表于 2022-11-29 02:41:46">2022-11-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-29T00:57:54.844Z" title="更新于 2022-11-29 08:57:54">2022-11-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81/">电子数据取证</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="RAID详解"><a href="#RAID详解" class="headerlink" title="RAID详解"></a>RAID详解</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>RAID是英文Redundant Array of Inexpensive Disks的缩写，中文简称为磁盘阵列。其实，从RAID的英文原意中，我们已经能够多少知道RAID就是一种由多块廉价磁盘构成的冗余阵列。虽然RAID包含多块磁盘，但是在操作系统下是作为一个独立的大型存储设备出现。RAID技术分为几种不同的等级，分别可以提供不同的速度，安全性和性价比。<br>人们在开发RAID时主要是基于以下设想，即几块小容量硬盘的价格总和要低于一块大容量的硬盘。虽然目前这一设想还没有成为现实，RAID在节省成本方面的作用还不是很明显，但是RAID可以充分发挥出多块硬盘的优势，实现远远超出任何一块单独硬盘的速度和吞吐量。除了性能上的提高之外，RAID还可以提供良好的容错能力，在任何一块硬盘出现问题的情况下都可以继续工作，不会受到损坏硬盘的影响。 </p>
+<h3 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h3><p>RAID 0是最简单的一种形式。RAID 0可以把多块硬盘连接在一起形成一个容量更大的存储设备。最简单的RAID 0技术只是提供更多的磁盘空间，不过我们也可以通过设置，使用RAID 0来提高磁盘的性能和吞吐量。RAID 0没有冗余或错误修复能力，但是实现成本是最低的。<br>RAID 0最简单的实现方式就是把几块硬盘串联在一起创建一个大的卷集。磁盘之间的连接既可以使用硬件的形式通过智能磁盘控制器实现，也可以使用操作系统中的磁盘驱动程序以软件的方式实现。</p>
+<img src="/2022/11/29/RAID/0811raid1.gif" class title="img">
+<p>在上述配置中，我们把4块磁盘组合在一起形成一个独立的逻辑驱动器，容量相当于任何任何一块单独硬盘的4倍。如图中彩色区域所示，数据被依次写入到各磁盘中。当一块磁盘的空间用尽时，数据就会被自动写入到下一块磁盘中。<br>这种设置方式只有一个好处，那就是可以增加磁盘的容量。至于速度，则与其中任何一块磁盘的速度相同，这是因为同一时间内只能对一块磁盘进行I/O操作。如果其中的任何一块磁盘出现故障，整个系统将会受到破坏，无法继续使用。从这种意义上说，使用纯RAID 0方式的可靠性仅相当于单独使用一块硬盘的1/4（因为本例中RAID 0使用了4块硬盘）。<br>虽然我们无法改变RAID 0的可靠性问题，但是我们可以通过改变配置方式，提高系统的性能。与前文所述的顺序写入数据不同，我们可以通过创建带区集，在同一时间内向多块磁盘写入数据。具体如图所示： </p>
+<img src="/2022/11/29/RAID/0811raid2.gif" class title="img">
+<p>上图中，系统向逻辑设备发出的I/O指令被转化为4项操作，其中的每一项操作都对应于一块硬盘。我们从图中可以清楚的看到通过建立带区集，原先顺序写入的数据被分散到所有的四块硬盘中同时进行读写。四块硬盘的并行操作使同一时间内磁盘读写的速度提升了4倍。<br>在创建带区集时，合理的选择带区的大小非常重要。如果带区过大，可能一块磁盘上的带区空间就可以满足大部分的I/O操作，使数据的读写仍然只局限在少数的一、两块硬盘上，不能充分的发挥出并行操作的优势。另一方面，如果带区过小，任何I/O指令都可能引发大量的读写操作，占用过多的控制器总线带宽。因此，在创建带区集时，我们应当根据实际应用的需要，慎重的选择带区的大小。<br>我们已经知道，带区集可以把数据均匀的分配到所有的磁盘上进行读写。如果我们把所有的硬盘都连接到一个控制器上的话，可能会带来潜在的危害。这是因为当我们频繁进行读写操作时，很容易使控制器或总线的负荷超载。为了避免出现上述问题，建议用户可以使用多个磁盘控制器。示意图如下：                                                                                           </p>
+<img src="/2022/11/29/RAID/0811raid3.gif" class title="img">
+<p>这样，我们就可以把原先控制器总线上的数据流量降低一半。当然，最好解决方法还是为每一块硬盘都配备一个专门的磁盘控制器。</p>
+<h3 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h3><p>虽然RAID 0可以提供更多的空间和更好的性能，但是整个系统是非常不可靠的，如果出现故障，无法进行任何补救。所以，RAID 0一般只是在那些对数据安全性要求不高的情况下才被人们使用。<br>RAID 1和RAID 0截然不同，其技术重点全部放在如何能够在不影响性能的情况下最大限度的保证系统的可靠性和可修复性上。RAID 1是所有RAID等级中实现成本最高的一种，尽管如此，人们还是选择RAID 1来保存那些关键性的重要数据。<br>RAID 1又被称为磁盘镜像，每一个磁盘都具有一个对应的镜像盘。对任何一个磁盘的数据写入都会被复制镜像盘中；系统可以从一组镜像盘中的任何一个磁盘读取数据。显然，磁盘镜像肯定会提高系统成本。因为我们所能使用的空间只是所有磁盘容量总和的一半。下图显示的是由4块硬盘组成的磁盘镜像，其中可以作为存储空间使用的仅为两块硬盘（画斜线的为镜像部分）。 </p>
+<p><img src="/2022/11/29/RAID/RAID.assets/0811raid4.gif" alt="img"></p>
+<p>RAID 1下，任何一块硬盘的故障都不会影响到系统的正常运行，而且只要能够保证任何一对镜像盘中至少有一块磁盘可以使用，RAID 1甚至可以在一半数量的硬盘出现问题时不间断的工作。当一块硬盘失效时，系统会忽略该硬盘，转而使用剩余的镜像盘读写数据。<br>通常，我们把出现硬盘故障的RAID系统称为在降级模式下运行。虽然这时保存的数据仍然可以继续使用，但是RAID系统将不再可靠。如果剩余的镜像盘也出现问题，那么整个系统就会崩溃。因此，我们应当及时的更换损坏的硬盘，避免出现新的问题。<br>更换新盘之后，原有好盘中的数据必须被复制到新盘中。这一操作被称为同步镜像。同步镜像一般都需要很长时间，尤其是当损害的硬盘的容量很大时更是如此。在同步镜像的进行过程中，外界对数据的访问不会受到影响，但是由于复制数据需要占用一部分的带宽，所以可能会使整个系统的性能有所下降。<br>因为RAID 1主要是通过二次读写实现磁盘镜像，所以磁盘控制器的负载也相当大，尤其是在需要频繁写入数据的环境中。为了避免出现性能瓶颈，使用多个磁盘控制器就显得很有必要。下图示意了使用两个控制器的磁盘镜像。 </p>
+<img src="/2022/11/29/RAID/0811raid5.gif" class title="img">
+<p>使用两个磁盘控制器不仅可以改善性能，还可以进一步的提高数据的安全性和可用性。我们已经知道，RAID 1最多允许一半数量的硬盘出现故障，所以按照我们上图中的设置方式（原盘和镜像盘分别连接不同的磁盘控制），即使一个磁盘控制器出现问题，系统仍然可以使用另外一个磁盘控制器继续工作。这样，就可以把一些由于意外操作所带来的损害降低到最低程度。 </p>
+<h3 id="RAID-0-1"><a href="#RAID-0-1" class="headerlink" title="RAID 0+1"></a>RAID 0+1</h3><p>单独使用RAID 1也会出现类似单独使用RAID 0那样的问题，即在同一时间内只能向一块磁盘写入数据，不能充分利用所有的资源。为了解决这一问题，我们可以在磁盘镜像中建立带区集。因为这种配置方式综合了带区集和镜像的优势，所以被称为RAID 0+1。 </p>
+<h4 id="热插拔"><a href="#热插拔" class="headerlink" title="热插拔"></a>热插拔</h4><p>一些面向高端应用的磁盘镜像系统都可以提供磁盘的热插拔功能。所谓热插拔功能，就是允许用户在不关闭系统，不切断电源的情况下取出和更换损害的硬盘。如果没有热插拔功能，即使磁盘损坏不会造成数据的丢失，用户仍然需要暂时关闭系统，以便能够对硬盘进行更换。现在，使用热插拔技术只要简单的打开连接开关或者转动手柄就可以直接取出硬盘，而系统仍然可以不间断的正常运行。 </p>
+<h4 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h4><p>RAID 3和RAID 5都分别使用了校验的概念提供容错能力。简单的说，我们可以把校验想象为一种二进制的校验和，一个可以告诉你其它所有字位是否正确的特殊位。<br>在数据通信领域，奇偶校验被用来确定数据是否被正确传送。例如，对于每一个字节，我们可以简单计算数字位1的个数，并在字节内加入附加校验位。在数据的接收方，如果数字位1的个数为奇数，而我们使用的又是奇数校验的话，则说明该字节是正确的。同样对偶数校验也是如此。然而，如果数字位1的个数和校验位的奇偶性不一致的话，则说明数据在传送过程中出现了错误。<br>RAID系统也采用了相似的校验方法，可以在磁盘系统中创建校验块，校验块中的每一位都用来对其它关联块中的所有对应位进行校验。<br>在数据通讯领域，虽然校验位可以告诉我们某个字节是否正确，但是无法告诉我们到底是哪一位出现了问题。这就是说我们可以检测错误，但是不能改正错误。对于RAID，这是远远不够的。固然错误的检测非常重要，但是如果不能对错误进行修复，我们就无法提高整个系统的可靠性。<br>举个例子来说，假设我们发现校验块中第10个字节的第5位不正确。如果这个校验块包含的是另外8个数据块的校验信息，那么哪一个数据块才是问题的罪魁祸首呢？也许你可能会想为每一个数据块都建立一个校验块就可以解决问题。但是这种方法很难实现。事实上，RAID主要是借助磁盘控制器的错误报告检测错误位置，并进行修复。如果磁盘控制器在读取数据时没有发出任何“抱怨”，那么系统将会视该数据为正确数据，继续使用。 </p>
+<h3 id="RAID-3"><a href="#RAID-3" class="headerlink" title="RAID 3"></a>RAID 3</h3><p>RAID 3采用的是一种较为简单的校验实现方式，使用一个专门的磁盘存放所有的校验数据，而在剩余的磁盘中创建带区集分散数据的读写操作。例如，在一个由4块硬盘构成的RAID 3系统中，3块硬盘将被用来保存数据，第四块硬盘则专门用于校验。这种配置方式可以用3+1的形式表示，具体如图： </p>
+<img src="/2022/11/29/RAID/300px-RAID_3.svg.png" class title="img">
+<p>在上图中，我们用相同的颜色表示使用同一个校验块的所有数据块，斜线标出的部分为校验块。校验块和所有对应的数据块一起构成一个带区。<br>第四块硬盘中的每一个校验块所包含的都是其它3块硬盘中对应数据块的校验信息。RAID 3的成功之处就在于不仅可以象RAID 1那样提供容错功能，而且整体开销从RAID 1的50%下降为25%（RAID 3+1）。随着所使用磁盘数量的增多，成本开销会越来越小。举例来说，如果我们使用7块硬盘，那么总开销就会将到12.5%（1/7）。<br>在不同情况下，RAID 3读写操作的复杂程度不同。最简单的情况就是从一个完好的RAID 3系统中读取数据。这时，只需要在数据存储盘中找到相应的数据块进行读取操作即可，不会增加任何额外的系统开销。<br>当向RAID 3写入数据时，情况会变得复杂一些。即使我们只是向一个磁盘写入一个数据块，也必须计算与该数据块同处一个带区的所有数据块的校验值，并将新值重新写入到校验块中。例如，当我们向上图中的绿色数据块写入数据时，必须重新计算所有3个绿色数据块的校验值，然后重写位于第四块硬盘的绿色校验块。由此我们可以看出，一个写入操作事实上包含了数据读取（读取带区中的关联数据块），校验值计算，数据块写入和校验块写入四个过程。系统开销大大增加。<br>我们可以通过适当设置带区的大小使RAID系统得到简化。如果某个写入操作的长度恰好等于一个完整带区的大小（全带区写入），那么我们就不必再读取带区中的关联数据块计算校验值。我们只需要计算整个带区的校验值，然后直接把数据和校验信息写入数据盘和校验盘即可。<br>到目前为止，我们所探讨的都是正常运行状况下的数据读写。下面，我们再来看一下当硬盘出现故障时，RAID系统在降级模式下的运行情况。<br>RAID 3虽然具有容错能力，但是系统会受到影响。当一块磁盘失效时，该磁盘上的所有数据块必须使用校验信息重新建立。如果我们是从好盘中读取数据块，不会有任何变化。但是如果我们所要读取的数据块正好位于已经损坏的磁盘，则必须同时读取同一带区中的所有其它数据块，并根据校验值重建丢失的数据。<br>当我们更换了损坏的磁盘之后，系统必须一个数据块一个数据块的重建坏盘中的数据。整个过程包括读取带区，计算丢失的数据块和向新盘写入新的数据块，都是在后台自动进行。重建活动最好是在RAID系统空闲的时候进行，否则整个系统的性能会受到严重的影响。 </p>
+<h4 id="RAID-3的性能问题"><a href="#RAID-3的性能问题" class="headerlink" title="RAID 3的性能问题"></a>RAID 3的性能问题</h4><p>除了我们在上文讨论过的有关数据写入和降级模式的问题之外，在使用RAID 3的过程中还有其他一些性能上的问题需要引起我们的注意。RAID 3所存在的最大一个不足同时也是导致RAID 3很少被人们采用的原因就是校验盘很容易成为整个系统的瓶颈。<br>我们已经知道RAID 3会把数据的写入操作分散到多个磁盘上进行，然而不管是向哪一个数据盘写入数据，都需要同时重写校验盘中的相关信息。因此，对于那些经常需要执行大量写入操作的应用来说，校验盘的负载将会很大，无法满足程序的运行速度，从而导致整个RAID系统性能的下降。鉴于这种原因，RAID 3更加适合应用于那些写入操作较少，读取操作较多的应用环境，例如数据库和WEB服务器等。</p>
+<h3 id="RAID-5"><a href="#RAID-5" class="headerlink" title="RAID 5"></a>RAID 5</h3><p>RAID 3所存在的校验盘的性能问题使几乎所有的RAID系统都转向了RAID 5。在运行机制上，RAID 5和RAID 3完全相同，也是由同一带区内的几个数据块共享一个校验块。<br>RAID 5和RAID 3的最大区别在于RAID 5不是把所有的校验块集中保存在一个专门的校验盘中，而是分散到所有的数据盘中。RAID 5使用了一种特殊的算法，可以计算出任何一个带区校验块的存放位置。具体如图所示： </p>
+<img src="/2022/11/29/RAID/0811raid7.gif" class title="img">
+<p>注意图中的校验块已经被分散保存在不同的磁盘中，这样就可以确保任何对校验块进行的读写操作都会在所有的RAID磁盘中进行均衡，从而消除了产生瓶颈的可能。 </p>
+<p><a target="_blank" rel="noopener" href="https://www.yisu.com/zixun/910.html">RAID重组</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.tjdn.cn/raid5cz.htm">Raid reconstructor</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Noir</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/11/29/RAID/">http://example.com/2022/11/29/RAID/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Noir's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81/">电子数据取证</a></div><div class="post_share"><div class="social-share" data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsznVGV3QqlH-Fzv2Qhp_Dv5gR6cH56n4WhQ&amp;usqp=CAU" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/29/MBR%E3%80%81EBR%E3%80%81DBR/"><img class="prev-cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MBR、EBR、DBR</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/29/Blockchain/"><img class="next-cover" src="https://media.kasperskydaily.com/wp-content/uploads/sites/97/2017/10/04130359/good-good-blockchain-featured-2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">区块链</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/11/29/MBR%E3%80%81EBR%E3%80%81DBR/" title="MBR、EBR、DBR"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">MBR、EBR、DBR</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar_image.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Noir</div><div class="author-info__description">Be yourself.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/noi1r" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lizhengwang1124@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RAID%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">RAID详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RAID-0"><span class="toc-number">1.1.1.</span> <span class="toc-text">RAID 0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RAID-1"><span class="toc-number">1.1.2.</span> <span class="toc-text">RAID 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RAID-0-1"><span class="toc-number">1.1.3.</span> <span class="toc-text">RAID 0+1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%83%AD%E6%8F%92%E6%8B%94"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">热插拔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RAID-3"><span class="toc-number">1.1.4.</span> <span class="toc-text">RAID 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RAID-3%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">RAID 3的性能问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RAID-5"><span class="toc-number">1.1.5.</span> <span class="toc-text">RAID 5</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/hexo%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84/" title="hexo图片路径"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo图片路径"/></a><div class="content"><a class="title" href="/2022/11/29/hexo%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84/" title="hexo图片路径">hexo图片路径</a><time datetime="2022-11-29T01:14:51.000Z" title="发表于 2022-11-29 09:14:51">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/test/" title="test"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="test"/></a><div class="content"><a class="title" href="/2022/11/29/test/" title="test">test</a><time datetime="2022-11-29T00:56:30.000Z" title="发表于 2022-11-29 08:56:30">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/" title="数据预处理"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据预处理"/></a><div class="content"><a class="title" href="/2022/11/29/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/" title="数据预处理">数据预处理</a><time datetime="2022-11-28T18:43:52.000Z" title="发表于 2022-11-29 02:43:52">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/MBR%E3%80%81EBR%E3%80%81DBR/" title="MBR、EBR、DBR"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MBR、EBR、DBR"/></a><div class="content"><a class="title" href="/2022/11/29/MBR%E3%80%81EBR%E3%80%81DBR/" title="MBR、EBR、DBR">MBR、EBR、DBR</a><time datetime="2022-11-28T18:42:39.000Z" title="发表于 2022-11-29 02:42:39">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/RAID/" title="RAID"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsznVGV3QqlH-Fzv2Qhp_Dv5gR6cH56n4WhQ&amp;usqp=CAU" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAID"/></a><div class="content"><a class="title" href="/2022/11/29/RAID/" title="RAID">RAID</a><time datetime="2022-11-28T18:41:46.000Z" title="发表于 2022-11-29 02:41:46">2022-11-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Noir</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  my  <a  target="_blank" rel="noopener" href="https://noi1r.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
