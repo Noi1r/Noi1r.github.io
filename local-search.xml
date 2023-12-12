@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>论icloud如何破坏一名计算机学生的好心情</title>
+    <link href="/2023/12/12/%E8%AE%BAicloud%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E4%B8%80%E5%90%8D%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A5%BD%E5%BF%83%E6%83%85/"/>
+    <url>/2023/12/12/%E8%AE%BAicloud%E5%A6%82%E4%BD%95%E7%A0%B4%E5%9D%8F%E4%B8%80%E5%90%8D%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A5%BD%E5%BF%83%E6%83%85/</url>
+    
+    <content type="html"><![CDATA[<p>原本今天晚上打算把DSA,ECDSA和EdDSA那篇给写完的，傻逼icloud突然抽风，上传直接卡死，修了一晚上有感。&gt; 一个好消息：在我写这篇博客的时候，他又坏了，傻逼 <imgsrc="/img/post/icloud_1.png" alt="Alt text" /></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">killall bird<br>killall cloudd<br>cd ～/Library/Application\ Support<br>mv CloudDoc CloudDocOld<br></code></pre></td></tr></table></figure><p>上面的方法能让已经卡出的icloud重新上传（不过也是重新下载和上传所有icloud数据，慎用</p><p>好了，好像是因为blog文件夹里的某些依赖里面有诡异的东西传不上去，学会了新的解决方案，我直接一手关闭blog文件夹同步</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mv blog blog.nosync<br></code></pre></td></tr></table></figure><p>最后来一句icloud，wcnm</p><h2 id="参考">参考</h2><p>https://apple.stackexchange.com/questions/313716/icloud-drive-wont-sync-on-mac</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Mac OS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>签名算法之DSA,ECDSA和EdDSA</title>
+    <link href="/2023/12/12/ECDSA/"/>
+    <url>/2023/12/12/ECDSA/</url>
+    
+    <content type="html"><![CDATA[<p>好记性不如烂笔头，写一篇文章详细记录一下DSA，ECDSA和EdDSA。</p><h1 id="dsa">DSA</h1><p>数字签名算法（DSA）是用于数字签名的联邦信息处理标准之一，基于模算数和离散对数的复杂度。DSA是Schnorr和ElGamal签名方案的变体。<ahref="#refer-anchor-1"><sup>1</sup></a></p><h2 id="概述">概述</h2><p>DSA算法工作在框架公钥加密、模算数和离散对数问题，这被认为是难解问题。该算法使用由公钥和私钥组成的密钥对。私钥用于生成消息的数字签名，并且可以通过使用签名者的相应公钥来验证这种签名。数字签名提供信息鉴定（接收者可以验证消息的来源），完整性（接收方可以验证消息自签名以来未被修改）和不可否认性（发送方不能错误地声称它们没有签署消息）</p><h2 id="算法">算法</h2><p>DSA 算法包含了四种操作：密钥生成、密钥分发、签名、验证</p><h3 id="密钥生成">密钥生成</h3><ol type="1"><li>选择经核可的 密码散列函数 <spanclass="math inline">\(H\)</span>，在原版的 DSS（Digital SignatureStandard）中，<span class="math inline">\(H\)</span> 总是使用SHA-1，而目前的 DSS 已核可更为安全的 SHA-2 作为散列函数。 假如长度 <spanclass="math inline">\({\displaystyle |H|}\)</span> 大于模数长度<spanclass="math inline">\(N\)</span>，则散列函数的输出只有最左边的 <spanclass="math inline">\(N\)</span> 比特会被使用。</li><li>选择密钥长度 <span class="math inline">\(L\)</span>，原版的 DSS 限制<span class="math inline">\(L\)</span> 必须为 512 到 1024 之间 64的倍数，NIST 800-57 建议使用长度为 2048 的密钥。</li><li>选择模数长度 <span class="math inline">\(N\)</span> 使得 <spanclass="math inline">\({\displaystyle N&lt;L}\)</span> 且 <spanclass="math inline">\({\displaystyle N\leq |H|}\)</span>，FIPS 186-4规定 <span class="math inline">\({\displaystyle (L,N)}\)</span> 必须为(1024, 160)、(2048, 224)、(2048, 256) 或 (3072, 256) 其中一种。</li><li>选择长度为 <span class="math inline">\(N\)</span> 比特的质数 <spanclass="math inline">\(q\)</span>。</li><li>选择长度为 <span class="math inline">\(L\)</span> 比特的质数 <spanclass="math inline">\(p\)</span> 使得 $ {p-1}$ 为 <spanclass="math inline">\(q\)</span> 的倍数。</li><li>从 <span class="math inline">\({\displaystyle \{2\ldotsp-2\}}\)</span> 随机选择 <span class="math inline">\(h\)</span>。计算<span class="math inline">\({\displaystyle g:=h^{(p-1)/q}\modp}\)</span>，当 <span class="math inline">\(g=1\)</span>时需要重新产生不同的 <span class="math inline">\(h\)</span>，通常会使用<span class="math inline">\({\displaystyleh=2}\)</span>，即使数值很大时仍然可以非常有效率的计算这个模幂。</li></ol><p>算法参数为 <spanclass="math inline">\((p,q,g)\)</span>，可被不同的用户共享。</p><h4 id="用户密钥">用户密钥</h4><p>给定一套算法参数后，第二阶段会为每位用户计算独立密钥组合：</p><ol type="1"><li>从 <span class="math inline">\({\displaystyle \{1\ldotsq-1\}}\)</span> 选择随机整数 <span class="math inline">\(x\)</span></li><li>计算 <span class="math inline">\({\displaystyle y:=g^{x}\modp}\)</span></li></ol><p>其中 <span class="math inline">\(x\)</span> 是私钥、 <spanclass="math inline">\(y\)</span> 是公钥。</p><h3 id="密钥分发">密钥分发</h3><p>签名者需要透过可信任的管道发布公钥 <spanclass="math inline">\(y\)</span>，并且安全地保护 <spanclass="math inline">\(x\)</span> 不被其他人知道。</p><h3 id="签名">签名</h3><p>消息 <span class="math inline">\(m\)</span> 签名流程如下：</p><ol type="1"><li>从 <span class="math inline">\({\displaystyle \{1\ldotsq-1\}}\)</span> 选择随机整数 <span class="math inline">\(k\)</span></li><li>计算 <span class="math inline">\({\displaystyle r:=\left(g^{k}{\bmod{\,}}p\right){\bmod {\,}}q}\)</span>，当出现 <spanclass="math inline">\(r=0\)</span> 状况时重新选择随机数 <spanclass="math inline">\(k\)</span></li><li>计算 <span class="math inline">\({\displaystyles:=\left(k^{-1}\left(H(m)+xr\right)\right){\bmod{\,}}q}\)</span>，当出现<span class="math inline">\(s=0\)</span>状况时重新选择随机数 <span class="math inline">\(k\)</span>.</li></ol><p>签名为 <span class="math inline">\({\displaystyle (r,s)}\)</span>组合</p><h3 id="验证签名">验证签名</h3><p>以下步骤可以验证 $ {(r,s)}$ 是消息 <spanclass="math inline">\(m\)</span> 的有效签名：</p><ol type="1"><li>验证<span class="math inline">\(0 &lt; r &lt; q, 0 &lt; s &lt;q\)</span></li><li>计算<span class="math inline">\(w:=s^{-1} \mod q\)</span></li><li>计算<span class="math inline">\(u_1:=H(m)\cdot w \modq\)</span></li><li>计算<span class="math inline">\(u_2:=r\cdot w \mod q\)</span></li><li>计算<span class="math inline">\(v:=(g^{u_1}y^{u_2}\mod p)\modq\)</span></li></ol><p>只有<span class="math inline">\(v = r\)</span>时，签名有效</p><h2 id="correctness">Correctness</h2><p>因为<span class="math display">\[g = h^{(p-1)/q} \mod p\]</span>所以<span class="math display">\[g^q = h^{p-1} =1 \mod q \]</span></p><p>所以有</p><p><span class="math display">\[\begin{align*}v=&amp;(g^{u_1}y^{u_2}\mod p)\mod q \\=&amp;(g^{H(m)\cdots^{-1}}y^{r\cdot s^{-1}}\mod p)\mod q\\=&amp;(g^{H(m)\cdot s^{-1}}g^{x\cdot r\cdot s^{-1}}\mod p)\mod q\\=&amp;(g^{H(m)\cdot s^{-1} \,+\, x\cdot r\cdot s^{-1}}\mod p)\mod q\\=&amp;(g^{(H(m) \,+\, x\cdot r)\cdot s^{-1}}\mod p)\mod q\\=&amp;(g^{(H(m) \,+\, xr)\cdot k\cdot {\left(H(m)+xr\right)^{-1}}}\modp)\mod q\\=&amp;(g^k \mod p) \mod q\\=&amp;r\end{align*}\]</span></p><h2 id="代码实现">代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure><h1 id="参考">参考</h1><div id="refer-anchor-1"></div><ul><li>[1] <ahref="https://zh.wikipedia.org/wiki/数字签名算法">维基百科-数字签名算法</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Cryptography</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Crypto</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>拉格朗日插值</title>
+    <link href="/2023/12/12/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC/"/>
+    <url>/2023/12/12/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC/</url>
+    
+    <content type="html"><![CDATA[<p>太久没学数学了，导致看到拉格朗日插值一时间都有些反应不上来，遂写下这一篇笔记。</p><h1 id="定义">定义</h1><p>对某个多项式函数，已知有给定的k + 1个取值点：</p><p><span class="math display">\[(x_0,y_0),(x_1,y_1)\dots (x_k,y_k)\]</span></p><p>假设任意两个不同的xj都互不相同，那么应用拉格朗日插值公式所得到的<strong>拉格朗日插值多项式</strong>为：</p><p><span class="math display">\[L(x):=\sum_{j=0}^k y_j \ell_j(x)\]</span></p><p>其中每个<spanclass="math inline">\(\ell_j(x)\)</span>为拉格朗日基本多项式（或称插值基函数），其表达式为：</p><p><span class="math display">\[\ell_j(x):=\prod_{i=0, i \neq j}^k\frac{x-x_i}{x_j-x_i}=\frac{\left(x-x_0\right)}{\left(x_j-x_0\right)}\cdots \frac{\left(x-x_{j-1}\right)}{\left(x_j-x_{j-1}\right)}\frac{\left(x-x_{j+1}\right)}{\left(x_j-x_{j+1}\right)} \cdots\frac{\left(x-x_k\right)}{\left(x_j-x_k\right)}\]</span></p><p>拉格朗日基本多项式<spanclass="math inline">\(\ell_j(x)\)</span>的特点是在<spanclass="math inline">\(x_{j}\)</span>上取值为1，在其它的点<spanclass="math inline">\(x_{i}(\,i\neq j\)</span>)上取值为0。</p><h1 id="证明">证明</h1><h2 id="存在性">存在性</h2><p>对于给定的k+1个点： <span class="math inline">\((x_{0},y_{0}),\ldots,(x_{k},y_{k})\)</span>，拉格朗日插值法的思路是找到一个在一点<spanclass="math inline">\(x_{j}\)</span>取值为1，而在其他点取值都是0的多项式<spanclass="math inline">\(\ell _{j}(x)\)</span>。这样，多项式 <spanclass="math inline">\(y_{j}\ell_{j}(x)\)</span>在点<spanclass="math inline">\(x_{j}\)</span>取值为 <spanclass="math inline">\(y_{j}\)</span>，而在其他点取值都是0。而多项式<spanclass="math inline">\(L(x):=\sum_{j=0}^k y_j\ell_j(x)\)</span>就可以满足</p><h2 id="唯一性">唯一性</h2><p>次数不超过k的拉格朗日多项式至多只有一个，因为对任意两个次数不超过k的拉格朗日多项式：<span class="math inline">\(P_{1}\)</span>和 <spanclass="math inline">\(P_{2}\)</span>，它们的差 <spanclass="math inline">\(P_{1}-P_{2}\)</span>在所有k+1个点上取值都是0，因此必然是多项式<spanclass="math inline">\((x-x_{0})(x-x_1)\cdots(x-x_)\)</span>的倍数。因此，如果这个差<spanclass="math inline">\(P_{1}-P_{2}\)</span>不等于0，次数就一定不小于k+1。但是<spanclass="math inline">\(P_{1}-P_{2}\)</span>是两个次数不超过k的多项式之差，它的次数也不超过k。所以<span class="math inline">\(P_{1}-P_{2}=0\)</span>，也就是说 <spanclass="math inline">\(P_{1}=P_{2}\)</span>。这样就证明了唯一</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mathematics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
