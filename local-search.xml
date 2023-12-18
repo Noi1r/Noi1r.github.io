@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Diffie-Hellman_Assumptions</title>
+    <link href="/2023/12/18/Diffie-Hellman-Assumptions/"/>
+    <url>/2023/12/18/Diffie-Hellman-Assumptions/</url>
+    
+    <content type="html"><![CDATA[<h1 id="the-discrete-logrithm-problem">The discrete logrithmproblem</h1><p>如果<span class="math inline">\(\mathbb{G}\)</span>是一个阶为<spanclass="math inline">\(q\)</span>的循环群，生成元为<spanclass="math inline">\(g\)</span>，那么集合<spanclass="math inline">\(\{g^0, g^1, \ldots, g^{q-1} \}\)</span>就是<spanclass="math inline">\(\mathbb{G}\)</span>的全部元素。换句话说，对于<spanclass="math inline">\(\mathbb{G}\)</span>中的每个<spanclass="math inline">\(h\)</span>都存在唯一的<spanclass="math inline">\(x \in \mathbb{Z}_q\)</span>使得<spanclass="math inline">\(g^x=h\)</span>，我们称这个<spanclass="math inline">\(x\)</span>为<spanclass="math inline">\(h\)</span>关于<spanclass="math inline">\(g\)</span>的离散对数，并记为<spanclass="math inline">\(x=\log _gh\)</span>。（在这种情况下，对数称为“离散”的，因为它们取整数值，而不是来自微积分的“标准”对数，其值范围是实数。）需要注意的是，如果对于某个任意整数<spanclass="math inline">\(x^{\prime}\)</span>，存在<spanclass="math inline">\(g^{x^{\prime}}=h\)</span>，那么<spanclass="math inline">\(\left[x^{\prime} \bmod q\right]=\log _gh\)</span>。</p><p>运算规则： 1. <span class="math inline">\(\log _g1=0\)</span>（其中1是<spanclass="math inline">\(\mathbb{G}\)</span>的单位元）； 2.对于任何整数<span class="math inline">\(r\)</span>，我们有<spanclass="math inline">\(\log _g h^r=\left[r \cdot \log _g h \bmodq\right]\)</span>；以及<span class="math inline">\(\log _g\left(h_1h_2\right)=\left[\left(\log _g h_1+\log _g h_2\right) \bmodq\right]\)</span>。</p><p>在具有生成元<span class="math inline">\(g\)</span>的循环群<spanclass="math inline">\(\mathbb{G}\)</span>中的离散对数问题是为了计算<spanclass="math inline">\(\log g h\)</span>，其中<spanclass="math inline">\(h\)</span>是<spanclass="math inline">\(\mathbb{G}\)</span>中的随机抽取的元素。</p><h1 id="diffie-hellman-problem">Diffie-Hellman Problem</h1><p>Diffie-Hellman Problem 与Discretelogrithm问题相关，但尚未被证明它们是等价的。有两个重要的变体: -Computational Diﬃe–Hellman (CDH) problem - Decisional Diﬃe–Hellman (DDH)problem</p><p>已知一个循环群 <span class="math inline">\(\mathbb{G}\)</span>和一个生成元 <span class="math inline">\(g \in\mathbb{G}\)</span>。给定元素 <span class="math inline">\(h_1, h_2 \in\mathbb{G}\)</span>，定义 <spanclass="math inline">\(\mathrm{DH}_g\left(h_1, h_2\right) \stackrel{\text{ def }}{=} g^{\log _g h_1 \cdot \log _g h_2}\)</span>。即，如果 <spanclass="math inline">\(h_1=g^{x_1}\)</span> 且 <spanclass="math inline">\(h_2=g^{x_2}\)</span>，则 <spanclass="math display">\[\mathrm{DH}_g\left(h_1, h_2\right)=g^{x_1 \cdot x_2}=h_1^{x_2}=h_2^{x_1}.\]</span></p><p><strong>CDH</strong>: compute <spanclass="math inline">\(\mathrm{DH}_g(h1,h2)\)</span> for uniform <spanclass="math inline">\(h_1\)</span> and <spanclass="math inline">\(h_2\)</span>.</p><p><strong>DDH</strong>: distinguish <spanclass="math inline">\(\mathrm{DH}_g(h1,h2)\)</span> from a uniform groupelement when <span class="math inline">\(h_1\)</span> , <spanclass="math inline">\(h_2\)</span> are uniform.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Cryptography</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Crypto</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>大端序与小端序</title>
     <link href="/2023/12/13/%E5%A4%A7%E7%AB%AF%E5%BA%8F%E4%B8%8E%E5%B0%8F%E7%AB%AF%E5%BA%8F/"/>
     <url>/2023/12/13/%E5%A4%A7%E7%AB%AF%E5%BA%8F%E4%B8%8E%E5%B0%8F%E7%AB%AF%E5%BA%8F/</url>
