@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/index/DiffieHellman.png">
 <meta property="article:published_time" content="2023-12-18T02:45:58.000Z">
-<meta property="article:modified_time" content="2023-12-18T03:03:16.797Z">
+<meta property="article:modified_time" content="2023-12-18T09:06:44.593Z">
 <meta property="article:author" content="Wang Lizheng">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          227 字
+          260 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -324,29 +324,64 @@ class="math inline">\(h\)</span>是<span
 class="math inline">\(\mathbb{G}\)</span>中的随机抽取的元素。</p>
 <h1 id="diffie-hellman-problem">Diffie-Hellman Problem</h1>
 <p>Diffie-Hellman Problem 与Discrete
-logrithm问题相关，但尚未被证明它们是等价的。有两个重要的变体: -
-Computational Diﬃe–Hellman (CDH) problem - Decisional Diﬃe–Hellman (DDH)
-problem</p>
-<p>已知一个循环群 <span class="math inline">\(\mathbb{G}\)</span>
-和一个生成元 <span class="math inline">\(g \in
-\mathbb{G}\)</span>。给定元素 <span class="math inline">\(h_1, h_2 \in
-\mathbb{G}\)</span>，定义 <span
-class="math inline">\(\mathrm{DH}_g\left(h_1, h_2\right) \stackrel{\text
-{ def }}{=} g^{\log _g h_1 \cdot \log _g h_2}\)</span>。即，如果 <span
-class="math inline">\(h_1=g^{x_1}\)</span> 且 <span
-class="math inline">\(h_2=g^{x_2}\)</span>，则 <span
-class="math display">\[
-\mathrm{DH}_g\left(h_1, h_2\right)=g^{x_1 \cdot x_2}=h_1^{x_2}=h_2^{x_1}
-.
+logrithm问题相关，但尚未被证明它们是等价的。</p>
+<ul>
+<li><strong>The Computation Diffie-Hellman (CDH) Problem</strong>. Given
+<span class="math inline">\(\left(g, g^a, g^b\right)\)</span>, compute
+<span class="math inline">\(g^{a b}\)</span>.</li>
+<li><strong>The Decisional Diffie-Hellman (DDH) Problem</strong>. Given
+<span class="math inline">\(\left(g, g^a, g^b, g^c\right)\)</span>,
+decide whether <span class="math inline">\(c=a b\)</span> in <span
+class="math inline">\(\mathbb{Z}_p\)</span>.</li>
+<li><strong>The <span class="math inline">\(\ell\)</span>-weak
+Diffie-Hellman ( <span class="math inline">\(\ell\)</span>-wDH)
+Problem.</strong> Given <span class="math inline">\(g\)</span> and <span
+class="math inline">\(g^{\alpha^i}\)</span> in <span
+class="math inline">\(G\)</span> for <span class="math inline">\(i=1,2,
+\ldots, \ell\)</span>, compute <span class="math inline">\(g^{1 /
+\alpha}\)</span>. This problem was introduced by Mitsunari, Sakai, and
+Kasahara for a traitor tracing scheme.</li>
+<li><strong>The <span class="math inline">\(\ell\)</span>-Strong
+Diffie-Hellman ( <span class="math inline">\(\ell\)</span>-SDH)
+Problem.</strong> Given <span class="math inline">\(g\)</span> and <span
+class="math inline">\(g^{\alpha^i}\)</span> in <span
+class="math inline">\(G\)</span> for <span class="math inline">\(i=1,2,
+\ldots, \ell\)</span>, compute <span
+class="math inline">\(g^{\alpha^{\ell+1}}\)</span>. This problem is
+considered as a weaker version of <span
+class="math inline">\(\ell\)</span>-wDH problem. It was first introduced
+by Boneh and Boyen to construct a short signature scheme, that is
+provably secure in the standard model (without random oracles), and
+later a short group signature scheme.</li>
+<li><strong>The <span class="math inline">\(\ell\)</span>-Bilinear
+Diffie-Hellman Inversion ( <span
+class="math inline">\(\ell\)</span>-BDHI) Problem</strong>. Given <span
+class="math inline">\(g\)</span> and <span
+class="math inline">\(g^{\alpha^i}\)</span> in <span
+class="math inline">\(G\)</span> for <span class="math inline">\(i=1,2,
+\ldots, \ell\)</span>, compute <span class="math inline">\(e(g, g)^{1 /
+\alpha} \in G^{\prime}\)</span>. This problem was introduced by Boneh
+and Boyen to construct an identity-based encryption that is secure in
+the standard model [BB04e]. It is also used to construct verifiable
+random functions [DY05].</li>
+<li><strong>The <span class="math inline">\(\ell\)</span>-Bilinear
+Diffie-Hellman Exponent ( <span
+class="math inline">\(\ell\)</span>-BDHE) Problem.</strong> Given <span
+class="math inline">\(g, h\)</span>, and <span
+class="math inline">\(g^{\alpha^i}(i=1,2, \ldots, \ell-1, \ell+1,
+\ldots, 2 \ell)\)</span> in <span class="math inline">\(G\)</span>,
+compute <span class="math inline">\(e(g, h)^{\alpha^{\ell}} \in
+G^{\prime}\)</span>. This problem was introduced by Boneh, Boyen, and
+Goh [BBG05] to construct a hierarchical identity-based encryption scheme
+with constant size ciphertext, and later used for a public key broadcast
+encryption scheme with constant size transmission overhead [BGW05].</li>
+</ul>
+<p>给定两个问题实例A和B，我们用A ≥
+B表示如果问题B可以在多项式时间内通过多项式次数的查询解决问题A的oracle。然后我们可以轻松地推导出DL相关问题之间的以下关系：
+<span class="math display">\[
+\mathrm{DL} \geq \mathrm{CDH} \geq \mathrm{DDH} \geq \ell-\mathrm{wDH}
+\geq \ell-\mathrm{SDH} \geq \ell-\mathrm{BDHI}, (\ell+1)-\mathrm{BDHE}.
 \]</span></p>
-<p><strong>CDH</strong>: compute <span
-class="math inline">\(\mathrm{DH}_g(h1,h2)\)</span> for uniform <span
-class="math inline">\(h_1\)</span> and <span
-class="math inline">\(h_2\)</span>.</p>
-<p><strong>DDH</strong>: distinguish <span
-class="math inline">\(\mathrm{DH}_g(h1,h2)\)</span> from a uniform group
-element when <span class="math inline">\(h_1\)</span> , <span
-class="math inline">\(h_2\)</span> are uniform.</p>
 
                 
               </div>
