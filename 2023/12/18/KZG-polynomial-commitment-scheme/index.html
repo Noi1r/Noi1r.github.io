@@ -16,24 +16,24 @@
   <meta name="author" content="Wang Lizheng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="笔者第一次见到这个概念是在大二下的信息安全与数学基础课程上，由于当时太菜，直到考试完了也没能理解这是什么意思。 刚准备动笔，看到了一个网站https:&#x2F;&#x2F;wuli.wiki&#x2F;online&#x2F;Group2.html#exe_Group2_2，莫名有些感动 先挖个坑，后面再填吧">
+    <meta name="description" content="Zero knowledge proofs have garnered an air of mystery around them, due to their mathematical complexity. They are affectionately referred to as “moon math,” as they are seen by most as otherworldly m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="同态与同构">
-<meta property="og:url" content="http://example.com/2023/12/18/%E5%90%8C%E6%80%81%E4%B8%8E%E5%90%8C%E6%9E%84/index.html">
+<meta property="og:title" content="KZG_polynomial_commitment_scheme">
+<meta property="og:url" content="http://example.com/2023/12/18/KZG-polynomial-commitment-scheme/index.html">
 <meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
-<meta property="og:description" content="笔者第一次见到这个概念是在大二下的信息安全与数学基础课程上，由于当时太菜，直到考试完了也没能理解这是什么意思。 刚准备动笔，看到了一个网站https:&#x2F;&#x2F;wuli.wiki&#x2F;online&#x2F;Group2.html#exe_Group2_2，莫名有些感动 先挖个坑，后面再填吧">
+<meta property="og:description" content="Zero knowledge proofs have garnered an air of mystery around them, due to their mathematical complexity. They are affectionately referred to as “moon math,” as they are seen by most as otherworldly m">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-18T05:47:12.000Z">
-<meta property="article:modified_time" content="2023-12-18T06:06:51.044Z">
+<meta property="article:published_time" content="2023-12-18T12:54:42.000Z">
+<meta property="article:modified_time" content="2023-12-18T13:30:22.402Z">
 <meta property="article:author" content="Wang Lizheng">
-<meta property="article:tag" content="Math">
+<meta property="article:tag" content="ZKP">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>同态与同构 - Wang Lizheng&#39;s Blog</title>
+  <title>KZG_polynomial_commitment_scheme - Wang Lizheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="同态与同构"></span>
+            <span id="subtitle" data-typed-text="KZG_polynomial_commitment_scheme"></span>
           
         </div>
 
@@ -222,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-18 13:47" pubdate>
-          2023年12月18日 下午
+        <time datetime="2023-12-18 20:54" pubdate>
+          2023年12月18日 晚上
         </time>
       </span>
     
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          79 字
+          63 字
         
       </span>
     
@@ -282,14 +282,36 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">同态与同构</h1>
+            <h1 id="seo-header">KZG_polynomial_commitment_scheme</h1>
             
             
               <div class="markdown-body">
                 
-                <p>笔者第一次见到这个概念是在大二下的信息安全与数学基础课程上，由于当时太菜，直到考试完了也没能理解这是什么意思。</p>
-<p>刚准备动笔，看到了一个网站https://wuli.wiki/online/Group2.html#exe_Group2_2，莫名有些感动</p>
-<p>先挖个坑，后面再填吧</p>
+                <blockquote>
+<p>Zero knowledge proofs have garnered an air of mystery around them,
+due to their mathematical complexity. They are affectionately referred
+to as “moon math,” as they are seen by most as otherworldly magic.</p>
+</blockquote>
+<p>最近在看SNARK的一些内容，KZG作为一种十分经典的polynomial commitment
+scheme当然避免不了要仔细研读一下，这篇博客就先记录一下他的组成（12.18），后面抽时间仔细研读一下论文再完善一下。</p>
+<h1 id="introduction">Introduction</h1>
+<p>A polynomial commitment scheme is a commitment scheme with some nice
+additional properties. In a general commitment scheme, the committer
+commits to a message <span class="math inline">\(m\)</span> by
+outputting some commitment <span class="math inline">\(c\)</span>. The
+committer can then later reveal the message <span
+class="math inline">\(m\)</span>, and a verifier can validate that
+indeed the commitment <span class="math inline">\(c\)</span> corresponds
+to <span class="math inline">\(m\)</span>.</p>
+<p>A commitment scheme should be "<strong>binding</strong>" (once
+publishing <span class="math inline">\(c\)</span>, the committer should
+not be able to find some other message <span
+class="math inline">\(m\)</span> ' <span class="math inline">\(\neq
+m\)</span> which also corresponds to <span
+class="math inline">\(c\)</span> ) and "<strong>hiding</strong>"
+(publishing <span class="math inline">\(c\)</span> should not reveal any
+information about the underlying message <span
+class="math inline">\(m\)</span> ).</p>
 
                 
               </div>
@@ -308,7 +330,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Mathematics/" class="category-chain-item">Mathematics</a>
+  <a href="/categories/Zero-Knowledge-Proof/" class="category-chain-item">Zero Knowledge Proof</a>
   
   
 
@@ -323,7 +345,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Math/" class="print-no-link">#Math</a>
+        <a href="/tags/ZKP/" class="print-no-link">#ZKP</a>
       
     </div>
   
@@ -335,8 +357,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>同态与同构</div>
-      <div>http://example.com/2023/12/18/同态与同构/</div>
+      <div>KZG_polynomial_commitment_scheme</div>
+      <div>http://example.com/2023/12/18/KZG-polynomial-commitment-scheme/</div>
     </div>
     <div class="license-meta">
       
@@ -380,9 +402,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/18/KZG-polynomial-commitment-scheme/" title="KZG_polynomial_commitment_scheme">
+                      <a href="/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" title="算术电路与布尔电路相互转换">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">KZG_polynomial_commitment_scheme</span>
+                        <span class="hidden-mobile">算术电路与布尔电路相互转换</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +412,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/12/18/Diffie-Hellman-Assumptions/" title="Diffie-Hellman_Problems">
-                        <span class="hidden-mobile">Diffie-Hellman_Problems</span>
+                      <a href="/2023/12/18/%E5%90%8C%E6%80%81%E4%B8%8E%E5%90%8C%E6%9E%84/" title="同态与同构">
+                        <span class="hidden-mobile">同态与同构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
