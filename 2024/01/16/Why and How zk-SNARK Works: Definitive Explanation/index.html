@@ -1,0 +1,1103 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.icon">
+  <link rel="icon" href="/img/favicon.icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wang Lizheng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Why and How zk-SNARK Works: Definitive Explanation Abstract 本篇论文对于zk- SNARK做了一个简单的阐述，不仅解释了它是如何工作的，更解释了它为什么如此工作和它如何变成这样。 1. Introduction 零知识简洁非交互式知识论证（Zero-knowledge succinct non-interactive arguments">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why and How zk-SNARK Works Definitive Explanation">
+<meta property="og:url" content="http://example.com/2024/01/16/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation/index.html">
+<meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
+<meta property="og:description" content="Why and How zk-SNARK Works: Definitive Explanation Abstract 本篇论文对于zk- SNARK做了一个简单的阐述，不仅解释了它是如何工作的，更解释了它为什么如此工作和它如何变成这样。 1. Introduction 零知识简洁非交互式知识论证（Zero-knowledge succinct non-interactive arguments">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240115160455830.png">
+<meta property="og:image" content="http://example.com/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240115160656818.png">
+<meta property="article:published_time" content="2024-01-16T11:41:14.000Z">
+<meta property="article:modified_time" content="2024-01-16T11:51:12.575Z">
+<meta property="article:author" content="Wang Lizheng">
+<meta property="article:tag" content="ZKP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240115160455830.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Why and How zk-SNARK Works Definitive Explanation - Wang Lizheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wang Lizheng</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Why and How zk-SNARK Works Definitive Explanation"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-16 19:41" pubdate>
+          2024年1月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Why and How zk-SNARK Works Definitive Explanation</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="why-and-how-zk-snark-works-definitive-explanation">Why and How
+zk-SNARK Works: Definitive Explanation</h1>
+<h2 id="abstract">Abstract</h2>
+<p>本篇论文对于zk-
+SNARK做了一个简单的阐述，不仅解释了它是如何工作的，更解释了它为什么如此工作和它如何变成这样。</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>零知识简洁非交互式知识论证（Zero-knowledge succinct non-interactive
+arguments of knowledge,
+zk-SNARK）是一种在不揭露任何其他信息的情况下，证明论述为true的一种优雅的方法。</p>
+<p>零知识证明有很多的应用场景：</p>
+<ol type="1">
+<li>证明关于隐私信息的论述，例如：证明A的银行账户里有比X更多的钱</li>
+<li>匿名授权，例如：证明请求者R有权访问网站的限制区域，而不透露其身份（例如登录名、密码）</li>
+<li>匿名支付，例如：在不透露收入的情况下纳税</li>
+<li>外包计算，例如：外包昂贵的计算，并在不重做执行的情况下验证结果是否正确</li>
+</ol>
+<p>尽管表面上听起来很棒，但其背后的方法是数学和密码学的一大奇迹，自1985年在《The
+Knowledge Complexity of Interactive
+Proof-systems》[GMR85]中引入以来，人们已经研究了40年，随后引入了在区块链环境中特别重要的非交互证明[BFM88]。</p>
+<p>零知识证明具有以下性质：</p>
+<ol type="1">
+<li>完备性（Completeness）：如果陈述属实，则证明者可以说服验证者</li>
+<li>稳健性（Soundness）：证明者无法说服证明者相信虚假陈述</li>
+<li>零知识（Zero-knowledge）：证明只会揭示陈述是否属实，而不是其他</li>
+</ol>
+<h2 id="the-medium-of-a-proof">2. The Medium of a Proof</h2>
+<p>假设我们想证明一个长为10数组中每个元素都为1，我们采用每次检查1个元素之后shuffle的方法：</p>
+<ul>
+<li>Completeness：如果数组中的元素均为1，那么我们一定能够说服Verfier</li>
+<li>Soundness：如果数组中存在0，我们计最好情况，数组中包含1个0，那么第一次check我们被欺骗的概率为<span
+class="math inline">\(90\%\)</span>，第二次为<span
+class="math inline">\(90\%^2=81\%\)</span>，通过<span
+class="math inline">\(\lceil\log_{0.9}{0.05}
+\rceil=29\)</span>次重复，我们可以将被欺骗的概率降至<span
+class="math inline">\(5%\)</span>以下</li>
+</ul>
+<p>但是上述方法的复杂度较高，其需要check的次数与数组中元素的个数成线性相关。因此我们可以采用多项式的方法，将所需要的约束用多项式表示，根据Schwartz-Zipple-Demillo-Lipton（SZDL）定理，我们只需要验证很大的定义域内的一个input对应的output，就可以以极大的概率确定该多项式的正确性。</p>
+<blockquote>
+<p>Theorem 1 (Schwartz, Zippel). Let <span class="math display">\[
+P \in R\left[x_1, x_2, \ldots, x_n\right]
+\]</span> be a non-zero polynomial of total degree <span
+class="math inline">\(d \geq 0\)</span> over an integral domain <span
+class="math inline">\(R\)</span>. Let <span
+class="math inline">\(S\)</span> be a finite subset of <span
+class="math inline">\(R\)</span> and let <span
+class="math inline">\(r_1, r_2, \ldots, r_n\)</span> be selected at
+random independently and uniformly from S. Then <span
+class="math display">\[
+\operatorname{Pr}\left[P\left(r_1, r_2, \ldots, r_n\right)=0\right] \leq
+\frac{d}{|S|} .
+\]</span></p>
+<p>Equivalently, the Lemma states that for any finite subset <span
+class="math inline">\(S\)</span> of <span
+class="math inline">\(R\)</span>, if <span
+class="math inline">\(Z(P)\)</span> is the zero set of <span
+class="math inline">\(P\)</span>, then <span class="math display">\[
+\left|Z(P) \cap S^n\right| \leq d \cdot|S|^{n-1} .
+\]</span></p>
+<p>Proof. The proof is by mathematical induction on <span
+class="math inline">\(n\)</span>. For <span
+class="math inline">\(n=1\)</span>, as was mentioned before, <span
+class="math inline">\(P\)</span> can have at most <span
+class="math inline">\(d\)</span> roots. This gives us the base case.
+Now, assume that the theorem holds for all polynomials in <span
+class="math inline">\(n-1\)</span> variables. We can then consider <span
+class="math inline">\(P\)</span> to be a polynomial in <span
+class="math inline">\(x_1\)</span> by writing it as <span
+class="math display">\[
+P\left(x_1, \ldots, x_n\right)=\sum_{i=0}^d x_1^i P_i\left(x_2, \ldots,
+x_n\right) .
+\]</span></p>
+<p>Since <span class="math inline">\(P\)</span> is not identically 0,
+there are some <span class="math inline">\(i\)</span> such that <span
+class="math inline">\(P_i\)</span> is not identically 0. Take the
+largest such <span class="math inline">\(i\)</span>. Then <span
+class="math inline">\(\operatorname{deg} P_i \leq d-i\)</span>, since
+the degree of <span class="math inline">\(x_1^i P_i\)</span> is at most
+d.</p>
+<p>Now we randomly pick <span class="math inline">\(r_2, \ldots,
+r_n\)</span> from <span class="math inline">\(S\)</span>. By the
+induction hypothesis, <span
+class="math inline">\(\operatorname{Pr}\left[P_i\left(r_2, \ldots,
+r_n\right)=0\right] \leq \frac{d-i}{|S|}\)</span>. If <span
+class="math inline">\(P_i\left(r_2, \ldots, r_n\right) \neq 0\)</span>,
+then <span class="math inline">\(P\left(x_1, r_2, \ldots,
+r_n\right)\)</span> is of degree <span class="math inline">\(i\)</span>
+(and thus not identically zero) so <span class="math display">\[
+\operatorname{Pr}\left[P\left(r_1, r_2, \ldots, r_n\right)=0 \mid
+P_i\left(r_2, \ldots, r_n\right) \neq 0\right] \leq \frac{i}{|S|} .
+\]</span></p>
+<p>If we denote the event <span class="math inline">\(P\left(r_1, r_2,
+\ldots, r_n\right)=0\)</span> by <span class="math inline">\(A\)</span>,
+the event <span class="math inline">\(P_i\left(r_2, \ldots,
+r_n\right)=0\)</span> by <span class="math inline">\(B\)</span>, and the
+complement of <span class="math inline">\(B\)</span> by <span
+class="math inline">\(B^c\)</span>, we have <span
+class="math display">\[
+\begin{aligned}
+\operatorname{Pr}[A] &amp; =\operatorname{Pr}[A \cap
+B]+\operatorname{Pr}\left[A \cap B^c\right] \\
+&amp; =\operatorname{Pr}[B] \operatorname{Pr}[A \mid
+B]+\operatorname{Pr}\left[B^c\right] \operatorname{Pr}\left[A \mid
+B^c\right] \\
+&amp; \leq \operatorname{Pr}[B]+\operatorname{Pr}\left[A \mid B^c\right]
+\\
+&amp; \leq \frac{d-i}{|S|}+\frac{i}{|S|}=\frac{d}{|S|}
+\end{aligned}
+\]</span></p>
+</blockquote>
+<p>具体流程如下：</p>
+<ol type="1">
+<li>Verifier选择一个随机数<span
+class="math inline">\(x\)</span>并且在本地运算多项式</li>
+<li>Verifier将<span
+class="math inline">\(x\)</span>发送给Prover，并且要求它运算质询中的多项式</li>
+<li>Prover计算多项式在<span
+class="math inline">\(x\)</span>处的取值，并且将结果发送给Verifier</li>
+<li>Verifier验证结果的正确性，并且给出accept/reject</li>
+</ol>
+<h2 id="non-interactive-zero-knowledge-of-a-polynomial">3.
+Non-Interactive Zero-Knowledge of a Polynomial</h2>
+<h3 id="proving-knowledge-of-a-polynomial">3.1 Proving Knowledge of a
+Polynomial</h3>
+<h4 id="多项式的表示方法">多项式的表示方法</h4>
+<ol type="1">
+<li>系数表达
+<ul>
+<li>求值：霍纳法则 <span class="math inline">\(O(n)\)</span>复杂度</li>
+<li>加法：<span class="math inline">\(O(n)\)</span>复杂度</li>
+<li>乘法：<span
+class="math inline">\(O(n^2)\)</span>复杂度（因为向量<span
+class="math inline">\(a\)</span>中的每个系数必须与向量<span
+class="math inline">\(b\)</span>中的每个系数相乘，我们目前的问题就在于优化乘法）</li>
+</ul></li>
+<li>点值表达
+<ul>
+<li>插值：拉格朗日插值 <span
+class="math inline">\(O(n^2)\)</span>复杂度</li>
+<li>加法：<span class="math inline">\(O(n)\)</span>复杂度</li>
+<li>乘法：<span class="math inline">\(O(n)\)</span>复杂度</li>
+</ul></li>
+</ol>
+<h4 id="多项式的快速乘法">多项式的快速乘法</h4>
+<p>通过前面的介绍，我们有了两种计算多项式乘法的方法：</p>
+<p><img src="/img/post/Why and How zk-SNARK Works: Definitive Explanation.assets/image-20240115160455830.png" srcset="/img/loading.gif" lazyload alt="image-20240115160455830" style="zoom:50%;" /></p>
+<p>图中的两种方法的时间复杂度都是 $ (n^2)$。在方法二中,
+我们可以采用任何点作为求值点, 但 通过精心地挑选求值点,
+可以把多项式“系数表达”和“点值表达”之间转化所需的时间复杂度变为 <span
+class="math inline">\(\Theta(n \lg n)\)</span>。</p>
+<h5 id="离散傅里叶变换-dft">离散傅里叶变换 (DFT)</h5>
+<p>在进一步介绍前, 我们先了解一下离散傅里叶变换 (DFT)。 向量 <span
+class="math inline">\(a=\left(a_0, a_1, \cdots, a_{n-1}\right)\)</span>
+的离散傅里叶变换为另外一个向量 <span class="math inline">\(y=\left(y_0,
+y_1, \cdots, y_{n-1}\right)\)</span>, 该向量中每个元素的定义为: <span
+class="math display">\[
+y_k=\sum_{j=0}^{n-1} a_j w_n^{k j}
+\]</span></p>
+<p>上式中 <span class="math inline">\(w_n^k, k=0,1, \cdots, n-1\)</span>
+分别是满足 <span class="math inline">\(w^n=1\)</span> 的 <span
+class="math inline">\(n\)</span> 个单位复数根中的第 <span
+class="math inline">\(k\)</span> 个。</p>
+<p><strong>如果我们恰好在 “单位复数根” <span
+class="math inline">\(w_n^k\)</span> 处求值 <span
+class="math inline">\(A(x)\)</span>, 则显然这样得到的 <span
+class="math inline">\(A\left(w_n^k\right)=\sum_{j=0}^{n-1} a_j w_n^{k
+j}\)</span> 就是系数向量 <span class="math inline">\(a=\left(a_0, a_1,
+\cdots, a_{n-1}\right)\)</span> 的离散傅里叶变换</strong>。</p>
+<p>快速傅里叶变换 (FFT) 是计算离散傅里叶变换（DFT）的快速算法,
+它的时间复杂度是 <span class="math inline">\(\Theta(n \lg n)\)</span>;
+同样快速傅里叶逆变换（IFFT）是计算离散傅里叶逆变换（IDFT）的快速算法,
+它的时间复杂度也是 <span class="math inline">\(\Theta(n \lg n)\)</span>
+。</p>
+<h5 id="fft加快多项式乘法">FFT加快多项式乘法</h5>
+<p>基于前面的介绍, 我们可以得到了下图的方法来加快多项式乘法的计算,
+它的时间复杂度为 $(n n) $</p>
+<p><img src="/img/post/Why and How zk-SNARK Works: Definitive Explanation.assets/image-20240115160656818.png" srcset="/img/loading.gif" lazyload alt="image-20240115160656818" style="zoom:50%;" /></p>
+<p>下面是使用 FFT 加快加速多项式乘法计算的具体操作步骤: 1. 加倍次数界:
+通过加入 <span class="math inline">\(n\)</span> 个系数为 0 的高阶系数,
+把多项式 <span class="math inline">\(A(x)\)</span> 和 <span
+class="math inline">\(B(x)\)</span> 变为次数界为 <span
+class="math inline">\(2 n\)</span> 的多项式, 并构造其系数表达; 2. 求值:
+通过应用 <span class="math inline">\(2 n\)</span> 阶的 FFT 计算出 <span
+class="math inline">\(A(x)\)</span> 和 <span
+class="math inline">\(B(x)\)</span> 的长度为 <span
+class="math inline">\(2 n\)</span>
+的点值表达。这些点值表达中包含了两个多项式在 <span
+class="math inline">\(2 n\)</span> 次单位根处的取值; 3. 逐点相乘: 把
+<span class="math inline">\(A(x)\)</span> 的值与 <span
+class="math inline">\(B(x)\)</span> 的值逐点相乘, 可以计算出多项式 <span
+class="math inline">\(C(x)=A(x) B(x)\)</span> 的点值表达,
+这个表示中包含了 <span class="math inline">\(C(x)\)</span> 在每个 <span
+class="math inline">\(2 n\)</span> 次单位根处的值; 4. 插值: 通过对 <span
+class="math inline">\(2 n\)</span> 个点值对应用 IFFT, 计算其逆 DFT,
+就可以构造出多项式 <span class="math inline">\(C(x)\)</span>
+的系数表达。</p>
+<h3 id="factorization">3.2 Factorization</h3>
+<p><strong>代数基本定理指出，任何可解多项式都可以分解成线性多项式(即一次多项式)</strong>，即都可以表示成如下形式：
+<span class="math display">\[
+(x-a_0)(x-a_1)\dots(x-a_n)=0
+\]</span>
+如果这些因子中的任何一个是零，那么整个方程就是零，因此所有的<span
+class="math inline">\(a_s\)</span>即为方程所有解。</p>
+<p>如果一个Prover想证明一个多项式有已知的几个根（witness），则可知原多项式为该“归零多项式”的倍数，即有：
+<span class="math display">\[
+p(x)=h(x)\cdot t(x)
+\]</span> 归零多项式<span
+class="math inline">\(t(x)\)</span>也被称为目标多项式（target
+polynomial）。</p>
+<p>我们可以通过以下流程来检查多项式的性质：</p>
+<ol type="1">
+<li>Verifier随机选取一个随机值<span
+class="math inline">\(r\)</span>，计算<span
+class="math inline">\(t=t(r)\)</span>并且将<span
+class="math inline">\(r\)</span>发送给Prover</li>
+<li>Prover计算<span
+class="math inline">\(h(x)=\frac{p(x)}{t(x)},p(r),h(r)\)</span>，并且将所得的<span
+class="math inline">\(p,h\)</span>发送给Verifier</li>
+<li>Verifier验证<span class="math inline">\(p=h\cdot
+t\)</span>，如果等式成立，则有<span
+class="math inline">\(p(x)\)</span>为<span
+class="math inline">\(t(x)\)</span>的倍数</li>
+</ol>
+<p>如果<span class="math inline">\(p(x)\)</span>不是<span
+class="math inline">\(t(x)\)</span>的倍数，则有 <span
+class="math display">\[
+h(x)=\dfrac{p(x)}{t(x)}=\hat{h}(x)+\dfrac{r(x)}{t(x)}
+\]</span> 由于 <span class="math inline">\(r(x) / t(x)\)</span>
+非零，当<span
+class="math inline">\(x\)</span>随机取值时，最后的余项大概率不是整数
+(但仍有非 negligible 的概率是整数)，故无法通过验证。</p>
+<p>但是该方案仍存在一些问题：</p>
+<ol type="1">
+<li>在<span
+class="math inline">\(x\)</span>随机取值的情况下，仍有non-negligible的概率<span
+class="math inline">\(r(x)/t(x)\)</span>为整数，导致不合法证明的产生。</li>
+<li>由于目前运算并非在有限域下，上述协议只能应用于多项式系数为整数的情况，对于分数系数的多项式无法进行验证。</li>
+<li>Prover 可能根本不知道一个合法的 <span
+class="math inline">\(p(x)\)</span>, 他可以直接计算出 <span
+class="math inline">\(t(s)\)</span> 的值（因为多项式 <span
+class="math inline">\(t(x)\)</span> 所有人都知道, <span
+class="math inline">\(s\)</span> 已由 Verifier 给出), 然后随机取一个数字
+<span class="math inline">\(h\)</span>, 或者随机构造一个多项式 <span
+class="math inline">\(h(x)\)</span>, 然后将 <span
+class="math inline">\(h=h(s)\)</span> 和 <span class="math inline">\(p=h
+\cdot t(s)\)</span> 发给 Verifier, 仍会通过验证。</li>
+<li>Prover知道随机点<span
+class="math inline">\(x=r\)</span>，所以他可以构造在<span
+class="math inline">\(r\)</span>处与<span
+class="math inline">\(t(r)·h(r)\)</span>有一个公共点的任何多项式。</li>
+<li>后续我们仍需要对 Prover 给出的 <span
+class="math inline">\(p(x)\)</span> 添加某些限定，如规定其次数不超过
+<span
+class="math inline">\(d\)</span>，或者不含某些项(如不含常数项，<span
+class="math inline">\(x^2\)</span>
+项等)，上述协议无法扩展出这些限定要求。</li>
+</ol>
+<h3 id="homomorphic-encryption">3.3 Homomorphic Encryption</h3>
+<p><strong>离散对数问题：</strong>给定<span
+class="math inline">\(y=g^x\)</span>，通过<span
+class="math inline">\(y\)</span>计算出<span
+class="math inline">\(x\)</span>的值是十分困难的</p>
+<p><strong>CDH假设：</strong>给定<span
+class="math inline">\(g^a,g^b\)</span>，算出<span
+class="math inline">\(g^{ab}\)</span>的值是困难的</p>
+<p>由此我们可以得到一个同态加密的函数（个人认为只是一种Homomorphic
+commitment）： <span class="math display">\[
+E(x)=g^x
+\]</span> 满足加法同态：<span
+class="math inline">\(E(x_1)*E(x_2)=g^{x_1}\cdot
+g^{x_2}=g^{x_1+x_2}\)</span>，但不满足乘法同态</p>
+<p>现在我们可以将上述方案修改如下：</p>
+<ol type="1">
+<li>Verifier随机选取一个随机值<span
+class="math inline">\(r\)</span>，计算<span
+class="math inline">\(E(s^0),E(s^1),E(s^2)\dots
+E(s^d)\)</span>并发送给Prover</li>
+<li>Prover 通过收到的加密数据计算 <span
+class="math inline">\(E(h(s))\)</span> 和 <span
+class="math inline">\(E(p(s))\)</span>，具体方法为计算 <span
+class="math inline">\(E\left(s^0\right)^{c_0}\cdot
+E\left(s^1\right)^{c_1} \ldots E\left(s^d\right)^{c_d}\)</span>，其中
+<span class="math inline">\(c_0, \ldots, c_d\)</span> 为对应的多项式系数
+<span class="math inline">\((h(x)\)</span> 或 <span
+class="math inline">\(p(x))\)</span>，并发送给 Verifier</li>
+<li>Verifier 计算<span class="math inline">\(t(s)\)</span>并验证<span
+class="math inline">\(E_p=E_h^{t(s)}\)</span></li>
+</ol>
+<p>由于<span
+class="math inline">\(E(x)\)</span>只满足加法同态，不满足乘法同态，因此可以保证安全性。</p>
+<p>我们接下来分析上述协议如何帮助我们解决上一章的几个问题：</p>
+<ol type="1">
+<li><p>对于问题 1， 如果 <span class="math inline">\(t(x)\)</span>
+不能整除 <span class="math inline">\(h(x)\)</span>，如上一章节所述，
+存在非零余项 <span class="math inline">\(r(s)\)</span>， 且 Prover
+需要提供<span class="math inline">\(E(\hat{h}(s)+r(s) /
+t(s))=E(\hat{h}(s)) \cdot E(r(s) / t(s))\)</span> 。其中 <span
+class="math inline">\(E(\hat{h}(s)), E(r(s)),
+E(t(s))\)</span>均可以算出，但是 <span class="math inline">\(E(r(s) /
+t(s))\)</span> 却因为加密函数 <span class="math inline">\(E(x)\)</span>
+不满足乘除同态性而无法计算，且我们也不知道<span
+class="math inline">\(s\)</span>的具体取值，因此无法直接得到<span
+class="math inline">\(r(s)/t(s)\)</span>，从而直接计算<span
+class="math inline">\(E(r(s)/t(s))\)</span>（即使 <span
+class="math inline">\(r(s) / t(s)\)</span> 是整数, 在模 <span
+class="math inline">\(p\)</span> 意义下整数和分数已没有区别） 这意味着
+<span class="math inline">\({t}(x)\)</span> 必须完全整除（不能只对某些
+<span class="math inline">\(s\)</span> 取值整除） <span
+class="math inline">\(h(x)\)</span> 证明才能合法。</p></li>
+<li><p>对于问题2，由于在模 <span class="math inline">\(p\)</span>
+意义下分数已经化成了整数，对于分数多项式
+也需要完全整除才能生成合法的证明。(一般而言，所有实数域上的运算法则在模
+<span class="math inline">\(p\)</span> 意义下也成立)</p></li>
+<li><p>对于问题3，首先，由于不知道 <span
+class="math inline">\(s\)</span> 的值，Prover 不能直接算出 <span
+class="math inline">\(t(s)\)</span> 再随便乘个数发给
+Verifier，但他仍然可以算出 <span class="math inline">\(E(t(s))\)</span>
+的值然后再进行 <span class="math inline">\(h\)</span> 次方得到 <span
+class="math inline">\(E(p(s))\)</span> 发给 Verifier
+通过验证。（但是我认为这个问题不在本协议的考虑范围之内，因为本协议要verify的是Prover是否知道一个满足该性质的多项式，有了<span
+class="math inline">\(t(x)\)</span>Prover一定能知道一个满足该性质的多项式，这么看来这个协议好像也没有什么实用价值，仅供学习使用？）</p></li>
+<li><p>对于问题4，目前仅能对多项式的最高次数做限定。</p></li>
+</ol>
+<p>虽然在这种协议中证明者的灵活性是有限的，但他仍然可以使用任何其他手段来伪造证明，例如，如果证明者声称仅使用<span
+class="math inline">\(s^3\)</span>和<span
+class="math inline">\(s^1\)</span>就有满足的多项式，这在当前的协议中是不可能验证的。</p>
+<h3 id="knowledge-of-polynomial">3.4 Knowledge of Polynomial</h3>
+<p>关于一个多项式的知识就是其系数<span
+class="math inline">\(c_0,c_1,c_2\dots
+c_d\)</span>的知识，我们在协议中使用这些系数的方式是通过对相应的加密值的幂进行指数运算<span
+class="math inline">\(E(s^i)^{c_i}=g^{c_i \cdot s^i
+}\)</span>，我们可以通过KEA假设来保证Prover对于多项式的知识：</p>
+<p><strong>KEA, Knowledge-of-Exponent Assumption：</strong>给定一组
+<span class="math inline">\(a, a^{\prime}\)</span> 满足 <span
+class="math inline">\(a^{\prime}=a^\alpha\)</span> (这个 <span
+class="math inline">\(a^{\prime}\)</span> 称作偏移量), 在不知道 <span
+class="math inline">\(\alpha\)</span> 的情况下,
+如果有人能够给出另外一组数 <span class="math inline">\(\left(b,
+b^{\prime}\right)\)</span> 使得 <span
+class="math inline">\(b^{\prime}=b^\alpha\)</span>, 那么一定有 <span
+class="math inline">\(b=a^c\)</span> 。</p>
+<p>因为Prover无法获取<span
+class="math inline">\(\alpha\)</span>的值，因此它一定知道<span
+class="math inline">\(c\)</span>的值。</p>
+<p>这一小节原论文中讲是为了避免上述问题3随机常数项的使用，但是以笔者目前的认知，感觉好像抵抗不了。（由于笔者目前所学浅陋，可能会有错误理解，渴望教教🥺）</p>
+<p><img
+src="/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240116191917926.png" srcset="/img/loading.gif" lazyload /></p>
+<p>即使是有KEA约束，在提供有<span
+class="math inline">\(E(s^0)\)</span>和<span
+class="math inline">\(E(\alpha
+s^0)\)</span>的情况下，我还是可以继续构造上述的攻击：<span
+class="math inline">\(z_h=E(s^0)^r=g^r, z_h^\prime = E(\alpha
+s^0)^r=g^{\alpha
+r}\)</span>，因为t(x)是公开的,因此我们可以非常轻松的得到t(s),从而<span
+class="math inline">\(z_p=z_h^{t(s)},z_p^\prime=z_h^{\prime{t(s)}}\)</span>貌似还是可以正常攻击。</p>
+<p>对于文中所说的<img
+src="/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240116192725212.png" srcset="/img/loading.gif" lazyload /></p>
+<p>我个人认为只是没有给我提供<span
+class="math inline">\(E(s^0)\)</span>和<span
+class="math inline">\(E(\alpha s^0)\)</span>罢了</p>
+<p>对于文中所说的</p>
+<p><img
+src="/img/post/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation.assets/image-20240116193017102.png" srcset="/img/loading.gif" lazyload /></p>
+<p>我认为即使不加KEA，我们不提供<span
+class="math inline">\(g^{s^j}\)</span>的话，好像也能达到这种效果（类似<span
+class="math inline">\(\text { The } \ell \text {-Strong Diffie-Hellman (
+} \ell \text {-SDH) Problem. }\)</span>）</p>
+<p>目前笔者认为加入KEA的作用好像就是给Verifier一个证据，证明了自己确实使用了提供的<span
+class="math inline">\(E(s^0),E(s^1),E(s^2)\dots
+E(s^d)\)</span>，并且知道一个多项式（Knowledge）。</p>
+<p>因此我更愿意把这一小节的标题改为Knowledge of
+Polynomial（不知道考虑是否有所欠缺）</p>
+<p><strong>先写到这，剩下的内容感觉更有意思，不过想摆烂啊啊啊啊，后面慢慢更</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zero-Knowledge-Proof/" class="category-chain-item">Zero Knowledge Proof</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ZKP/" class="print-no-link">#ZKP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Why and How zk-SNARK Works Definitive Explanation</div>
+      <div>http://example.com/2024/01/16/Why and How zk-SNARK Works: Definitive Explanation/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wang Lizheng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/23/LPCP%E5%92%8CLIP/" title="LPCP和LIP">
+                        <span class="hidden-mobile">LPCP和LIP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
