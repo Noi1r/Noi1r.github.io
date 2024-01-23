@@ -1,0 +1,956 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.icon">
+  <link rel="icon" href="/img/favicon.icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wang Lizheng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Interactive Proofs 1 Mathematical Proofs &#x3D; NP 首先回顾一下NP的定义： \[ \begin{align*} L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time } \mathrm{decider \,D} \text{ s.t.}\\ \text{(1) } &amp;\forall \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Interactive Proofs 1">
+<meta property="og:url" content="http://example.com/2024/01/23/Interactive-Proofs-1/index.html">
+<meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
+<meta property="og:description" content="Interactive Proofs 1 Mathematical Proofs &#x3D; NP 首先回顾一下NP的定义： \[ \begin{align*} L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time } \mathrm{decider \,D} \text{ s.t.}\\ \text{(1) } &amp;\forall \">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/postLecture1.assets/image-20240117100422382.png">
+<meta property="og:image" content="http://example.com/img/postLecture1.assets/image-20240117101402714.png">
+<meta property="og:image" content="http://example.com/img/postLecture1.assets/image-20240117102444502.png">
+<meta property="og:image" content="http://example.com/img/postLecture1.assets/image-20240117104106447.png">
+<meta property="og:image" content="http://example.com/img/postLecture1.assets/image-20240117152018882.png">
+<meta property="article:published_time" content="2024-01-23T08:37:32.000Z">
+<meta property="article:modified_time" content="2024-01-23T08:42:13.155Z">
+<meta property="article:author" content="Wang Lizheng">
+<meta property="article:tag" content="Complexity Theory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/postLecture1.assets/image-20240117100422382.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Interactive Proofs 1 - Wang Lizheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wang Lizheng</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Interactive Proofs 1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 16:37" pubdate>
+          2024年1月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Interactive Proofs 1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="interactive-proofs-1">Interactive Proofs 1</h1>
+<h2 id="mathematical-proofs-np">Mathematical Proofs = NP</h2>
+<p>首先回顾一下NP的定义： <span class="math display">\[
+\begin{align*}
+L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time }
+\mathrm{decider \,D} \text{ s.t.}\\
+\text{(1) } &amp;\forall \text{ instance } x\in L, \, \exist \text{
+witness } \omega \quad D(x,\omega)=1\\
+\text{(2) } &amp;\forall \text{ instance } x\notin L, \, \forall \text{
+witness } \omega \quad D(x,\omega)=0
+\end{align*}
+\]</span> 例如：L = SAT 则有<span
+class="math inline">\(x\)</span>是一个布尔电路<span
+class="math inline">\(\phi(x_1,x_2\dots x_n)\)</span>，<span
+class="math inline">\(\omega\)</span>是一个赋值<span
+class="math inline">\((a_1,a_2\dots a_n)\in \{0,1\}^n\)</span>，<span
+class="math inline">\(D\)</span>检查<span
+class="math inline">\(\phi(a_1,a_2\dots a_n)\)</span>是否为真</p>
+<p>对于Mathematics Proofs，我们可以将上述定义进行简单的修改： $$ <span
+class="math display">\[\begin{align*}
+L &amp;\in \mathrm{Mathematics\,\,Proofs} \iff \exists \text{
+polynomial-time } \mathrm{verifier \,V} \text{ s.t.}\\
+&amp;\text{(1) } \forall \text{ theorem } x\in L, \, \exist \text{ proof
+} \omega \quad D(x,\omega)=1\\
+&amp;\text{(2) } \forall \text{ theorem } x\notin L, \, \forall \text{
+proof } \omega \quad D(x,\omega)=0
+
+\end{align*}\]</span> $$ 我们可以认为NP抓住了classical Mathematics
+Proofs关键：<strong>对于Mathematics
+Proofs，我们和NP一样，也是不考虑获取证明的难度，只考虑能不能快速有效的验证证明的正确性</strong></p>
+<p><img src="/img/postLecture1.assets/image-20240117100422382.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p>接下来，我们对于Verifier的约束进行减少，使其具备以下能力：</p>
+<ol type="1">
+<li>具备随机性（Randomness），例如：抛硬币（coins）</li>
+<li>可以与Prover进行交互</li>
+</ol>
+<p>由此，我们就引出了Interactive Proofs的概念</p>
+<h2 id="interactive-proof">Interactive Proof</h2>
+<p>我们首先给出IP的定义</p>
+<p><img src="/img/postLecture1.assets/image-20240117101402714.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p>对于语言L的IP是一个二元组<span class="math inline">\((P,V)\)</span>
+s.t.</p>
+<ol type="1">
+<li>Completeness：<span class="math inline">\(\forall x\in L,\,
+\text{Pr}_r[&lt;P(x),V(x,r)&gt;=1]=1\)</span></li>
+<li>Soundness：<span class="math inline">\(\forall x\notin L,\,
+\text{Pr}_r[&lt;\widetilde{P},V(x,r)&gt;=1]=1/2\)</span></li>
+</ol>
+<p>在IP中，我们同样不考虑Prover提出一个Proof所消耗的资源，因此我们对于Prover不作限制（unbounded），但是我们需要这个Proof是可以高效验证的，因此对于Verifier我们需要进行限制（efficient）。</p>
+<p>上述定义中的1和1/2是随便选取的，只需要两者有明显的区别即可。</p>
+<blockquote>
+<p><strong>Remark：</strong>在上述NP、IP、Mathematics
+Proofs的定义中，我们没有明示的是Proof的长度也要是Polynomial的，要不然仅仅是读取Proof就打破了对Verifier的efficient限制。</p>
+</blockquote>
+<p>IP与NP的区分：</p>
+<p>MA代表Merlin-Arthur</p>
+<p><img src="/img/postLecture1.assets/image-20240117102444502.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<h2 id="ip-for-graph-non-isomorphism">IP for Graph Non-Isomorphism</h2>
+<p>我们首先对图的同构给出定义：</p>
+<p>假设<span class="math inline">\(G_0(V,E_0)\)</span>和<span
+class="math inline">\(G_1(V,E_1)\)</span>为关于点集<span
+class="math inline">\(V\)</span>的两个图（Graph），如果存在一个置换
+<span class="math display">\[
+\pi:V\rightarrow V s.t.\\
+(u,v)\in E_0 \leftrightarrow (\pi(u),\pi(v))\in E_1
+\]</span> 我们有<span class="math inline">\(G_0\equiv
+G_1\)</span>（<span class="math inline">\(G_0\)</span>和<span
+class="math inline">\(G_1\)</span>同构），写作<span
+class="math inline">\(G_0=\pi(G_1)\)</span></p>
+<p>我们定义：图同构问题GI（Graph Isomorphism）<span
+class="math inline">\(\mathrm{GI}:=\{(G_0,G_1)\mid G_0\equiv
+G_1\}\)</span>，图非同构问题GNI（Graph Non-Isomorphism）<span
+class="math inline">\(\mathrm{GNI}:=\{(G_0,G_1)\mid G_0\not\equiv
+G_1\}\)</span></p>
+<p><img src="/img/postLecture1.assets/image-20240117104106447.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p>我们有：</p>
+<ul>
+<li><span class="math inline">\(\mathrm{GI}\in \mathrm{NP}\)</span></li>
+<li>$ $</li>
+<li>Not known either in <span
+class="math inline">\(\mathrm{P}\)</span></li>
+</ul>
+<blockquote>
+<p><strong>coNP</strong>定义：In <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computational_complexity_theory">computational
+complexity theory</a>, <strong>co-NP</strong> is a <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Complexity_class">complexity
+class</a>. A <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Decision_problem">decision
+problem</a> X is a member of co-NP if and only if its <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Complement_(complexity)">complement</a>
+X is in the complexity class <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/NP_(complexity)">NP</a>. The class
+can be defined as follows: a decision problem is in co-NP if and only if
+for every <em>no</em>-instance we have a polynomial-length "<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Certificate_(complexity)">certificate</a>"
+and there is a polynomial-time algorithm that can be used to verify any
+purported certificate.</p>
+</blockquote>
+<h3 id="section">$ $</h3>
+<p><img src="/img/postLecture1.assets/image-20240117152018882.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p>同构是一种等价关系，因此可以根据同构运算划分等价类</p>
+<p><strong>Completeness：</strong><span
+class="math inline">\((G_0,G_1)\in \mathrm{GNI},\, [G_0\not\equiv
+G_1]\)</span>，<span
+class="math inline">\(G_0,G_1\)</span>位于不同的同构等价类，因此Prover可以轻松地区分<span
+class="math inline">\(H\)</span>与<span
+class="math inline">\(G_0,G_1\)</span>中的哪一个同构，从而给出正确的<span
+class="math inline">\(\widetilde{b}=b\)</span>，<span
+class="math inline">\(Pr[\widetilde{b}=b]=1\)</span></p>
+<p><strong>Soundness：</strong><span
+class="math inline">\((G_0,G_1)\notin \mathrm{GNI},\, [G_0\equiv
+G_1]\)</span>，<span
+class="math inline">\(G_0,G_1\)</span>位于同一个同构等价类，因此对于任何Prover都无法区分<span
+class="math inline">\(H\)</span>由<span
+class="math inline">\(G_0,G_1\)</span>中的哪一个推出，在Prover看来两者是相同的，只能给出一个随机的的<span
+class="math inline">\(\widetilde{b}\)</span>，<span
+class="math inline">\(Pr[\widetilde{b}=b]=1/2\)</span></p>
+<blockquote>
+<p><strong>Note：</strong>随机数<span
+class="math inline">\(b\)</span>一定要保密，否则Prover能够打破Soundness，该协议就是所谓的Private
+coin protocol。</p>
+</blockquote>
+<h2 id="an-upper-bound-on-ip">An Upper Bound on IP</h2>
+<p>我们首先给出PSPACE的定义：<strong>多项式空间问题（Polynomial
+SPACE，PSPACE）包含所有能用多项式大小内存解决的问题</strong>，在PSAPCE类的问题中，你不在乎时间，只关心一个算法所需的内存空间。计算机科学家已经证明PSPACE包含PH类，而PH类包含NP，同时NP还包含P类。</p>
+<p><strong>接下来我们要证明</strong>：<span
+class="math inline">\(\mathrm{P}\in \mathrm{PSPACE}\)</span></p>
+<p><strong>证明</strong>：</p>
+<p>令<span class="math inline">\({L}\in \mathrm{IP}\)</span>，且<span
+class="math inline">\((P,V)\)</span>是一个关于<span
+class="math inline">\(L\)</span>的<span
+class="math inline">\(\mathrm{IP}\)</span>，我们现在需要证明<span
+class="math inline">\(L\in
+\mathrm{PSPACE}\)</span>，我们假设具有一个实例<span
+class="math inline">\(x\)</span>，并且定义<span
+class="math inline">\(q_x
+:=\max\limits_{\widetilde{\text{P}}}\text{Pr}_r[&lt;\widetilde{\text{P}},V(x)&gt;=1]\)</span>，我们有</p>
+<ol type="1">
+<li>如果<span class="math inline">\(x\in L\)</span>，有<span
+class="math inline">\(q_x=1\)</span></li>
+<li>如果<span class="math inline">\(x\notin L\)</span>，有<span
+class="math inline">\(q_x\leq 1/2\)</span></li>
+</ol>
+<p>现在我们可以将原有的<strong>证明<span class="math inline">\(L\in
+\mathrm{PSPACE}\)</span>的问题</strong>规约为<strong>证明<span
+class="math inline">\(q_x\)</span>可以在多项式空间内运算的问题</strong>，但是仍然存在一个问题：我们不能遍历所有的Prover，因为有一些Prover并不是<span
+class="math inline">\(\mathrm{PSPACE}\)</span>的。</p>
+<p>我们考虑到由于所有的Verifier一定是<span
+class="math inline">\(\mathrm{P}\)</span>的，因此所有Prover与Verifier交互的transcript一定是polynomial
+size的（Verifier需要在polynomial
+time的情况下读取它），因此我们可以不考虑遍历所有的Prover，而是<strong>遍历所有的transcript</strong>。由此最优Prover就可以在<span
+class="math inline">\(\mathrm{PSPACE}\)</span>下进行运算，从而<span
+class="math inline">\(q_x\)</span>也可以。</p>
+<p>我们假设transcript可以写作元组（tuple）的形式<span
+class="math inline">\((a_1,b_1,a_2,b_2,\dots,a_i,b_i)\)</span></p>
+<p>我们定义算法<span
+class="math inline">\(P^*(x,(a_1,b_1,\dots,a_i,b_i))\)</span>输出使得Verifier
+接受概率最大的下一条消息<span
+class="math inline">\(a_{i+1}\)</span>，<strong>我们首先假设<span
+class="math inline">\(P^*\in
+\mathrm{PSPACE}\)</span>，由此我们可以证明<span
+class="math inline">\(q_x \in
+\mathrm{PSPACE}\)</span>​</strong>，证明如下：</p>
+<p>由于<span
+class="math inline">\(P^*\)</span>是使Verifier接受概率最大的算法，因此我们可以得到<span
+class="math inline">\(q_x=\frac{\sum_{r\in
+R}d(x,r)}{|R|}\)</span>，其中<span
+class="math inline">\(d(x,r)\)</span>为Verifier在输入为<span
+class="math inline">\((x,r)\)</span>时，与使用<span
+class="math inline">\(P^*\)</span>的Prover交互的结果。</p>
+<p>因为Prover为多项式空间，Verifier为多项式时间，因此对于任意一个指定的<span
+class="math inline">\(r\)</span>，我们可以在<span
+class="math inline">\(\mathrm{PSPACE}\)</span>内计算<span
+class="math inline">\(d(x,r)\)</span></p>
+<p><strong>综上所述，如果可以得到如果<span class="math inline">\(P^*\in
+\mathrm{PSPACE}\)</span>，我们就得到了<span class="math inline">\(q_x
+\in \mathrm{PSPACE}\)</span>，也就是<span
+class="math inline">\(\mathrm{P}\in
+\mathrm{PSPACE}\)</span></strong></p>
+<p>接下来，我们来证明<span class="math inline">\(P^*\in
+\mathrm{PSPACE}\)</span></p>
+<p>我们定义<span class="math inline">\(tr =
+(a_1,b_1,\dots,a_i,b_i)\)</span>为第<span
+class="math inline">\(i\)</span>轮的transcript，<span
+class="math inline">\(R[x,tr]\)</span>是和<span
+class="math inline">\((x,tr)\)</span>保持一致的随机数<span
+class="math inline">\(r\)</span>的集合</p>
+<blockquote>
+<p><span
+class="math inline">\(R(x,tr)\)</span>的意思是，在Verifier已知<span
+class="math inline">\((x,tr)\)</span>的情况下，所能选取的随机数的集合，已知知识越多，可选取的随机性越小</p>
+</blockquote>
+<p>我们通过数学归纳法证明：</p>
+<ul>
+<li><p><span class="math inline">\(i=k-1\)</span></p>
+<p><span class="math inline">\(P^*(x,tr)=\mathop{\arg\max}\limits_{a_k}
+\mathop{E}\limits_{r\in
+R[x,tr]}[V(x,r,a_1,\dots,a_{k-1},a_k)]\)</span></p>
+<p>我们可以在<span
+class="math inline">\(\mathrm{PSPACE}\)</span>情况下，两层循环遍历所有的消息<span
+class="math inline">\(a_k\)</span>和随机数<span
+class="math inline">\(r\)</span>。</p></li>
+<li><p><span class="math inline">\(i&lt;k-1\)</span>（假设当<span
+class="math inline">\(|tr|&gt;i\)</span>时，<span
+class="math inline">\(P^*\in \mathrm{PSPACE}\)</span>）</p>
+<p><span
+class="math inline">\(P^*(x,tr)=\mathop{\arg\max}\limits_{a_{i+1}}
+\mathop{E}\limits_{r\in
+R[x,tr]}[V(x,r,a_1,\dots,a:a_{i+1},a_{i+2}^*,\dots,a_k^*)]\)</span></p>
+<p>因为当<span class="math inline">\(|tr|&gt;i\)</span>时，<span
+class="math inline">\(P^*\in
+\mathrm{PSPACE}\)</span>，我们可以在多项式空间内计算出<span
+class="math inline">\(a_{i+2}^*,b_{i+2}^*,\dots,a_{k}^*\)</span>，之后我们可以遍历<span
+class="math inline">\(a_{i+1}^*\)</span>，在多项式空间内计算出最优的<span
+class="math inline">\(a_{i+1}^*\)</span>。（<strong><span
+class="math inline">\(\mathrm{PSPACE}\)</span>真是太美妙了！</strong>）</p></li>
+</ul>
+<p>由此我们可以推导出任意情况下的<span class="math inline">\(P^*\in
+\mathrm{PSPACE}\)</span>。</p>
+<p><strong>综上，我们就得到了<span class="math inline">\(\mathrm{P}\in
+\mathrm{PSPACE}\)</span>，证毕</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zero-Knowledge-Proof/" class="category-chain-item">Zero Knowledge Proof</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Complexity-Theory/" class="print-no-link">#Complexity Theory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Interactive Proofs 1</div>
+      <div>http://example.com/2024/01/23/Interactive-Proofs-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wang Lizheng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/16/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation/" title="Why and How zk-SNARK Works Definitive Explanation">
+                        <span class="hidden-mobile">Why and How zk-SNARK Works Definitive Explanation</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
