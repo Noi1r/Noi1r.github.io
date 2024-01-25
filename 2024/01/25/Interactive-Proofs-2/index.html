@@ -16,26 +16,30 @@
   <meta name="author" content="Wang Lizheng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Interactive Proofs 1 Mathematical Proofs &#x3D; NP 首先回顾一下NP的定义： \[ \begin{align*} L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time } \mathrm{decider \,D} \text{ s.t.}\\ \text{(1) } &amp;\forall \">
+    <meta name="description" content="IP#2 - Sumcheck Protocol Interactive Proofs for Counting Problems 在IP#1中我们已经了解到了GNI的交互式证明方法，但是GNI并非一个coNP-complete问题。（如果GNI是coNP-complete问题，PH会collapse到2nd level） 在这一节中，我们首先提出来两个定理：（后面会给出证明）  \(\mathr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Interactive Proofs 1">
-<meta property="og:url" content="http://example.com/2024/01/23/Interactive-Proofs-1/index.html">
+<meta property="og:title" content="Interactive Proofs 2">
+<meta property="og:url" content="http://example.com/2024/01/25/Interactive-Proofs-2/index.html">
 <meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
-<meta property="og:description" content="Interactive Proofs 1 Mathematical Proofs &#x3D; NP 首先回顾一下NP的定义： \[ \begin{align*} L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time } \mathrm{decider \,D} \text{ s.t.}\\ \text{(1) } &amp;\forall \">
+<meta property="og:description" content="IP#2 - Sumcheck Protocol Interactive Proofs for Counting Problems 在IP#1中我们已经了解到了GNI的交互式证明方法，但是GNI并非一个coNP-complete问题。（如果GNI是coNP-complete问题，PH会collapse到2nd level） 在这一节中，我们首先提出来两个定理：（后面会给出证明）  \(\mathr">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/post/Lecture1.assets/image-20240123164747325.png">
-<meta property="article:published_time" content="2024-01-23T08:37:32.000Z">
-<meta property="article:modified_time" content="2024-01-23T08:49:28.829Z">
+<meta property="og:image" content="http://example.com/img/post/IP2.assets/image-20240124222637670.png">
+<meta property="og:image" content="http://example.com/img/post/IP2.assets/image-20240125090340926.png">
+<meta property="og:image" content="http://example.com/img/post/IP2.assets/image-20240125104924540.png">
+<meta property="og:image" content="http://example.com/img/post/IP2.assets/image-20240125145911910.png">
+<meta property="og:image" content="http://example.com/img/post/IP2.assets/image-20240125152438490.png">
+<meta property="article:published_time" content="2024-01-25T07:26:32.000Z">
+<meta property="article:modified_time" content="2024-01-25T07:33:50.690Z">
 <meta property="article:author" content="Wang Lizheng">
 <meta property="article:tag" content="Complexity Theory">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/post/Lecture1.assets/image-20240123164747325.png">
+<meta name="twitter:image" content="http://example.com/img/post/IP2.assets/image-20240124222637670.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Interactive Proofs 1 - Wang Lizheng&#39;s Blog</title>
+  <title>Interactive Proofs 2 - Wang Lizheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Interactive Proofs 1"></span>
+            <span id="subtitle" data-typed-text="Interactive Proofs 2"></span>
           
         </div>
 
@@ -224,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-23 16:37" pubdate>
-          2024年1月23日 下午
+        <time datetime="2024-01-25 15:26" pubdate>
+          2024年1月25日 下午
         </time>
       </span>
     
@@ -236,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          530 字
         
       </span>
     
@@ -247,7 +251,7 @@
         
         
         
-          9 分钟
+          5 分钟
         
       </span>
     
@@ -284,236 +288,207 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Interactive Proofs 1</h1>
+            <h1 id="seo-header">Interactive Proofs 2</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="interactive-proofs-1">Interactive Proofs 1</h1>
-<h2 id="mathematical-proofs-np">Mathematical Proofs = NP</h2>
-<p>首先回顾一下NP的定义： <span class="math display">\[
-\begin{align*}
-L &amp;\in \mathrm{NP} \iff \exists \text{ polynomial-time }
-\mathrm{decider \,D} \text{ s.t.}\\
-\text{(1) } &amp;\forall \text{ instance } x\in L, \, \exists\text{
-witness } \omega \quad D(x,\omega)=1\\
-\text{(2) } &amp;\forall \text{ instance } x\notin L, \, \forall \text{
-witness } \omega \quad D(x,\omega)=0
-\end{align*}
-\]</span> 例如：L = SAT 则有<span
-class="math inline">\(x\)</span>是一个布尔电路<span
-class="math inline">\(\phi(x_1,x_2\dots x_n)\)</span>，<span
-class="math inline">\(\omega\)</span>是一个赋值<span
-class="math inline">\((a_1,a_2\dots a_n)\in \{0,1\}^n\)</span>，<span
-class="math inline">\(D\)</span>检查<span
-class="math inline">\(\phi(a_1,a_2\dots a_n)\)</span>是否为真</p>
-<p>对于Mathematics Proofs，我们可以将上述定义进行简单的修改： $$ <span
-class="math display">\[\begin{align*}
-L &amp;\in \mathrm{Mathematics\,\,Proofs} \iff \exists\text{
-polynomial-time } \mathrm{verifier \,V} \text{ s.t.}\\
-&amp;\text{(1) } \forall \text{ theorem } x\in L, \, \exists\text{ proof
-} \omega \quad D(x,\omega)=1\\
-&amp;\text{(2) } \forall \text{ theorem } x\notin L, \, \forall \text{
-proof } \omega \quad D(x,\omega)=0
-
-\end{align*}\]</span> $$ 我们可以认为NP抓住了classical Mathematics
-Proofs关键：<strong>对于Mathematics
-Proofs，我们和NP一样，也是不考虑获取证明的难度，只考虑能不能快速有效的验证证明的正确性</strong></p>
-<p><img src="/img/post/Lecture1.assets/image-20240117100422382.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
-<p>接下来，我们对于Verifier的约束进行减少，使其具备以下能力：</p>
+                <h1 id="ip2---sumcheck-protocol">IP#2 - Sumcheck Protocol</h1>
+<h2 id="interactive-proofs-for-counting-problems">Interactive Proofs for
+Counting Problems</h2>
+<p>在<strong>IP#1</strong>中我们已经了解到了GNI的交互式证明方法，但是GNI并非一个coNP-complete问题。（如果GNI是coNP-complete问题，PH会collapse到2nd
+level）</p>
+<p>在这一节中，我们首先提出来两个定理：（后面会给出证明）</p>
 <ol type="1">
-<li>具备随机性（Randomness），例如：抛硬币（coins）</li>
-<li>可以与Prover进行交互</li>
+<li><span class="math inline">\(\mathrm{UNSAT}\in \mathrm{IP}\)</span>，
+so $ $</li>
+<li><span class="math inline">\(\mathrm{\#SAT}\in \mathrm{IP}\)</span>，
+so <span class="math inline">\(\mathrm{P^{\#P}}\subseteq
+\mathrm{IP}\)</span></li>
 </ol>
-<p>由此，我们就引出了Interactive Proofs的概念</p>
-<h2 id="interactive-proof">Interactive Proof</h2>
-<p>我们首先给出IP的定义</p>
-<p><img src="/img/post/Lecture1.assets/image-20240117101402714.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
-<p>对于语言L的IP是一个二元组<span class="math inline">\((P,V)\)</span>
-s.t.</p>
-<ol type="1">
-<li>Completeness：<span class="math inline">\(\forall x\in L,\,
-\text{Pr}_r[&lt;P(x),V(x,r)&gt;=1]=1\)</span></li>
-<li>Soundness：<span class="math inline">\(\forall x\notin L,\,
-\text{Pr}_r[&lt;\widetilde{P},V(x,r)&gt;=1]=1/2\)</span></li>
-</ol>
-<p>在IP中，我们同样不考虑Prover提出一个Proof所消耗的资源，因此我们对于Prover不作限制（unbounded），但是我们需要这个Proof是可以高效验证的，因此对于Verifier我们需要进行限制（efficient）。</p>
-<p>上述定义中的1和1/2是随便选取的，只需要两者有明显的区别即可。</p>
 <blockquote>
-<p><strong>Remark：</strong>在上述NP、IP、Mathematics
-Proofs的定义中，我们没有明示的是Proof的长度也要是Polynomial的，要不然仅仅是读取Proof就打破了对Verifier的efficient限制。</p>
+<p><span class="math inline">\(\mathrm{P^{\#P}}=\)</span> languages
+decidable in polynomial time via a machine with a <span
+class="math inline">\(\mathrm{\#SAT}\)</span> oracle</p>
 </blockquote>
-<p>IP与NP的区分：</p>
-<p>MA代表Merlin-Arthur</p>
-<p><img src="/img/post/Lecture1.assets/image-20240117102444502.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
-<h2 id="ip-for-graph-non-isomorphism">IP for Graph Non-Isomorphism</h2>
-<p>我们首先对图的同构给出定义：</p>
-<p>假设<span class="math inline">\(G_0(V,E_0)\)</span>和<span
-class="math inline">\(G_1(V,E_1)\)</span>为关于点集<span
-class="math inline">\(V\)</span>的两个图（Graph），如果存在一个置换
+<p>这两个定理引出来了很多新的结果：</p>
+<ul>
+<li>有很多在<span
+class="math inline">\(\mathrm{NP}\)</span>之上的语言（language）</li>
+<li>GNI的交互式证明方法利用了很多关于图同构问题的特殊性质，然而<span
+class="math inline">\(\mathrm{UNSAT}\)</span>和<span
+class="math inline">\(\mathrm{\#SAT}\)</span>问题并不具备这些性质</li>
+</ul>
+<p><img src="/img/post/IP2.assets/image-20240124222637670.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<h2 id="arithmetization-of-a-boolean-formula">Arithmetization of a
+Boolean Formula</h2>
+<p>布尔公式<span
+class="math inline">\(\phi(x_1,\dots,x_n)\)</span>可以被视作一个树：</p>
+<ul>
+<li>每一个叶节点都是一个变量<span
+class="math inline">\(x_i\)</span></li>
+<li>每一个非终端节点都是其子节点的一个运算符（<span
+class="math inline">\(\land,\vee,\neg\)</span>）</li>
+</ul>
+<p><img src="/img/post/IP2.assets/image-20240125090340926.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p>布尔公式（电路）的算术化非常简单，总的来说就是把三种逻辑运算符用算术运算符替换：</p>
+<ul>
+<li><span class="math inline">\(\neg x \mapsto {1-x}\)</span></li>
+<li><span class="math inline">\(x\land y \mapsto x\cdot y\)</span></li>
+<li><span class="math inline">\(x \vee y \mapsto x+y\)</span></li>
+</ul>
+<p>因此，我们可以将一个布尔公式<span
+class="math inline">\(\phi(x_1,\dots,x_n)\)</span>转化为一个多项式<span
+class="math inline">\(p(x_1,\dots,x_n)\)</span>，且该多项式的度<span
+class="math inline">\(\deg_{tot}(p)\leq
+|\phi|\)</span>，我们可以声明一下两个性质：</p>
+<ul>
+<li><span class="math inline">\(\phi \in \mathrm{UNSAT} \Rightarrow
+\sum_{a_1,\dots,a_n\in \{0,1\}}p(a_1,\dots,a_n)=0\)</span></li>
+<li><span class="math inline">\(\phi \not\in \mathrm{UNSAT} \Rightarrow
+0 \leq \sum_{a_1,\dots,a_n\in \{0,1\}}p(a_1,\dots,a_n) \leq
+2^n3^m\)</span>（以3CNF表示，<span
+class="math inline">\(n\)</span>为变量数，m为三元合取范式的数目）</li>
+</ul>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/56369/can-someone-please-explain-3-cnf-for-me">We
+care specifically about 3CNF for historical reasons, it was the first
+(or one of the first) NP-complete problems (check out Cook's paper or
+Karp's paper on their respective pages). Also, 2CNF is not "complete"
+(arbitrary formulas cannot be equivalent to a 2CNF), and it is easy to
+determine whether they are satisfiable or not (google if
+interested).</a></p>
+</blockquote>
+<p>我们有以下推论： <span class="math display">\[
+\forall \,\text{prime} \, q&gt;2^n3^m,\phi \in \mathrm{UNSAT}
+\\
+\Updownarrow\\
+\sum_{a_1,\dots,a_n\in \{0,1\}}p(a_1,\dots,a_n)=0 \mod q
+\]</span></p>
+<h2 id="sumcheck-protocol">Sumcheck Protocol</h2>
+<p><img src="/img/post/IP2.assets/image-20240125104924540.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<h2 id="soundness-of-sumcheck-protocol">Soundness of Sumcheck
+Protocol</h2>
+<p><span class="math display">\[
+\text{if} \,\sum_{\alpha_1,\dots,\alpha_n\in
+H}p(\alpha_1,\dots,\alpha_n)\not=\gamma,\text{then }\Pr[\text{Verifier
+accept}]\leq \frac{n\cdot \deg_{\text{ind}}(p)}{|\mathbb{F}|}
+\]</span></p>
+<p><strong>Proof：</strong>假设有一个恶意的Prover，拥有n个多项式<span
+class="math inline">\(\widetilde{p}_1,\dots,\widetilde{p}_n\in
+\mathbb{F}(x)\)</span>，并且每一个多项式<span
+class="math inline">\(\widetilde{p}_i\)</span>取决于之前Verifier的消息<span
+class="math inline">\(w_1,\dots,w_{i-1}\in \mathbb{F}\)</span></p>
+<p>我们定义：<span class="math inline">\(\forall i\in[n],
+E_i:=\text{&quot;event that }
+\widetilde{p}_i=p_i\text{&quot;},W=\text{&quot;event that Verifier
+accepts&quot;}\)</span></p>
+<p>提出以下引理：<span class="math inline">\(\text{For } j=n,n-1,\dots,1
+\,\, \Pr[W]\leq
+\frac{(n-j+1)\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_j \land
+\dots\land E_n]\)</span></p>
+<p>如果上述引理成立，我们可以轻易地证明我们的结论：我们令<span
+class="math inline">\(j=1\)</span> <span class="math display">\[
+\begin{align}
+\Pr[W]&amp;\leq
+\frac{n\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\underbrace{\Pr[W|E_1
+\land \dots\land E_n]}_{
+\leq\Pr[W|E_1]=0\, \text{because }
+\sum_{\alpha_1\in H}\widetilde{p}_1(\alpha_1)=\sum_{\alpha_1\in H}
+p_1(\alpha_1) \neq \gamma
+}\\
+&amp;=\frac{n\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+0\\
+&amp;=\frac{n\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}
+\end{align}
+\]</span> 接下来我们通过数学归纳法来证明这个引理：</p>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Schwartz–Zippel_lemma">Schwartz–Zippel</a>引理：</p>
+<p>对于域 <span class="math inline">\(\mathbb{F}\)</span>
+上的每一个阶最多为 <span class="math inline">\(d\)</span> 的 <span
+class="math inline">\(n\)</span> 变元非零多项式, 对于任意有限集合 <span
+class="math inline">\(S \subseteq F\)</span> ， <span
+class="math display">\[
+\operatorname{Pr}_{r_1, \ldots, r_n \leftarrow S}\left[f\left(r_1,
+\ldots, r_n\right)=0\right] \leq \frac{d}{|S|}
+\]</span></p>
+</blockquote>
+<p>当<span class="math inline">\(j=n\)</span>时： <span
+class="math display">\[
+\begin{align}
+\Pr[W]&amp;\leq \Pr[W|\overline{E_n}]+\Pr[W|{E}_n]\\
+&amp;= \Pr[\text{V accepts }| \widetilde{p}_n \not\equiv
+p_n]+\Pr[W|{E}_n]\\
+&amp;\leq \Pr[\widetilde{p}_n(w_n)=p(w_1,\dots,w_n)| \widetilde{p}_n
+\not\equiv p_n]+\Pr[W|{E}_n]\\
+&amp;= \Pr[\widetilde{p}_n(w_n)=p_n(w_n)| \widetilde{p}_n \not\equiv
+p_n]+\Pr[W|{E}_n]\\
+&amp;\leq \frac{\deg_{\text{ind}}(p)}{|\mathbb{F}|} +\Pr[W|{E}_n]
+\end{align}
+\]</span> 假设引理在<span class="math inline">\(j\in
+\{2,3,\dots,n\}\)</span>时成立，我们在<span
+class="math inline">\(j-1\)</span>时也成立： <span
+class="math display">\[
+\begin{align}
+\Pr[W]&amp;\leq
+\frac{(n-j+1)\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_j \land
+\dots\land E_n]\\
+&amp;\leq
+\frac{(n-j+1)\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_{j-1}\land
+E_j \land \dots\land E_n]+\Pr[W|\overline{E_{j-1}}\land E_j \land
+\dots\land E_n]\\
+&amp;\leq
+\frac{(n-j+1)\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_{j-1}\land
+E_j \land \dots\land
+E_n]+\Pr[\widetilde{p}_{j-1}(w_{j-1})=p_{j-1}(w_{j-1})|
+\widetilde{p}_{j-1} \not\equiv p_{j-1}]\\
+&amp;\leq
+\frac{(n-j+1)\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_{j-1}\land
+E_j \land \dots\land E_n]+\frac{\deg_{\text{ind}}(p)}{|\mathbb{F}|}\\
+&amp;\leq
+\frac{[n-(j-1)+1]\cdot\deg_{\text{ind}}(p)}{|\mathbb{F}|}+\Pr[W|E_{j-1}\land
+E_j \land \dots\land E_n]
+\end{align}
+\]</span> <strong>证毕</strong></p>
+<h2 id="interactive-proof-of-mathrmunsat">Interactive Proof of <span
+class="math inline">\(\mathrm{UNSAT}\)</span>​</h2>
+<p><img src="/img/post/IP2.assets/image-20240125145911910.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p><strong>上述协议证明了$ $</strong></p>
+<h2 id="arithmetization-for-mathrmsat">Arithmetization for <span
+class="math inline">\(\mathrm{\#SAT}\)</span></h2>
+<p>在上文中我们提出算术化的方法无法适用于<span
+class="math inline">\(\mathrm{\#SAT}\)</span>问题： <span
+class="math display">\[
+\forall (a_1,\dots,a_n)\in
+\{0,1\}^n,\phi(a_1,\dots,a_n)=\text{true}\rightarrow
+0&lt;p(a_1,\dots,a_n)\leq 3^m
+\]</span> 这样会导致我们无法判断满足<span
+class="math inline">\(\mathrm{SAT}\)</span>的具体的赋值的数量，因此我们对算术化方法进行以下更改：</p>
+<ul>
+<li><span class="math inline">\(\neg x \mapsto {1-x}\)</span></li>
+<li><span class="math inline">\(x\land y \mapsto x\cdot y\)</span></li>
+<li><span class="math inline">\(x \vee y \mapsto x+y-x\cdot
+y\)</span></li>
+</ul>
+<blockquote>
+<p>该方法也可适用于<span
+class="math inline">\(\mathrm{UNSAT}\)</span>问题，但是有一个微不足道的缺点就是会引入<span
+class="math inline">\(xy\)</span>，增加多项式的次数</p>
+</blockquote>
+<p>使用新的算术化方法，我们有： <span class="math display">\[
+\forall (a_1,\dots,a_n)\in
+\{0,1\}^n,\phi(a_1,\dots,a_n)=\text{true}\rightarrow p(a_1,\dots,a_n)=1
+\]</span> 接下来，我们可以将<span
+class="math inline">\(\mathrm{\#SAT}\)</span>规约为以下Sumcheck问题：
 <span class="math display">\[
-\pi:V\rightarrow V s.t.\\
-(u,v)\in E_0 \leftrightarrow (\pi(u),\pi(v))\in E_1
-\]</span> 我们有<span class="math inline">\(G_0\equiv
-G_1\)</span>（<span class="math inline">\(G_0\)</span>和<span
-class="math inline">\(G_1\)</span>同构），写作<span
-class="math inline">\(G_0=\pi(G_1)\)</span></p>
-<p>我们定义：图同构问题GI（Graph Isomorphism）<span
-class="math inline">\(\mathrm{GI}:=\{(G_0,G_1)\mid G_0\equiv
-G_1\}\)</span>，图非同构问题GNI（Graph Non-Isomorphism）<span
-class="math inline">\(\mathrm{GNI}:=\{(G_0,G_1)\mid G_0\not\equiv
-G_1\}\)</span></p>
-<p><img src="/img/post/Lecture1.assets/image-20240117104106447.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
-<p>我们有：</p>
-<ul>
-<li><span class="math inline">\(\mathrm{GI}\in \mathrm{NP}\)</span></li>
-<li>$ $</li>
-<li>Not known either in <span
-class="math inline">\(\mathrm{P}\)</span></li>
-</ul>
-<blockquote>
-<p><strong>coNP</strong>定义：In <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computational_complexity_theory">computational
-complexity theory</a>, <strong>co-NP</strong> is a <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Complexity_class">complexity
-class</a>. A <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Decision_problem">decision
-problem</a> X is a member of co-NP if and only if its <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Complement_(complexity)">complement</a>
-X is in the complexity class <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/NP_(complexity)">NP</a>. The class
-can be defined as follows: a decision problem is in co-NP if and only if
-for every <em>no</em>-instance we have a polynomial-length "<a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Certificate_(complexity)">certificate</a>"
-and there is a polynomial-time algorithm that can be used to verify any
-purported certificate.</p>
-</blockquote>
-<h3 id="section">$ $</h3>
-<p><img src="/img/post/Lecture1.assets/image-20240117152018882.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
-<p>同构是一种等价关系，因此可以根据同构运算划分等价类</p>
-<p><strong>Completeness：</strong><span
-class="math inline">\((G_0,G_1)\in \mathrm{GNI},\, [G_0\not\equiv
-G_1]\)</span>，<span
-class="math inline">\(G_0,G_1\)</span>位于不同的同构等价类，因此Prover可以轻松地区分<span
-class="math inline">\(H\)</span>与<span
-class="math inline">\(G_0,G_1\)</span>中的哪一个同构，从而给出正确的<span
-class="math inline">\(\widetilde{b}=b\)</span>，<span
-class="math inline">\(Pr[\widetilde{b}=b]=1\)</span></p>
-<p><strong>Soundness：</strong><span
-class="math inline">\((G_0,G_1)\notin \mathrm{GNI},\, [G_0\equiv
-G_1]\)</span>，<span
-class="math inline">\(G_0,G_1\)</span>位于同一个同构等价类，因此对于任何Prover都无法区分<span
-class="math inline">\(H\)</span>由<span
-class="math inline">\(G_0,G_1\)</span>中的哪一个推出，在Prover看来两者是相同的，只能给出一个随机的的<span
-class="math inline">\(\widetilde{b}\)</span>，<span
-class="math inline">\(Pr[\widetilde{b}=b]=1/2\)</span></p>
-<blockquote>
-<p><strong>Note：</strong>随机数<span
-class="math inline">\(b\)</span>一定要保密，否则Prover能够打破Soundness，该协议就是所谓的Private
-coin protocol。</p>
-</blockquote>
-<h2 id="an-upper-bound-on-ip">An Upper Bound on IP</h2>
-<p>我们首先给出PSPACE的定义：<strong>多项式空间问题（Polynomial
-SPACE，PSPACE）包含所有能用多项式大小内存解决的问题</strong>，在PSAPCE类的问题中，你不在乎时间，只关心一个算法所需的内存空间。计算机科学家已经证明PSPACE包含PH类，而PH类包含NP，同时NP还包含P类。</p>
-<p><strong>接下来我们要证明</strong>：<span
-class="math inline">\(\mathrm{P}\in \mathrm{PSPACE}\)</span></p>
-<p><strong>证明</strong>：</p>
-<p>令<span class="math inline">\({L}\in \mathrm{IP}\)</span>，且<span
-class="math inline">\((P,V)\)</span>是一个关于<span
-class="math inline">\(L\)</span>的<span
-class="math inline">\(\mathrm{IP}\)</span>，我们现在需要证明<span
-class="math inline">\(L\in
-\mathrm{PSPACE}\)</span>，我们假设具有一个实例<span
-class="math inline">\(x\)</span>，并且定义<span
-class="math inline">\(q_x
-:=\max\limits_{\widetilde{\text{P}}}\text{Pr}_r[&lt;\widetilde{\text{P}},V(x)&gt;=1]\)</span>，我们有</p>
-<ol type="1">
-<li>如果<span class="math inline">\(x\in L\)</span>，有<span
-class="math inline">\(q_x=1\)</span></li>
-<li>如果<span class="math inline">\(x\notin L\)</span>，有<span
-class="math inline">\(q_x\leq 1/2\)</span></li>
-</ol>
-<p>现在我们可以将原有的<strong>证明<span class="math inline">\(L\in
-\mathrm{PSPACE}\)</span>的问题</strong>规约为<strong>证明<span
-class="math inline">\(q_x\)</span>可以在多项式空间内运算的问题</strong>，但是仍然存在一个问题：我们不能遍历所有的Prover，因为有一些Prover并不是<span
-class="math inline">\(\mathrm{PSPACE}\)</span>的。</p>
-<p>我们考虑到由于所有的Verifier一定是<span
-class="math inline">\(\mathrm{P}\)</span>的，因此所有Prover与Verifier交互的transcript一定是polynomial
-size的（Verifier需要在polynomial
-time的情况下读取它），因此我们可以不考虑遍历所有的Prover，而是<strong>遍历所有的transcript</strong>。由此最优Prover就可以在<span
-class="math inline">\(\mathrm{PSPACE}\)</span>下进行运算，从而<span
-class="math inline">\(q_x\)</span>也可以。</p>
-<p>我们假设transcript可以写作元组（tuple）的形式<span
-class="math inline">\((a_1,b_1,a_2,b_2,\dots,a_i,b_i)\)</span></p>
-<p>我们定义算法<span
-class="math inline">\(P^*(x,(a_1,b_1,\dots,a_i,b_i))\)</span>输出使得Verifier
-接受概率最大的下一条消息<span
-class="math inline">\(a_{i+1}\)</span>，<strong>我们首先假设<span
-class="math inline">\(P^*\in
-\mathrm{PSPACE}\)</span>，由此我们可以证明<span
-class="math inline">\(q_x \in
-\mathrm{PSPACE}\)</span>​</strong>，证明如下：</p>
-<p>由于<span
-class="math inline">\(P^*\)</span>是使Verifier接受概率最大的算法，因此我们可以得到<span
-class="math inline">\(q_x=\frac{\sum_{r\in
-R}d(x,r)}{|R|}\)</span>，其中<span
-class="math inline">\(d(x,r)\)</span>为Verifier在输入为<span
-class="math inline">\((x,r)\)</span>时，与使用<span
-class="math inline">\(P^*\)</span>的Prover交互的结果。</p>
-<p>因为Prover为多项式空间，Verifier为多项式时间，因此对于任意一个指定的<span
-class="math inline">\(r\)</span>，我们可以在<span
-class="math inline">\(\mathrm{PSPACE}\)</span>内计算<span
-class="math inline">\(d(x,r)\)</span></p>
-<p><strong>综上所述，如果可以得到如果<span class="math inline">\(P^*\in
-\mathrm{PSPACE}\)</span>，我们就得到了<span class="math inline">\(q_x
-\in \mathrm{PSPACE}\)</span>，也就是<span
-class="math inline">\(\mathrm{P}\in
-\mathrm{PSPACE}\)</span></strong></p>
-<p>接下来，我们来证明<span class="math inline">\(P^*\in
-\mathrm{PSPACE}\)</span></p>
-<p>我们定义<span class="math inline">\(tr =
-(a_1,b_1,\dots,a_i,b_i)\)</span>为第<span
-class="math inline">\(i\)</span>轮的transcript，<span
-class="math inline">\(R[x,tr]\)</span>是和<span
-class="math inline">\((x,tr)\)</span>保持一致的随机数<span
-class="math inline">\(r\)</span>的集合</p>
-<blockquote>
-<p><span
-class="math inline">\(R(x,tr)\)</span>的意思是，在Verifier已知<span
-class="math inline">\((x,tr)\)</span>的情况下，所能选取的随机数的集合，已知知识越多，可选取的随机性越小</p>
-</blockquote>
-<p>我们通过数学归纳法证明：</p>
-<ul>
-<li><p><span class="math inline">\(i=k-1\)</span></p>
-<p><span class="math inline">\(P^*(x,tr)=\mathop{\arg\max}\limits_{a_k}
-\mathop{E}\limits_{r\in
-R[x,tr]}[V(x,r,a_1,\dots,a_{k-1},a_k)]\)</span></p>
-<p>我们可以在<span
-class="math inline">\(\mathrm{PSPACE}\)</span>情况下，两层循环遍历所有的消息<span
-class="math inline">\(a_k\)</span>和随机数<span
-class="math inline">\(r\)</span>。</p></li>
-<li><p><span class="math inline">\(i&lt;k-1\)</span>（假设当<span
-class="math inline">\(|tr|&gt;i\)</span>时，<span
-class="math inline">\(P^*\in \mathrm{PSPACE}\)</span>）</p>
-<p><span
-class="math inline">\(P^*(x,tr)=\mathop{\arg\max}\limits_{a_{i+1}}
-\mathop{E}\limits_{r\in
-R[x,tr]}[V(x,r,a_1,\dots,a:a_{i+1},a_{i+2}^*,\dots,a_k^*)]\)</span></p>
-<p>因为当<span class="math inline">\(|tr|&gt;i\)</span>时，<span
-class="math inline">\(P^*\in
-\mathrm{PSPACE}\)</span>，我们可以在多项式空间内计算出<span
-class="math inline">\(a_{i+2}^*,b_{i+2}^*,\dots,a_{k}^*\)</span>，之后我们可以遍历<span
-class="math inline">\(a_{i+1}^*\)</span>，在多项式空间内计算出最优的<span
-class="math inline">\(a_{i+1}^*\)</span>。（<strong><span
-class="math inline">\(\mathrm{PSPACE}\)</span>真是太美妙了！</strong>）</p></li>
-</ul>
-<p>由此我们可以推导出任意情况下的<span class="math inline">\(P^*\in
-\mathrm{PSPACE}\)</span>。</p>
-<p><strong>综上，我们就得到了<span class="math inline">\(\mathrm{P}\in
-\mathrm{PSPACE}\)</span>，证毕</strong></p>
-<h3 id="mathrmpspace"><span
-class="math inline">\(\mathrm{PSPACE}\)</span></h3>
-<p><img src="/img/post/Lecture1.assets/image-20240123164747325.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+\forall \text{prime } q&gt;2^n,\#\phi=c \Longleftrightarrow
+\sum_{(a_1,\dots,a_n)\in \{0,1\}^n}p(a_1,\dots,a_n)=c \mod q
+\]</span></p>
+<h2 id="interactive-proof-for-mathrmsat">Interactive Proof for <span
+class="math inline">\(\mathrm{\#SAT}\)</span></h2>
+<p><img src="/img/post/IP2.assets/image-20240125152438490.png" srcset="/img/loading.gif" lazyload alt="" style="zoom:50%;" /></p>
+<p><strong>上述协议证明了$ $</strong></p>
 
                 
               </div>
@@ -559,8 +534,8 @@ class="math inline">\(\mathrm{PSPACE}\)</span></h3>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Interactive Proofs 1</div>
-      <div>http://example.com/2024/01/23/Interactive-Proofs-1/</div>
+      <div>Interactive Proofs 2</div>
+      <div>http://example.com/2024/01/25/Interactive-Proofs-2/</div>
     </div>
     <div class="license-meta">
       
@@ -572,7 +547,7 @@ class="math inline">\(\mathrm{PSPACE}\)</span></h3>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月23日</div>
+          <div>2024年1月25日</div>
         </div>
       
       
@@ -604,18 +579,12 @@ class="math inline">\(\mathrm{PSPACE}\)</span></h3>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/25/Interactive-Proofs-2/" title="Interactive Proofs 2">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Interactive Proofs 2</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/16/Why%20and%20How%20zk-SNARK%20Works:%20Definitive%20Explanation/" title="Why and How zk-SNARK Works Definitive Explanation">
-                        <span class="hidden-mobile">Why and How zk-SNARK Works Definitive Explanation</span>
+                      <a href="/2024/01/23/Interactive-Proofs-1/" title="Interactive Proofs 1">
+                        <span class="hidden-mobile">Interactive Proofs 1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
