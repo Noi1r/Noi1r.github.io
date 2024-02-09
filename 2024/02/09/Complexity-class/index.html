@@ -1,0 +1,1080 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.icon">
+  <link rel="icon" href="/img/favicon.icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wang Lizheng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Complexity Class 在计算复杂度理论中，一个复杂度类指的是一群复杂度类似的问题的集合。一个典型的复杂度类的定义有以下形式：  可以被同一个抽象机器M使用O(f(n))的资源R所解决的问题的集合（n是输入资料的大小）。  L （Logarithm space class) L，也称为LSPACE或DLOGSPACE，是能被确定型图灵机利用对数空间解决的判定问题集合。 对数空间是指与输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Complexity class">
+<meta property="og:url" content="http://example.com/2024/02/09/Complexity-class/index.html">
+<meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
+<meta property="og:description" content="Complexity Class 在计算复杂度理论中，一个复杂度类指的是一群复杂度类似的问题的集合。一个典型的复杂度类的定义有以下形式：  可以被同一个抽象机器M使用O(f(n))的资源R所解决的问题的集合（n是输入资料的大小）。  L （Logarithm space class) L，也称为LSPACE或DLOGSPACE，是能被确定型图灵机利用对数空间解决的判定问题集合。 对数空间是指与输入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/post/Complexity%20Class.assets/descriptiveWorld2015.jpg">
+<meta property="article:published_time" content="2024-02-09T02:39:39.000Z">
+<meta property="article:modified_time" content="2024-02-09T02:40:56.999Z">
+<meta property="article:author" content="Wang Lizheng">
+<meta property="article:tag" content="Computation Complexity">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/post/Complexity%20Class.assets/descriptiveWorld2015.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Complexity class - Wang Lizheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wang Lizheng</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Complexity class"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-09 10:39" pubdate>
+          2024年2月9日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Complexity class</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="complexity-class">Complexity Class</h1>
+<p>在<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/计算复杂度理论">计算复杂度理论</a>中，一个<strong>复杂度类</strong>指的是一群复杂度类似的问题的集合。一个典型的复杂度类的定义有以下形式：</p>
+<ul>
+<li>可以被同一个抽象机器M使用O(f(n))的资源R所解决的问题的集合（n是输入资料的大小）。</li>
+</ul>
+<h2 id="l-logarithm-space-class">L （Logarithm space class)</h2>
+<p><strong>L</strong>，也称为<strong>LSPACE</strong>或<strong>DLOGSPACE</strong>，是能被<strong>确定型图灵机</strong>利用<strong>对数空间</strong>解决的<strong>判定问题</strong>集合。</p>
+<p><strong>对数空间</strong>是指与输入规模成对数大小关系的可写的储存空间，大多数对数空间（<strong>LOGSPACE</strong>）算法以这种方式储存。</p>
+<p>重要的相关未解问题包括复杂度类L和P是否恒等（<strong>L =
+P</strong>）及复杂度类L和NL是否恒等（<strong>L = NL</strong>）。
+目前已知有以下重要性质：</p>
+<ul>
+<li><span class="math inline">\(\mathrm{L} \subseteq \mathrm{NL}
+\subseteq \mathrm{P}\)</span></li>
+<li><span class="math inline">\(\mathrm{NC}^1 \subseteq \mathrm{L}
+\subseteq \mathrm{NL} \subseteq \mathrm{NC}^{2}\)</span></li>
+</ul>
+<h2 id="ppolynomial-time-class">P（Polynomial time class）</h2>
+<p><strong>P</strong>，也称为<strong>PTIME、DTIME</strong>(<span
+class="math inline">\(n^{O(1)}\)</span>​)，是可用<strong>确定型图灵机</strong>以<strong>多项式时间</strong>解决的<strong>判定问题</strong>集合。</p>
+<p><strong>形式化定义：</strong>如果一个语言L属于复杂度类P，当且仅当存在一个确定型图灵机满足以下条件：</p>
+<ul>
+<li><span
+class="math inline">\(M\)</span>在所有输入上以多项式时间运行</li>
+<li>对于所有属于<span class="math inline">\(L\)</span>的<span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(M\)</span>输出为1</li>
+<li>对于所有不属于<span class="math inline">\(L\)</span>的<span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(M\)</span>​​​输出为1</li>
+</ul>
+<p><span
+class="math inline">\(\mathrm{P}\)</span>也可以被视为一种布尔电路的uniform
+family。语言<span class="math inline">\(L\)</span>在<span
+class="math inline">\(\mathrm{P}\)</span>中，当且仅当存在布尔电路<span
+class="math inline">\(\left\{C_n: n \in
+\mathbb{N}\right\}\)</span>的多项式时间uniform family满足</p>
+<ul>
+<li><p>对于所有<span class="math inline">\(n \in
+\mathbb{N}，C_n\)</span>接受<span
+class="math inline">\(n\)</span>位作为输入，并且输出为1比特</p></li>
+<li><p>对于所有属于<span class="math inline">\(L\)</span>的<span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(C_{|x|}(x)=1\)</span></p></li>
+<li><p>对于所有不属于<span class="math inline">\(L\)</span>的<span
+class="math inline">\(x\)</span>，，<span
+class="math inline">\(C_{|x|}(x)=0\)</span></p></li>
+</ul>
+<p>电路定义可以削弱为仅使用对数空间uniform
+family，而无需更改复杂度类。</p>
+<blockquote>
+<p>uniform
+family在Alessandro的CS294里面IP#6里面有提到过这个概念，个人理解uniform大概想表达的意思应该是均匀，完整的整个电路因为这些均匀重复的信息可以用很少的描述（description）去表达出来。</p>
+<p>这种uniform电路有一个性质就是可以用少于整个电路大小（|C|-size）的描述去完整的表达这个电路，也就意味着可能不需要完全read这个电路就能求出结果。</p>
+<p>在此处仅使用对数空间uniform family，是因为<span
+class="math inline">\(2^{O(\log
+n)}=n^{O(1)}\)</span>，仅使用对数空间就能表现出来所有的组合。</p>
+</blockquote>
+<p><strong>P</strong>通常表示那类可以“<strong>可被高效解决</strong>”或“<strong>易于处理（tractable）</strong>”的可计算型问题，就算指数级非常高也可以算作“<strong>易于处理</strong>”，例如<strong><a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/RP_(複雜度)">RP</a></strong>与<strong><a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/BPP_(複雜度)">BPP</a></strong>问题。当然P类别存在很多现实处理上一点也<strong>不易于处理</strong>的问题，例如一些至少需要<span
+class="math inline">\(n^{1000000}\)</span>​指令来解决的问题，但是他也是多项式时间，并非指数时间。</p>
+<p><strong>P</strong>包含了很多已知的自然问题，例如决定性版本的<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/线性规划">线性规划</a>，计算<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/最大公因數">最大公因数</a>，以及发现<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=Maximum_matching&amp;action=edit&amp;redlink=1">最大匹配</a>。在2002年，判别一个数是否为<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/質數">质数</a>也被人解出是一个<strong>P</strong>问题。</p>
+<p>一个判定算法使用了<span class="math inline">\(O(\log
+n)\)</span>的空间就不可能使用超过<span class="math inline">\(2^{O(\log
+n)}=n^{O(1)}\)</span>的时间，因为这是所有可能组合方式的总数，因此<strong>L</strong>是<strong>P</strong>的子集合。另一个重要问题是：<strong>L</strong>是否相等于<strong>P</strong>？我们已知<strong>P</strong>=<strong>AL</strong>（问题可在对数存储器上以<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/交替式图灵机">交替式图灵机</a>解决的问题之集合），而<strong>P</strong>也已知不大于<strong><a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PSPACE">PSPACE</a></strong>（可在多项式空间判定的问题）。再一次，我们面对<strong>P</strong>是否等于<strong>PSPACE</strong>的未知问题。整理一下上述问题：
+<span class="math display">\[
+\mathrm{L} \subseteq \mathrm{AL}=\mathrm{P} \subseteq \mathrm{NP}
+\subseteq \mathrm{PSPACE} \subseteq \mathrm{EXPTIME}
+\]</span></p>
+<h2 id="np-non-deterministic-polynomial-time-class">NP
+（Non-deterministic Polynomial time class）</h2>
+<p><strong>NP</strong>有两种定义方式：</p>
+<ul>
+<li><strong>非确定型图灵机</strong>可以在<strong>多项式时间</strong>内<strong>解决</strong>（solvable）的判定问题集合。</li>
+<li><strong>确定型图灵机</strong>可以在<strong>多项式时间</strong>内<strong>验证</strong>（decidable）的判定问题集合。</li>
+</ul>
+<p><strong>形式化定义：</strong></p>
+<p>复杂性类NP可以用NTIME定义如下： <span class="math display">\[
+\mathrm{NP}=\bigcup_{k \in \mathbb{N}}
+\operatorname{NTIME}\left(n^k\right)
+\]</span> 其中<span
+class="math inline">\(\operatorname{NTIME}\left(n^k\right)\)</span>是非确定性图灵机可以在<span
+class="math inline">\(O\left(n^k\right)\)</span>时间内解决的决策问题集。</p>
+<p>也可以使用确定性图灵机作为验证器来定义NP。语言<span
+class="math inline">\(L\)</span>在NP中，当且仅当存在多项式<span
+class="math inline">\(p\)</span>和<span
+class="math inline">\(q\)</span>，以及确定性图灵机<span
+class="math inline">\(M\)</span>，使得</p>
+<ul>
+<li><p>对于所有<span class="math inline">\(x\)</span>和<span
+class="math inline">\(y\)</span>，机器<span
+class="math inline">\(M\)</span>在输入<span class="math inline">\((x,
+y)\)</span>上以时间<span
+class="math inline">\(p(|x|)\)</span>运行。</p></li>
+<li><p>对于<span class="math inline">\(L\)</span>中的所有<span
+class="math inline">\(x\)</span>，存在一个长度为<span
+class="math inline">\(q(|x|)\)</span>的字符串<span
+class="math inline">\(y\)</span>，使得<span class="math inline">\(M(x,
+y)=1\)</span>。</p></li>
+<li><p>对于所有不在<span class="math inline">\(L\)</span>中的<span
+class="math inline">\(x\)</span>和长度为<span
+class="math inline">\(q(|x|)\)</span>的所有字符串<span
+class="math inline">\(y\)</span>，<span
+class="math inline">\(M(x,y)=0\)</span>。</p></li>
+</ul>
+<p>其中的<span class="math inline">\(x\)</span>和<span
+class="math inline">\(y\)</span>，我们可以理解为零知识证明中的statement和witness（assignment）。</p>
+<p>很容易看出，复杂度类<strong>P</strong>都包含在<strong>NP</strong>中，因为如果一个问题可以在多项式时间内<strong>解决</strong>，那么<strong>也可以通过找出解决方案解决问题</strong>来实现在多项式时间内<strong>验证</strong>。</p>
+<p>但NP包含更多问题，其中最难的问题被称为NP完全（NP-complete）问题，NP中的任何问题都可以归约为NP完全问题<span
+class="math inline">\(\mathrm{NP}\propto
+\mathrm{NP-complete}\)</span>，因此在多项式时间内解决此类问题的算法也能够在多项式时间内解决任何其他NP问题。</p>
+<p>最重要的P与NP（“P =
+NP？”）问题，询问是否存在解决NP完全的多项式时间算法，并通过推论解决所有NP问题。</p>
+<p>NP包含在PSPACE中，因为多项式时间机器只能读取多项式长度的字符串，所以我们可以使用PSPACE机器遍历所有的证明字符串，并将每个字符串反馈给多项式时间验证器。</p>
+<p>SAT（Satisfiability）问题是令$ x_1，x_2,,x_n<span
+class="math inline">\(代表布尔变量(boolean variables)。令\)</span>-x_i$
+代表 $ x_i$​
+的相反数（negation）。一个布尔公式是将一些布尔变量及其相反数利用而且（and）和或（or）所组成的表达式。满足问题是判断是否存在一种指定每个布尔变量真假值的方式，使得一个布尔公式为真。2SAT问题是NL-complete问题，3SAT是NP-complete问题</p>
+<p>我们利用SAT问题给出NP-complete问题的另一种定义：</p>
+<ul>
+<li><p>一个问题 L 被称为是 NP-hard，当且仅当，SAT问题可以归约为 L。
+SAT问题是 NP 中的难题，而 NP-hard 的问题则是SAT问题派生出来的。</p></li>
+<li><p>一个问题 L 被称为是 NP-complete，当且仅当，<span
+class="math inline">\(\mathrm{L}\in \mathrm{NP}\)</span> 而且 <span
+class="math inline">\(\mathrm{L}\in \mathrm{NP-hard}\)</span>
+。</p></li>
+</ul>
+<blockquote>
+<p><strong>史蒂芬库克(Stephen
+Cook)证明了一个十分重要的性质:</strong></p>
+<ul>
+<li>性质(A)：“任一个 NP 内的问题都可以， 在多项式时间内，
+被转换成满足问题。</li>
+<li>性质(B)：“任一个 NP 内的问题都可以， 在多项式时间内， 被转换成任一个
+NP-complete 问题。”</li>
+<li>性质(C): “任一个 NP 内的问题都可以， 在多项式时间内， 被转换成任一个
+NP-hard 问题。”</li>
+<li>性质(D): “满足问题在集合 <span class="math inline">\(P\)</span> 中，
+当且仅当， <span class="math inline">\(P=N P\)</span> 。”</li>
+</ul>
+</blockquote>
+<p><strong>接下来我们证明3SAT是NP-complete问题：</strong></p>
+<p>证明分为两个部分，我们首先需要证明3SAT为NP问题，之后我们证明它是NP-hard问题</p>
+<p>3-SAT (3-CNF-SAT) 的描述为：判断是否存在一个布尔表达式 <span
+class="math inline">\(C=C_1 \cap C_2 \cap \cdots \cap C_n\)</span>，
+其中 <span class="math inline">\(C_i=x_a \cup x_b \cup x_c\)</span>，
+使得 <span class="math inline">\(C=1\)</span> 。即判断是否存在布尔表达式
+<span class="math inline">\(C=\left(x_a^1 \cup x_b^1 \cup
+x_c^1\right)\)</span> <span class="math inline">\(\cap\left(x_a^2 \cup
+x_b^2 \cup x_c^2\right) \cap \cdots \cap\left(x_a^n \cup x_b^n \cup
+x_c^n\right)\)</span>​ 为真。</p>
+<p><strong>3SAT为NP问题：</strong>因此只要给定一个赋值，我们将其带入到布尔表达式，就可以得到验证解的正确性。</p>
+<p><strong>3SAT为NP-hard问题：</strong>对于每一个SAT 问题， 例如： <span
+class="math display">\[
+\left\{\begin{array}{l}
+C=C_1 \cap C_2 \cap \cdots \cap C_n \\
+C_i=x_1^i \cup x_2^i \cup \cdots \cup x_m^i
+\end{array}\right.
+\]</span></p>
+<p>他的每一个 <span class="math inline">\(C_i\)</span>
+都是由一定数量的变量组成的。我们分情况对每一组变量做一下操作。</p>
+<ul>
+<li>若 <span class="math inline">\(\left|C_i\right|=1\)</span>，
+即只有一个变量参与该 <span class="math inline">\(C_i\)</span> 的组成，
+例如 <span class="math inline">\(C_i=x_1^i\)</span> 。我们将其变换为
+<span class="math inline">\(C_i=x_1^i \cup x_1^i \cup x_1^i\)</span>
+。</li>
+<li>若 <span class="math inline">\(\left|C_i\right|=2\)</span>， 例如
+<span class="math inline">\(C_i=x_1^i \cup x_2^i\)</span>
+。我们将其变换为 <span class="math inline">\(C_i=x_1^i \cup x_1^i \cup
+x_2^i\)</span> 。</li>
+<li>若 <span class="math inline">\(\left|C_i\right|=3\)</span>，
+我们保持其不变。</li>
+<li>若 <span class="math inline">\(\left|C_i\right|\ge 4\)</span>，
+假设为k，则我们引入k-3个变量，使得 <span
+class="math inline">\(C_i=(x_1^i \cup x_2^i \cup
+y_1^i)\cap(\overline{y_1^i}\cup x_3^i\cup
+y_2^i)\cap(\overline{y_2^i}\cup x_4^i\cup
+y_3^i)\cap\dots\cap(\overline{y_{k-3}^i}\cup x_{k-1}^i\cup
+x_k^i)\)</span></li>
+</ul>
+<p>对于每个SAT的实例， 如果存在一个真值赋值， 则每个子句 <span
+class="math inline">\(C_i\)</span> 一定有一个literal为 1 ， 即 <span
+class="math inline">\(x_1^i \cup x_2^i \cup \cdots \cup x_m^i\)</span>
+中一定有一个为 1 ，</p>
+<ul>
+<li><p><span class="math inline">\(\left|C_i\right|=1\)</span>， 则
+<span class="math inline">\(x_1^i=1\)</span>， <span
+class="math inline">\(C_i=1\)</span> 。</p></li>
+<li><p><span class="math inline">\(\left|C_i\right|=2\)</span>， 则
+<span class="math inline">\(x_1^i \cup x_2^i=1\)</span>， <span
+class="math inline">\(C_i=1\)</span> 。</p></li>
+<li><p><span class="math inline">\(\left|C_i\right|=3\)</span>， 则
+<span class="math inline">\(C_i=1\)</span> 。</p></li>
+<li><p><span class="math inline">\(\left|C_i\right| \geq 4\)</span>，
+则假设:</p>
+<ul>
+<li><p><span class="math inline">\(x_1^i \cup x_2^i =1\)</span>， 则
+<span class="math inline">\(y_j^i=0(j=1,2,3, \ldots, k-3)\)</span>，
+因此 <span class="math inline">\(C_i=1\)</span> 。</p></li>
+<li><p><span class="math inline">\(x_{ k-1}^i \cup x_{k}^i=1\)</span>，
+则 <span class="math inline">\(y_j^i=1(j=1,2,3, \ldots .,
+k-3)\)</span>， 因此 <span class="math inline">\(C_i=1\)</span>
+。</p></li>
+<li><p><span class="math inline">\(x_{j}^i=1(2&lt;j&lt;k-1)\)</span>，
+则 <span class="math inline">\(\overline{y_{a}^i}=0(\mathrm{a} \leq
+\mathrm{j}-2), y_{ a}^i=0(\mathrm{a} \geq \mathrm{j}-1)\)</span>， 因此
+<span class="math inline">\(C_i=1\)</span> 。</p></li>
+</ul></li>
+</ul>
+<p>因此得到 <span class="math inline">\(C\)</span> 的真值赋值 <span
+class="math inline">\(t^{\prime}\)</span> 。</p>
+<p><strong>故 3-SAT 是 NP 完全的。</strong></p>
+<h2 id="co-np-complement-non-deterministic-polynomial-time-class">co-NP
+（complement-Non-deterministic polynomial time class）</h2>
+<p><strong>co-NP</strong>是<strong>确定型图灵机</strong>可以在<strong>多项式时间</strong>内<strong>验证</strong>（decidable）反例（no-instance）的判定问题集合，例如素性检测。</p>
+<p><strong>形式化定义：co-NP</strong>可以通过<strong>NP</strong>来进行定义
+<span class="math display">\[
+\mathbf{C o N P}:=\left\{L \mid L^{\mathrm{C}} \in \mathbf{N P}\right\}
+\text { 。 }
+\]</span>
+简单来说，<strong>co-NP</strong>就是可以高效核实地证明命题为<strong>错</strong>的问题集合</p>
+<p>当一个NP问题询问一个给定的实例是否是YES-实例时，它的补集询问一个实例是否是反例，这意味着补集是co-NP的。原始NP问题的任何是实例都变成了它的补语的反例，反之亦然。</p>
+<p>UNSAT是<strong>co-NP-complete</strong>问题，可以用sumcheck协议通过<strong>IP</strong>验证，通过将<strong>UNSAT</strong>问题算术化，之后验证<span
+class="math inline">\(\sum{p(x_1,x_2,\dots,x_i)}=0\)</span>。</p>
+<p>确定命题逻辑中的范式是否是重言式是<strong>co-NP-complete</strong>的。</p>
+<p><strong>P</strong>被认为是严格属于<strong>co-NP</strong>和<strong>NP</strong>的，因为<strong>P</strong>可以在多项式时间内被解决，就可以很容易在多项式时间内判断正例和反例。</p>
+<p>整数分解问题：给两个正整数m与n，决定m是否有小于n且大于1的因数。不属于<strong>P</strong>，但属于<span
+class="math inline">\(\mathrm{NP\cup co-NP}\)</span>：</p>
+<ul>
+<li><strong>NP：</strong>如果m的确存在一个满足条件的因子，我们可以通过除法来轻易判断</li>
+<li><strong>co-NP：</strong>我们可以列举出所有大于或等于n的因子，验证者可以通过乘法和素性测试来确认其有效。</li>
+</ul>
+<h2 id="bpp-bounded-error-probabilistic-polynomial-time">BPP
+（Bounded-error Probabilistic Polynomial time）</h2>
+<p><strong>BPP</strong>是在<strong>多项式时间</strong>内以<strong>几率图灵机</strong>解出的问题集合，
+并且对所有的输入，输出结果有错误的<strong>概率</strong>在1/3之内。<strong>BPP</strong>这个简写代表"<strong>B</strong>ounded-error"(有限错误)，"<strong>P</strong>robabilistic"(几率的)，"<strong>P</strong>olynomial
+time"(多项式时间)。</p>
+<blockquote>
+<p><strong>几率图灵机</strong>是一个<strong>非确定型图灵机</strong>，在每个转折点根据某种<strong>概率分布</strong>随机选择某种可行的转变(transition)。</p>
+</blockquote>
+<p>要是一个问题属于<strong>BPP</strong>，则存在一个算法，此算法允许转硬币作随机的决定，并在多项式时间内结束。
+对这个算法的任何输入，他都要在小于1/3的错误概率之下给出正确判断，不论这一个问题的答案是"正确"或者"错误"。</p>
+<p><strong>形式化定义：</strong>一个语言 <span
+class="math inline">\(L\)</span> 在BPP里面，
+当且仅当这语言存在一个概率图灵机 <span
+class="math inline">\(M\)</span>， 另</p>
+<ul>
+<li><span class="math inline">\(M\)</span>
+对任何输入均在多项式时间后停止</li>
+<li>对任何字串 <span class="math inline">\(x\)</span> 在 <span
+class="math inline">\(L\)</span> 之内， 对 <span
+class="math inline">\(M\)</span> 输入 <span
+class="math inline">\(x\)</span> 之后， <span
+class="math inline">\(M\)</span> 输出 1 的几率大于或者等于 <span
+class="math inline">\(2 / 3\)</span></li>
+<li>对任何字串 <span class="math inline">\(x\)</span> 不在 <span
+class="math inline">\(L\)</span> 之内， 对 <span
+class="math inline">\(M\)</span> 输入 <span
+class="math inline">\(x\)</span> 之后， <span
+class="math inline">\(M\)</span> 输出 1 的几率小于或者等于 <span
+class="math inline">\(1 / 3\)</span></li>
+</ul>
+<p>另外，BPP可以仅以<strong>确定性图灵机</strong>定义。一个语言 <span
+class="math inline">\(L\)</span> 是在BPP里面当且仅当存在一个多项式 <span
+class="math inline">\(p\)</span> 和一个决定性图灵机<em>M</em>，满足</p>
+<ul>
+<li><span class="math inline">\(M\)</span>
+对任何输入均操作多项式时间之内</li>
+<li>对任何字串 <span class="math inline">\(x\)</span> 在 <span
+class="math inline">\(L\)</span> 之内， 对长度为 <span
+class="math inline">\(p(|x|)\)</span> 的任意字串 <span
+class="math inline">\(y\)</span>， 满足 <span class="math inline">\(M(x,
+y)=1\)</span> 这条件的几率超过或等于 <span class="math inline">\(2 /
+3\)</span></li>
+<li>对任何字串 <span class="math inline">\(x\)</span> 不在 <span
+class="math inline">\(L\)</span> 之内， 对长度为 <span
+class="math inline">\(p(|x|)\)</span> 的任意字串 <span
+class="math inline">\(y\)</span>， 满足 <span class="math inline">\(M(x,
+y)=1\)</span> 这条件的几率小于或等于 <span class="math inline">\(1 /
+3\)</span>​</li>
+</ul>
+<p>在实际情况下，<span class="math inline">\(1 / 3\)</span>可以是<span
+class="math inline">\(0～1/2\)</span>的任意值，甚至不必是恒定的，例如<span
+class="math inline">\(1/2 −
+n^{−c}\)</span>。可以这么做是因为我们可以通过多次运行并取大多数结果来实现一个更准确的算法。</p>
+<p><strong>BPP</strong>是大小最大的几个<strong>易于处理的</strong>问题类别之一，大多数的<strong>BPP</strong>问题都有高效的<strong>概率算法</strong></p>
+<figure>
+<img
+src="/img/post/Complexity%20Class.assets/280px-Randomised_Complexity_Classes_2.svg.png" srcset="/img/loading.gif" lazyload
+alt="Diagram of randomised complexity classes" />
+<figcaption aria-hidden="true">Diagram of randomised complexity
+classes</figcaption>
+</figure>
+<h2 id="pp-probabilistic-polynomial-time">PP （Probabilistic Polynomial
+time）</h2>
+<p><strong>PP</strong>是概率图灵机在多项式时间内可解的一类决策问题，所有情况下的错误概率都小于1/2。</p>
+<p><strong>BPP</strong>是<strong>PP</strong>的一个子集；它可以被视为具有有效概率算法的子集。区别在于允许的错误概率：在BPP中，算法必须给出正确答案（是或否），<span
+class="math inline">\(\epsilon &gt;
+1/2\)</span>。我们可以多次运行算法，并使用<strong>Chernoff边界</strong>进行多数投票，以实现任何所需的正确概率。如果<span
+class="math inline">\(\epsilon\)</span>接近1/2，这个重复次数会增加，但它不取决于输入大小n。</p>
+<h2 id="ph-polynomial-hierarchy">PH （Polynomial Hierarchy）</h2>
+<p><strong>PH</strong>代表所有在<strong>多项式谱系</strong>里面的复杂度类并集，亦即：
+<span class="math display">\[
+\mathrm{PH}=\bigcup_{k \in \mathbb{N}} \Delta_k \mathrm{P}
+\]</span> PH最早是由Larry Stockmeyer定义，
+是一个受限交替式图灵机(bounded alternating Turing
+machine)其谱系(hierarchy)的特例。这个复杂度包含于<span
+class="math inline">\(\mathrm{P^{PP}}\)</span>
+(包含问题可以由多项式时间图灵机， 并且能取用PP
+神谕的机器所解决的复杂度类。)， <span
+class="math inline">\(\mathrm{p^{\# {P}}}\)</span>​ (根据Toda's
+theorem)， 以及PSPACE里面。</p>
+<p>PH有一个简单的逻辑描述方法:
+<strong>PH是一个能以二阶逻辑所表示语言的集合</strong>。</p>
+<p>PH包含了几乎所有在PSPACE里面有名的复杂度类;举例来说， 像是 P， NP，
+和co-NP。甚至还包含了一些概率复杂度类像是BPP和RP。然而，有一些证据指出
+BQP(以量子电脑可以在多项式时间之内解决的问题)并不包含在PH里面。</p>
+<blockquote>
+<p>一阶逻辑：只包括取值为论域的个体元素的变量和量词，例如在一阶句子
+<span class="math inline">\(\forall x(x \neq x+1)\)</span> 中变量 <span
+class="math inline">\(x\)</span> 被用来表示一个任意的个体。</p>
+<p>二阶逻辑：二阶逻辑是一阶逻辑的扩展，通过增加取值在个体的集合上变量和量词。例如，二阶句子
+<span class="math inline">\(\forall S \forall x(x \in S \vee x \notin
+S)\)</span> 声称对于所有个体的集合 <span
+class="math inline">\(S\)</span> 和所有的个体 <span
+class="math inline">\(x\)</span>， 要么 <span
+class="math inline">\(x\)</span> 在 <span
+class="math inline">\(S\)</span> 中要么不在</p>
+</blockquote>
+<h2 id="pspace-polynomial-space">PSPACE （Polynomial SPACE）</h2>
+<p><strong>PSPACE</strong>是计算复杂度理论中能被<strong>确定型图灵机</strong>利用<strong>多项式空间</strong>解决的判定问题集合。</p>
+<p><strong>形式化定义：</strong>如果规定 <span
+class="math inline">\(\operatorname{SPACE}(t(n))\)</span> 为至多 <span
+class="math inline">\(t(n)\)</span>
+空间内能被确定型图灵机解决的问题的集合 <span
+class="math inline">\((t\)</span> 是输入大小 <span
+class="math inline">\(n\)</span> 的函数) , 那么,
+PSPACE可被形式化地定义为: <span class="math display">\[
+\operatorname{PSPACE}=\bigcup_{k \in \mathbb{N}}
+\operatorname{SPACE}\left(n^k\right)
+\]</span></p>
+<p>已经证明PSPACE和NL、P、NP、PH、EXPTIME和EXPSPACE的关系 （注意, <span
+class="math inline">\(\subsetneq\)</span> 不是 <span
+class="math inline">\(\nsubseteq\)</span> ) : <span
+class="math display">\[
+\begin{aligned}
+&amp; \mathrm{NL} \subseteq \mathrm{P} \subseteq \mathrm{NP} \subseteq
+\mathrm{PH} \subseteq \mathrm{PSPACE} \\
+&amp; \mathrm{PSPACE} \subseteq \mathrm{EXPTIME} \subseteq
+\mathrm{EXPSPACE} \\
+&amp; \mathrm{NL} \subsetneq \mathrm{PSPACE} \subsetneq
+\mathrm{EXPSPACE}
+\end{aligned}
+\]</span></p>
+<p>目前已经知道, 第一行和第二行中至少有一个包含关系为真包含,
+但是目前尚未证明任何一个。一般假定所有的包含关系均为真包含。</p>
+<h2 id="complexity-zoo">Complexity Zoo</h2>
+<figure>
+<img src="/img/post/Complexity%20Class.assets/descriptiveWorld2015.jpg" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Computation-Complexity/" class="print-no-link">#Computation Complexity</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Complexity class</div>
+      <div>http://example.com/2024/02/09/Complexity-class/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wang Lizheng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/27/Interactive-Proofs-3/" title="Interactive Proofs 3">
+                        <span class="hidden-mobile">Interactive Proofs 3</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
