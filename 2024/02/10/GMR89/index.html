@@ -16,24 +16,26 @@
   <meta name="author" content="Wang Lizheng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="布尔电路 to 算术电路 在\((\mathbb{F},+,\cdot)\)上考虑一个函数\(f\)，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT} \}\)。要在\(\mathbb {F}\)上模拟计算，请将\(0\)编码为\(0_ \mathbb {F}\)(在\(\mathbb {F">
+    <meta name="description" content="GMR89：The knowledge complexity of interactive proof systems 这篇博客有点头重脚轻的感觉，因为笔者觉得后面的很多定义没有必要重述，对于文章中的协议也没有进行重写，笔者的思考好像也在introduction都讲了，这篇文章感觉也是重在引入，因此在后面写的比较简略，只记录了相对比较重要的内容，大年初一属实是有点太累了😫，一会还想陪女朋友聊会天">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算术电路与布尔电路相互转换">
-<meta property="og:url" content="http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:title" content="GMR89：The knowledge complexity of interactive proof systems">
+<meta property="og:url" content="http://example.com/2024/02/10/GMR89/index.html">
 <meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
-<meta property="og:description" content="布尔电路 to 算术电路 在\((\mathbb{F},+,\cdot)\)上考虑一个函数\(f\)，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT} \}\)。要在\(\mathbb {F}\)上模拟计算，请将\(0\)编码为\(0_ \mathbb {F}\)(在\(\mathbb {F">
+<meta property="og:description" content="GMR89：The knowledge complexity of interactive proof systems 这篇博客有点头重脚轻的感觉，因为笔者觉得后面的很多定义没有必要重述，对于文章中的协议也没有进行重写，笔者的思考好像也在introduction都讲了，这篇文章感觉也是重在引入，因此在后面写的比较简略，只记录了相对比较重要的内容，大年初一属实是有点太累了😫，一会还想陪女朋友聊会天">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-21T13:55:16.000Z">
-<meta property="article:modified_time" content="2023-12-21T14:19:45.445Z">
+<meta property="og:image" content="http://example.com/img/post/GMR89.assets/image-20240210190007841.png">
+<meta property="article:published_time" content="2024-02-10T13:24:54.000Z">
+<meta property="article:modified_time" content="2024-02-10T13:32:50.050Z">
 <meta property="article:author" content="Wang Lizheng">
-<meta property="article:tag" content="基础知识">
+<meta property="article:tag" content="Complexity Theory">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/post/GMR89.assets/image-20240210190007841.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>算术电路与布尔电路相互转换 - Wang Lizheng&#39;s Blog</title>
+  <title>GMR89：The knowledge complexity of interactive proof systems - Wang Lizheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="算术电路与布尔电路相互转换"></span>
+            <span id="subtitle" data-typed-text="GMR89：The knowledge complexity of interactive proof systems"></span>
           
         </div>
 
@@ -222,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-21 21:55" pubdate>
-          2023年12月21日 晚上
+        <time datetime="2024-02-10 21:24" pubdate>
+          2024年2月10日 晚上
         </time>
       </span>
     
@@ -234,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          199 字
+          2.1k 字
         
       </span>
     
@@ -245,7 +247,7 @@
         
         
         
-          2 分钟
+          18 分钟
         
       </span>
     
@@ -282,51 +284,206 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">算术电路与布尔电路相互转换</h1>
+            <h1 id="seo-header">GMR89：The knowledge complexity of interactive proof systems</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="布尔电路-to-算术电路">布尔电路 to 算术电路</h2>
-<p>在<span
-class="math inline">\((\mathbb{F},+,\cdot)\)</span>上考虑一个函数<span
-class="math inline">\(f\)</span>，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础<span
-class="math inline">\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT}
-\}\)</span>。要在<span class="math inline">\(\mathbb
-{F}\)</span>上模拟计算，请将<span
-class="math inline">\(0\)</span>编码为<span class="math inline">\(0_
-\mathbb {F}\)</span>(在<span class="math inline">\(\mathbb
-{F}\)</span>中加法的中性)，将<span
-class="math inline">\(1\)</span>编码为<span class="math inline">\(1_
-\mathbb {F}\)</span>(乘法的中性)。布尔门可以模拟如下：</p>
-<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
-class="math inline">\(\mathsf{OR}\)</span>门，返回<span
-class="math inline">\(x+y - x \cdot y\)</span></p>
-<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
-class="math inline">\(\mathsf{AND}\)</span>门，返回<span
-class="math inline">\(x \cdot y\)</span></p>
-<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
-class="math inline">\(\mathsf{XOR}\)</span>门，返回<span
-class="math inline">\(x + y-2 \cdot x \cdot y\)</span></p>
-<p>要计算输入<span class="math inline">\(x\)</span>的<span
-class="math inline">\(\mathsf{NOT}\)</span>门，请返回<span
-class="math inline">\(1_ \mathbb{F} -x\)</span>。</p>
-<h2 id="算术电路-to-布尔电路">算术电路 to 布尔电路</h2>
-<p>考虑<span class="math inline">\(\mathbb{F}\)</span>的任何元素<span
-class="math inline">\(x\)</span>的二进制分解：<span
-class="math inline">\(x = \ sum_ {i = 0} ^ {\lceil \log | \mathbb {F} ||
-\rceil-1} b_i \cdot 2 ^ i\)</span>，<span class="math inline">\(b_i \in
-\{0_\mathbb{F}，1_\mathbb {F} \}\)</span>。</p>
+                <h1
+id="gmr89the-knowledge-complexity-of-interactive-proof-systems">GMR89：The
+knowledge complexity of interactive proof systems</h1>
+<p>这篇博客有点头重脚轻的感觉，因为笔者觉得后面的很多定义没有必要重述，对于文章中的协议也没有进行重写，笔者的思考好像也在introduction都讲了，这篇文章感觉也是重在引入，因此在后面写的比较简略，只记录了相对比较重要的内容，大年初一属实是有点太累了😫，一会还想陪女朋友聊会天🥰，后面再进行完善。</p>
+<h2 id="abstract">Abstract</h2>
+<p>通常，在定理的证明往往会包含除<strong>定理正确性</strong>（correctness）之外的其他“<strong>知识</strong>”（knowledge）。在这篇文章中，作者进一步发展了证明中包含的知识的计算复杂性理论，<strong>零知识证明被定义为除了问题中命题的正确性外，不传递其他知识的证明</strong>。</p>
+<h2 id="introduction">Introduction</h2>
+<p>我们通常认为一种语言L是NP的（即在非确定性多项式时间内是可接受的）等价于说存在一个针对L的多项式时间“证明系统”：对于输入<span
+class="math inline">\(x\)</span>，Prover生成字符串<span
+class="math inline">\(\alpha\)</span>，Verifier在<span
+class="math inline">\(x\)</span>和<span
+class="math inline">\(\alpha\)</span>上进行运算，在时间<span
+class="math inline">\(O(|x|)\)</span>时间内判断<span
+class="math inline">\(x\)</span>是否属于L。</p>
+<p>我们可以仔细思考一下这样的证明系统，可以得到更多的信息：</p>
 <ul>
-<li><span class="math inline">\(\mathbb {F}\)</span>上的加法: 通过<span
-class="math inline">\(\mathsf{XOR}\)</span>门得到第<span
-class="math inline">\(i\)</span>位的值，通过<span
-class="math inline">\(\mathsf{AND}\)</span>门得到第<span
-class="math inline">\(i\)</span>位的进位。</li>
-<li><span class="math inline">\(\mathbb {F}\)</span>上的乘法: 通过<span
-class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li>
+<li>NP问题只要求<strong>给定一个解，我们能够在多项式时间内验证该解的正确性</strong>，所以我们对于<strong>Prover的计算资源是没有限制</strong>的，对于Verifier的计算资源，我们要求是多项式时间的</li>
+<li>由于Verifier是多项式时间的，所以给定的解的大小也一定是多项式大小的，否则仅仅是读取就已经超出了Verifier的能力。</li>
+<li>在这样的证明系统中，Verifier和Prover之间没有交互，Verifier只读取了Prover给出的<strong>解</strong></li>
+<li>Verifier和Prover都没有使用Randomness，然而Randomness是一个非常强大的工具，在实际情况下这个限制貌似没有那么必要。</li>
 </ul>
-<p>其实就是模拟我们计算机所做的事情。</p>
+<blockquote>
+<p>在这种理解下的NP和数学证明（mathematical proof）很相似</p>
+</blockquote>
+<p>因此我们解除NP的一些限制，允许（1）Verifier和Prover之间进行交互，（2）允许Verifier和Prover使用Randomness。从而，我们就得到了交互式证明系统（Interactive
+Proof
+system）。交互式证明系统能力十分强大，可以证明<strong>PSPACE</strong>中的所有问题。</p>
+<p>接下来，我们考虑在Verifier和Prover交互过程中传递的知识，以下为两个极端情况：</p>
+<ul>
+<li><span class="math inline">\(F\in
+\mathrm{SAT}\)</span>：针对SAT问题，Prover可以直接将一个满足的赋值发送给Verifier，这样Verifier不仅知道了<span
+class="math inline">\(F\in \mathrm{SAT}\)</span>，而且还知道了<span
+class="math inline">\(F\)</span>的一个赋值</li>
+<li><span
+class="math inline">\(Q\in\mathrm{P}\)</span>：对于多项式时间问题，Prover不需要发送任何信息，Verifier就可以知道<span
+class="math inline">\(Q\in \mathrm{P}\)</span></li>
+</ul>
+<p>如果语言L的一个交互式证明系统中，Prover只传递给Verifier命题正确性，不包含其他任何知识，我们就称其具有<strong>零知识性</strong>。零知识性需要保证无论Verifier是否遵守协议，都要满足。</p>
+<blockquote>
+<p>如果只能保证诚实Verifier情况下的零知识性，我们称之为HVZK（Honest
+Verifier Zero-Knowledge）</p>
+</blockquote>
+<p>在零知识交互式证明中，验证者在协议中获取到的应该是验证者可以自己计算的东西，或者称之为可以模拟出来的东西，这就引出来了Simulator的概念。（后面会有提到）</p>
+<p>零知识证明有很多的应用场景，比如密码信息交换等，用于替代可信第三方的存在，证明Prover所说的话是属实的，但是替代可信第三方的存在势必需要Prover具备更强的能力（信息、资源等），这也是一种trade
+off。</p>
+<blockquote>
+<p>目前已知所有NP问题都具有零知识证明。</p>
+<p>其实很好证明，我们对SAT问题具有零知识证明（Sumcheck），SAT是NP-complete问题，因此<span
+class="math inline">\(\mathrm{NP}\subseteq\mathrm{IP}\)</span></p>
+</blockquote>
+<h2 id="interactive-proof-systems">Interactive proof systems</h2>
+<p>在上一节的基础上，我们首先考虑一个高效的定理证明都需要有哪些性质：</p>
+<ul>
+<li>我们可能证明一个正确的定理（Completeness）</li>
+<li>我们不可能证明一个错误的定理（Soundness）</li>
+<li>不考虑生成证明的难度，Verifier可以高效的验证定理的正确性</li>
+</ul>
+<p>NP其实在一定程度上具备了上述性质，但是我们希望能够泛化一下这个概念：Verifier具备Randomness，允许一定概率的error。</p>
+<h3 id="interactive-turing-machine">Interactive Turing Machine</h3>
+<p><img src="/img/post/GMR89.assets/image-20240210190007841.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="interactive-proof-systems-1">Interactive proof systems</h3>
+<p><strong>定义：</strong>我们定义<span
+class="math inline">\((A,B)\)</span>为<span
+class="math inline">\(L\)</span>的交互式证明系统，如果<span
+class="math inline">\((A,B)\)</span>满足：</p>
+<ul>
+<li>对于每个<span class="math inline">\(k\)</span>，对于作为<span
+class="math inline">\((A,B)\)</span>输入的<span
+class="math inline">\(L\)</span>中足够大的<span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(B\)</span>停止并接受的概率至少为<span
+class="math inline">\(1-|x|^{-k}\)</span>。</li>
+<li>对于每个<span class="math inline">\(k\)</span>，对于足够大的<span
+class="math inline">\(x\not\in L\)</span>，对于任何ITM <span
+class="math inline">\(A^{\prime}\)</span>，在输入<span
+class="math inline">\(x\)</span>到<span
+class="math inline">\(\left(A^{\prime},B\right)\)</span>时，<span
+class="math inline">\(B\)</span>最多接受<span
+class="math inline">\(|x|^{-k}\)</span>的概率。</li>
+</ul>
+<p>对于第一种情况，B将以不可抗拒的概率接受x，对于第二种情况，B被欺骗的概率可忽略不计。值得一提的是，在交互式证明系统中，B不需要相信与它交互的对象，只需要相信自己所投掷的硬币即可（Randomness）。</p>
+<p>对于以上定义的更泛化的版本是A可以不仅仅是一个ITM，还可以是一个无限状态机，甚至确定型PSPACE机。</p>
+<p><strong>A是随机性对于实现零知识证明至关重要</strong></p>
+<h3 id="arthur-marlin-game">Arthur-Marlin game</h3>
+<p>Arthur指的是Verifier，Marlin指的是Prover，Arthur-Marlin是一种public
+coin
+IP，Verifier只能向Prover发送其产生的随机数，AM可以通过Shamir转换转变为非交互式证明系统，IP[k]也可以通过set
+lower bound协议和Lautemann证明来转换为AM[k+2]</p>
+<p>AM所能证明的问题集合和IP是一样的，但是<strong>IP中的private
+coin对于零知识性是至关重要的</strong>，存在语言L具备<strong>完美或统计零知识的</strong>IP，但是不具备<strong>完美或统计零知识的</strong>AM。</p>
+<h2 id="zero-knowledge">Zero-knowledge</h2>
+<p>交互式证明系统的完备性（Completeness）取决于Prover和Verifier，稳健性（Soundness）取决于Verifier，零知识性（Zero-knowledge）仅取决于Prover。</p>
+<blockquote>
+<p>对于上述表述，我们可以理解为我们对于Verifier或Prover没有要求，不必是honest，不必遵守协议</p>
+</blockquote>
+<p>IP的零知识性我们可以理解为，在交互过程中B从A看到的随机分布，也可以通过自己生成。</p>
+<h3 id="indistinguishability-of-random-variables">Indistinguishability
+of random variables</h3>
+<p>随机变量：<span
+class="math inline">\(U=\{U(x)\}\)</span>，其中参数<span
+class="math inline">\(x\)</span>取自<span
+class="math inline">\(L\)</span>。如果随着<span
+class="math inline">\(|x|\)</span>的增大，<span
+class="math inline">\(U=\{U(x)\}\)</span>可以被<span
+class="math inline">\(V=\{V(x)\}\)</span>所替代，我们就称<span
+class="math inline">\(U=\{U(x)\}\)</span>和<span
+class="math inline">\(V=\{V(x)\}\)</span>是不可区分的。</p>
+<p>我们可以考虑以下game：从<span
+class="math inline">\(U=\{U(x)\}\)</span>和<span
+class="math inline">\(V=\{V(x)\}\)</span>随机抽取一个变量，并将其发送给一个判定者。判定者输出<span
+class="math inline">\(0\)</span>，则代表变量来自于<span
+class="math inline">\(U=\{U(x)\}\)</span>；判定者输出<span
+class="math inline">\(1\)</span>，则代表变量来自于<span
+class="math inline">\(V=\{V(x)\}\)</span>。如果随着<span
+class="math inline">\(|x|\)</span>的增长，判定者的输出逐渐变的没有意义，则说明<span
+class="math inline">\(U=\{U(x)\}\)</span>和<span
+class="math inline">\(V=\{V(x)\}\)</span>不可区分。</p>
+<p>有三种不同程度的不可区分性：</p>
+<ul>
+<li>等价（equality）：<span
+class="math inline">\(U=\{U(x)\}\)</span>和<span
+class="math inline">\(V=\{V(x)\}\)</span>完全相等</li>
+<li>统计不可区分性（statistics
+indistinguishability）：判定者可以使用无限时间，但是有限的抽样</li>
+<li>计算不可区分性（computational
+indistinguishability）：判定者可以使用有限时间和有限的抽样</li>
+</ul>
+<p><strong>形式化定义：</strong>（统计不可区分性）设<span
+class="math inline">\(L
+\subset\{0,1\}^*\)</span>为一种语言。随机变量<span
+class="math inline">\(\{U(x)\}\)</span>和<span
+class="math inline">\(\{V(x)\}\)</span>的两族在统计学上无法在<span
+class="math inline">\(L\)</span>上区分，如果 <span
+class="math display">\[
+\sum_{\alpha
+\in\{0,1\}^*}|\operatorname{prob}(U(x)=\alpha)-\operatorname{prob}(V(x)=\alpha)|&lt;|x|^{-c}
+\]</span></p>
+<p>对于所有常量<span
+class="math inline">\(c&gt;0\)</span>和所有足够长的<span
+class="math inline">\(x \in L\)</span>。</p>
+<p>举例：设<span class="math inline">\(U(x)\)</span>为所有长度<span
+class="math inline">\(|x|\)</span>的字符串分配相等的概率，并让<span
+class="math inline">\(V(x)\)</span>将概率<span
+class="math inline">\(2^{-|x|}\)</span>分配给所有长度<span
+class="math inline">\(|x|\)</span>的字符串，除了<span
+class="math inline">\(0^{|x|}\)</span>，其概率为0和<span
+class="math inline">\(1^{-|x|}\)</span>，即概率为<span
+class="math inline">\(2^{-|x|+1}\)</span>。那么<span
+class="math inline">\(\{U(x)\}\)</span>和<span
+class="math inline">\(\{V(x)\}\)</span>是<span
+class="math inline">\(\{0,1\}^*\)</span>上<strong>统计上无法区分</strong>的两个随机变量族。</p>
+<p><strong>形式化定义：</strong>（计算不可区分性）。设<span
+class="math inline">\(L
+\subset\{0,1\}^*\)</span>为一种语言。随机变量<span
+class="math inline">\(U\)</span>和<span
+class="math inline">\(V\)</span>的两个有界族在<span
+class="math inline">\(L\)</span>上在计算上是不可区分的，如果对于所有多尺寸电路族<span
+class="math inline">\(C\)</span>，对于所有常数<span
+class="math inline">\(c&gt;0\)</span>和所有足够长的字符串 <span
+class="math inline">\(x \in L\)</span>，</p>
+<p><span class="math display">\[
+|P(U, C, x)-P(V, C, x)|&lt;|x|^{-c} 。
+\]</span>
+举例：考虑一个在Goldwasser和Micali意义上安全的概率加密算法；对于<span
+class="math inline">\(n\)</span>整数，让<span
+class="math inline">\(U\left(1^n\right)\)</span>和<span
+class="math inline">\(V\left(1^n\right)\)</span>是随机变量，分别将安全参数<span
+class="math inline">\(n\)</span>上的0和1的可能加密作为值。那么<span
+class="math inline">\(U\)</span>和<span
+class="math inline">\(V\)</span>在<span
+class="math inline">\(L=\{1\}^*\)</span>上是计算无法区分的。</p>
+<p>我们认为，随机变量的计算不可区分性的概念达到了正确的通用性水平。因此，我们将称不可区分的任意两个计算上不可区分的随机变量家族。</p>
+<h3 id="zero-knowledge-1">Zero-knowledge</h3>
+<p><strong>形式化定义：</strong>设<span class="math inline">\(L
+\subset\{0,1\}^*\)</span>为语言，<span class="math inline">\((A,
+B)\)</span>为协议。我们说<span class="math inline">\((A,
+B)\)</span>是完美的（统计/计算）<span
+class="math inline">\(L\)</span>的零知识，对于<span
+class="math inline">\(B^{\prime}\)</span>，如果随机变量族<span
+class="math inline">\(View_{A，B^{\prime}}\)</span>是完美的（统计/计算）近似的
+<span class="math display">\[
+L^{\prime}=\left\{(x, H) \mid x \in L \text { and }|H|=|x|^c\right\} 。
+\]</span></p>
+<p>我们说<span class="math inline">\(（A，B）\)</span>是<span
+class="math inline">\(L\)</span>上的完美（统计/计算）零知识，如果它是所有概率多项式时间ITM
+<span
+class="math inline">\(B^{\prime}\)</span>上的完美（统计/计算）零知识。</p>
+<p><strong>各种复杂度类的零知识性：</strong></p>
+<ul>
+<li>所有的BPP问题都有<strong>完美</strong>零知识证明</li>
+<li>GI问题有<strong>完美</strong>零知识证明</li>
+<li>GNI问题有<strong>统计</strong>零知识证明</li>
+<li>在安全加密机制存在的假设下，所有NP问题都有<strong>计算</strong>零知识证明</li>
+<li><strong>如果NP-complete问题有完美或统计零知识证明，则PH会坍缩</strong></li>
+</ul>
 
                 
               </div>
@@ -335,32 +492,11 @@ class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="category-chain-item">计算机基础</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="print-no-link">#基础知识</a>
+        <a href="/tags/Complexity-Theory/" class="print-no-link">#Complexity Theory</a>
       
     </div>
   
@@ -372,8 +508,8 @@ class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>算术电路与布尔电路相互转换</div>
-      <div>http://example.com/2023/12/21/算术电路与布尔电路相互转换/</div>
+      <div>GMR89：The knowledge complexity of interactive proof systems</div>
+      <div>http://example.com/2024/02/10/GMR89/</div>
     </div>
     <div class="license-meta">
       
@@ -385,7 +521,7 @@ class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年12月21日</div>
+          <div>2024年2月10日</div>
         </div>
       
       
@@ -417,18 +553,12 @@ class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/23/LPCP%E5%92%8CLIP/" title="LPCP和LIP">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LPCP和LIP</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/12/18/KZG-polynomial-commitment-scheme/" title="KZG_polynomial_commitment_scheme">
-                        <span class="hidden-mobile">KZG_polynomial_commitment_scheme</span>
+                      <a href="/2024/02/09/Complexity-class/" title="Complexity class">
+                        <span class="hidden-mobile">Complexity class</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
