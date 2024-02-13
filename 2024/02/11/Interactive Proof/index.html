@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/img/post/Interactive%20Proof.assets/image-20240125145911910.png">
 <meta property="og:image" content="http://example.com/img/post/Interactive%20Proof.assets/image-20240125152438490.png">
 <meta property="article:published_time" content="2024-02-10T17:03:34.000Z">
-<meta property="article:modified_time" content="2024-02-12T12:12:12.630Z">
+<meta property="article:modified_time" content="2024-02-13T04:21:35.190Z">
 <meta property="article:author" content="Wang Lizheng">
 <meta property="article:tag" content="Complexity theory">
 <meta name="twitter:card" content="summary_large_image">
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          4k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
         
-          30 分钟
+          34 分钟
         
       </span>
     
@@ -422,7 +422,7 @@ class="math inline">\(G_0,G_1\)</span>中的哪一个推出，在Prover看来两
 class="math inline">\(\widetilde{b}\)</span>，<span
 class="math inline">\(Pr[\widetilde{b}=b]=1/2\)</span></p>
 <p>综上，我们给出了一个coNP问题GNI的交互式证明，在此过程中，我们也熟悉了交互式证明到底是什么样的，接下来我们将给出<strong>IP的上界</strong></p>
-<h2 id="an-upper-bound-on-ip">An Upper Bound on IP</h2>
+<h3 id="an-upper-bound-on-ip">An Upper Bound on IP</h3>
 <p>我们首先给出结论：<span class="math inline">\(\mathrm{IP}\subseteq
 \mathrm{PSPACE}\)</span></p>
 <blockquote>
@@ -740,12 +740,12 @@ E_j \land \dots\land E_n]+\frac{\deg_{\text{ind}}(p)}{|\mathbb{F}|}\\
 E_j \land \dots\land E_n]
 \end{align}
 \]</span> <strong>证毕</strong></p>
-<h2 id="interactive-proof-of-mathrmunsat">Interactive Proof of <span
-class="math inline">\(\mathrm{UNSAT}\)</span>​</h2>
+<h3 id="interactive-proof-of-mathrmunsat">Interactive Proof of <span
+class="math inline">\(\mathrm{UNSAT}\)</span>​</h3>
 <p><img src="/img/post/Interactive Proof.assets/image-20240125145911910.png" srcset="/img/loading.gif" lazyload alt="Interactive Proof of UNSAT" style="zoom:50%;" /></p>
 <p><strong>上述协议证明了$ $</strong></p>
-<h2 id="arithmetization-for-mathrmsat">Arithmetization for <span
-class="math inline">\(\mathrm{\#SAT}\)</span></h2>
+<h3 id="arithmetization-for-mathrmsat">Arithmetization for <span
+class="math inline">\(\mathrm{\#SAT}\)</span></h3>
 <p>在上文中我们提出算术化的方法无法适用于<span
 class="math inline">\(\mathrm{\#SAT}\)</span>问题： <span
 class="math display">\[
@@ -774,8 +774,8 @@ class="math inline">\(\mathrm{\#SAT}\)</span>规约为以下Sumcheck问题：
 \forall \text{prime } q&gt;2^n,\#\phi=c \Longleftrightarrow
 \sum_{(a_1,\dots,a_n)\in \{0,1\}^n}p(a_1,\dots,a_n)=c \mod q
 \]</span></p>
-<h2 id="interactive-proof-for-mathrmsat">Interactive Proof for <span
-class="math inline">\(\mathrm{\#SAT}\)</span></h2>
+<h3 id="interactive-proof-for-mathrmsat">Interactive Proof for <span
+class="math inline">\(\mathrm{\#SAT}\)</span></h3>
 <p><img src="/img/post/Interactive Proof.assets/image-20240125152438490.png" srcset="/img/loading.gif" lazyload alt="Interactive Proof for #SAT" style="zoom:50%;" /></p>
 <p><strong>上述协议证明了$ $</strong></p>
 <p>现在基础已经十分完备了，接下来我们尝试证明<span
@@ -963,7 +963,105 @@ class="math inline">\(\dfrac{2}{\mathbb{|F|}}\)</span>或<span
 class="math inline">\(\dfrac{3m}{\mathbb{|F|}}\)</span>。</p></li>
 </ul>
 <p>所以综合的Soundness为<span
-class="math inline">\(n\cdot\dfrac{1}{\mathbb{|F|}}+n\cdot\dfrac{3m}{\mathbb{|F|}}+\dfrac{n^2-n}{2}\cdot\dfrac{2}{\mathbb{|F|}}=\dfrac{3mn+n^2}{\mathbb{|F|}}\)</span></p>
+class="math inline">\(n\cdot\dfrac{1}{\mathbb{|F|}}+n\cdot\dfrac{3m}{\mathbb{|F|}}+\dfrac{n^2-n}{2}\cdot\dfrac{2}{\mathbb{|F|}}=\dfrac{3mn+n^2}{\mathbb{|F|}}\)</span>​</p>
+<h3 id="mathrmtqbfin-mathrmpspace-complete"><span
+class="math inline">\(\mathrm{TQBF}\in
+\mathrm{PSPACE-complete}\)</span></h3>
+<p>Todo;</p>
+<h2 id="public-coins">Public Coins</h2>
+<h3 id="public-coins-vs-private-coins">Public Coins vs Private
+Coins</h3>
+<p>从前面的课程中我们可以已经知道了<strong>随机性</strong>对于<strong>IP</strong>至关重要，分为不同的形式：</p>
+<ol type="1">
+<li>在GNI的交互式证明中，Verifier的<strong>随机比特b</strong>是保密的</li>
+<li>在TQBF的交互式证明中，Verifier的<strong>随机数w</strong>是作为消息直接发送给Prover的</li>
+</ol>
+<p>上述两个证明就对应于交互式证明中的两个不同的证明方法：Public
+Coins和Private Coins</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>后面我还会学到随机性对于实现零知识证明也是至关重要的</p>
+</blockquote>
+<blockquote>
+<p>之所以叫Public Coins和Private
+Coins，笔者认为是最开始提出IP的时候，讲随机数是通过不断抛硬币来得到的，是否将随机数公开就是是否将自己抛硬币的结果公开，因此就有了Public
+Coins和Private Coins</p>
+</blockquote>
+<p>我们给出以下定义：<strong>如果一个交互式证明中Verifier的消息都是新鲜从已定长度的均匀随机分布中抽取的，那么这个交互式证明就是Public
+Coins；否则就是Private Coins</strong></p>
+<p><strong>AM[K]/MA[K]就是由Verifier/Prover先发送消息，并且可以通过k轮Public-coin交互式证明来确定是否为True的语言集合</strong></p>
+<blockquote>
+<p>AM和MA来源于Arthur-Merlin，其中Arthur代表Verifier，Merlin代表Prover（wizard，hhh）</p>
+</blockquote>
+<p>引理：<span class="math inline">\(\forall
+\mathrm{K},\mathrm{AM[K]/MA[K]}\subseteq \mathrm{IP[K]}\)</span></p>
+<blockquote>
+<p>证明很简单，因为无论是MA还是AM都只是Public-coin的交互式证明，而IP包含了Public-coin和Private-coin交互式证明</p>
+</blockquote>
+<p>有一个非常有意思的结论：<span
+class="math inline">\(\forall\mathrm{K},\mathrm{IP[K]}\subseteq
+\mathrm{AM[K+1]}\)</span>​​​，但是证明通用的结论是十分困难的，在本篇博客中，我们会引用之前所了解过的<strong>GNI</strong>问题来讲解</p>
+<h3 id="graph-non-isomorphism">Graph Non-Isomorphism</h3>
+<p>我们定义图同构（Graph Isomorphism）问题：给定<span
+class="math inline">\((G_0,G_1),S:=\{H|H\equiv G_0 \text{ or } H\equiv
+G_1\}\)</span></p>
+<p>我们可以通过是否与<span class="math inline">\(G_0\)</span>或<span
+class="math inline">\(G_1\)</span>同构证明<span
+class="math inline">\(H\in S\)</span></p>
+<ul>
+<li><span class="math inline">\(G_0 \equiv G_1 \longrightarrow
+|S|=n!\)</span></li>
+<li><span class="math inline">\(G_0 \not\equiv G_1 \longrightarrow
+|S|=2\cdot n!\)</span>​</li>
+</ul>
+<p>接下来我们就可以通过判断<span
+class="math inline">\(|S|\)</span>​的大小来判断GNI问题。</p>
+<h3 id="pairwise-independent-hashing">Pairwise Independent Hashing</h3>
+<p>我们首先给出定义：</p>
+<p>一个函数族<span
+class="math inline">\(H_{m,\ell}=\{h:\{0,1\}^m\rightarrow\{0,1\}^\ell\}\)</span>是成对独立的，如果有<span
+class="math inline">\(\forall \text{ distinct }
+x,x^\prime\in\{0,1\}^m,y,y^\prime\in\{0,1\}^\ell,\Pr_{h\leftarrow
+H_{m,\ell}}[h(x)=y\land
+h(x^\prime)=y^\prime]=\dfrac{1}{2^{2\ell}}\)</span>​</p>
+<h3 id="set-lower-bound-protocol">Set lower bound protocol</h3>
+<p>我们令<span
+class="math inline">\(S\subseteq\{0,1\}^m\)</span>，并且满足<span
+class="math inline">\(S\in\mathrm{NP}\)</span>（我们可以在Prover的帮助下验证<span
+class="math inline">\(x\in S\)</span>）</p>
+<p>Set lower bound protocol可以帮助我们实现以下功能：</p>
+<ul>
+<li>如果<span class="math inline">\(|S|\ge B\)</span>，Verifier接受</li>
+<li>如果<span class="math inline">\(|S|\leq
+\dfrac{B}{2}\)</span>，Verifier拒绝</li>
+</ul>
+<figure>
+<img
+src="/img/post/Interactive%20Proof.assets/image-20240213105327162.png" srcset="/img/loading.gif" lazyload
+alt="image-20240213105327162" />
+<figcaption aria-hidden="true">image-20240213105327162</figcaption>
+</figure>
+<p>我们对Set lower bound protocol进行分析：</p>
+<p><strong>Soundness：</strong></p>
+<p>如果<span class="math inline">\(|S|\leq
+\dfrac{B}{2}\)</span>，那么我们有<span
+class="math inline">\(\Pr_{h,y}[\exists x\in S:h(x)=y]\leq\sum_{x\in
+S}\Pr_{h,y}[h(x)=y]=\dfrac{|S|}{2^\ell}\leq\dfrac{1}{2}\cdot\dfrac{B}{2^\ell}\leq\dfrac{1}{4}\)</span></p>
+<p><strong>Completeness：</strong></p>
+<p>如果<span class="math inline">\(|S|\ge B\)</span>，那么我们有</p>
+<h3 id="public-coin-interactive-proof-for-gni">Public Coin Interactive
+Proof for GNI</h3>
+<p>我们令<span class="math inline">\(S:=\{H\in\{0,1\}^{n^2}|H\equiv G_0
+\text{ or } H\equiv G_1\}\)</span>​</p>
+<figure>
+<img
+src="/img/post/Interactive%20Proof.assets/image-20240213110914995.png" srcset="/img/loading.gif" lazyload
+alt="image-20240213110914995" />
+<figcaption aria-hidden="true">image-20240213110914995</figcaption>
+</figure>
+<h3 id="perfect-completeness-for-public-coins">Perfect Completeness for
+Public Coins</h3>
+<p>Todo</p>
 
                 
               </div>
