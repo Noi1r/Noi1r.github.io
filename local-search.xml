@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>关于Lipschitz的思考</title>
+    <link href="/2024/04/17/%E5%85%B3%E4%BA%8ELipschitz%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <url>/2024/04/17/%E5%85%B3%E4%BA%8ELipschitz%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    
+    <content type="html"><![CDATA[<h1 id="关于lipschitz的思考">关于Lipschitz的思考</h1><p>今天在看TFHE论文的过程中，看到了 <spanclass="math inline">\(\kappa\)</span>-Lipschitz的概念</p><p>The notion of Lipschitz function always refers to the <spanclass="math inline">\(\ell_{\infty}\)</span>-distance: a function <spanclass="math inline">\(f: \mathbb{T}^m \rightarrow\)</span> <spanclass="math inline">\(\mathbb{T}^n\)</span> is said to be <spanclass="math inline">\(\kappa\)</span>-Lipschitz if <spanclass="math inline">\(\|f(x)-f(y)\|_{\infty} \leq\kappa\|x-y\|_{\infty}\)</span> for all inputs <spanclass="math inline">\(x, y\)</span>, where <spanclass="math inline">\(\|\cdot\|_{\infty}\)</span> is the <spanclass="math inline">\(\ell\)</span>-infinity norm.</p><blockquote><p>一个新奇的想法：在学密码学过程中遇到的一些数学概念，或许我们应该去究其本质，看看它原本在数学领域和其他领域的应用，或者说提出的原因，这样更有利于我们理解他的概念</p></blockquote><p>可能是笔者太久没学数学了，看到这样一个形式有点迷糊，甚至有一个奇怪的想法，<spanclass="math inline">\(x\)</span>和<spanclass="math inline">\(f(x)\)</span>量纲不同（考虑到量纲可能是因为选用的是∞范数，现在倒是想不起来为什么会考虑到量纲了）的话，这么限制有什么意义呢？</p><p>之后去查阅了相关资料，发现Lipschitz多用于深度学习领域，并且该概念十分简单易懂。我们把RHS中的<spanclass="math inline">\(\|x-y\|_{\infty}\)</span>除下来，其实就是斜率的概念<span class="math display">\[\frac{\|f(x)-f(y)\|_{\infty} }{|x-y\|_{\infty}}\leq \kappa\]</span> 这不就是代表<spanclass="math inline">\(f(x)\)</span>这个函数，在任意维度上，斜率最大也不超过<spanclass="math inline">\(\kappa\)</span>​嘛。在TLWE提到这个概念，应该也只是想约束一下error对于明文带来的影响。</p><p>在TLWE中，我们是将Lipschitz套在phasefunction上使用的，phase的自变量<spanclass="math inline">\(x\)</span>是ciphertext，因变量才是plaintext，因此笔者理解的是给ciphertext加error造成的影响，对于plaintext不大，所以才能正确解密。</p><p>我们可以这样看这个问题，假设密文是<spanclass="math inline">\((\pmb{a},b)\)</span>，对应的明文是<spanclass="math inline">\(\mu\)</span>，则有<spanclass="math inline">\(\varphi_s{(\pmb{a},b)}=b-\pmb{a}\pmb{s}=\mu\)</span>，我们引入噪声，可以参考TFHE中对于trivialencryption的概念，<spanclass="math inline">\((\pmb{0},e)\)</span>和<spanclass="math inline">\(e\)</span>，则有<spanclass="math inline">\(\varphi_s{(\pmb{0},e)}=e-\pmb{0}\pmb{s}=e\)</span></p><p>因此，我们可以有 <span class="math display">\[\frac{\|\varphi_s{(\pmb{a},b)}-\varphi_s{(\pmb{a},b-e)}\|_{\infty}}{|(\pmb{0},e)\|_{\infty}}\leq \kappa\]</span></p><p><span class="math display">\[\|\varphi_s{(\pmb{a},b)}-\varphi_s{(\pmb{a},b-e)}\|_{\infty} \leq\kappa{||(\pmb{0},e)\|_{\infty}}\]</span></p><p>因此，影响很小</p><h2 id="参考资料">参考资料：</h2><p>[1] <ahref="https://zhuanlan.zhihu.com/p/389024283">详细解析深度学习中的Lipschitz 条件</a></p><p>[2] Chillotti I, Gama N, Georgieva M, et al. TFHE: fast fullyhomomorphic encryption over the torus[J]. Journal of Cryptology, 2020,33(1): 34-91.</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Math</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Interactive Proof</title>
     <link href="/2024/02/11/Interactive%20Proof/"/>
     <url>/2024/02/11/Interactive%20Proof/</url>
