@@ -16,24 +16,24 @@
   <meta name="author" content="Wang Lizheng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Minkowski Theorem Minkowski Theorem 1 若多面体 \(\mathrm{S}\) 的体积 \(\operatorname{Vol}(S)&gt;\operatorname{Vol}(P)\), 则 \(\mathrm{S}\) 中必然存在两点 \(\mathrm{x}, \mathrm{y}\) 满足 \(x \neq y, x-y \in L\) 证明：首先,">
+    <meta name="description" content="Average Case Hardness（平均困难度） 平均情况下的困难度：随机选择参数，解决该问题的困难度。 密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度 例如：  大整数分解问题，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解； 对于Ajtai的OWF问题，如果我们随机的抽取 \(\mathbf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Minkowski定理">
-<meta property="og:url" content="http://example.com/2024/04/18/Minkowski%E5%AE%9A%E7%90%86/index.html">
+<meta property="og:title" content="Average- and worst-case complexity">
+<meta property="og:url" content="http://example.com/2024/04/18/Average-and-worst-case-complexity/index.html">
 <meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
-<meta property="og:description" content="Minkowski Theorem Minkowski Theorem 1 若多面体 \(\mathrm{S}\) 的体积 \(\operatorname{Vol}(S)&gt;\operatorname{Vol}(P)\), 则 \(\mathrm{S}\) 中必然存在两点 \(\mathrm{x}, \mathrm{y}\) 满足 \(x \neq y, x-y \in L\) 证明：首先,">
+<meta property="og:description" content="Average Case Hardness（平均困难度） 平均情况下的困难度：随机选择参数，解决该问题的困难度。 密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度 例如：  大整数分解问题，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解； 对于Ajtai的OWF问题，如果我们随机的抽取 \(\mathbf">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-18T08:22:42.000Z">
-<meta property="article:modified_time" content="2024-04-18T14:34:54.012Z">
+<meta property="article:published_time" content="2024-04-18T15:04:07.000Z">
+<meta property="article:modified_time" content="2024-04-18T15:23:32.778Z">
 <meta property="article:author" content="Wang Lizheng">
-<meta property="article:tag" content="Math, Lattice">
+<meta property="article:tag" content="Lattice">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Minkowski定理 - Wang Lizheng&#39;s Blog</title>
+  <title>Average- and worst-case complexity - Wang Lizheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Minkowski定理"></span>
+            <span id="subtitle" data-typed-text="Average- and worst-case complexity"></span>
           
         </div>
 
@@ -222,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-18 16:22" pubdate>
-          2024年4月18日 下午
+        <time datetime="2024-04-18 23:04" pubdate>
+          2024年4月18日 晚上
         </time>
       </span>
     
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          228 字
+          791 字
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          2 分钟
+          7 分钟
         
       </span>
     
@@ -282,151 +282,95 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Minkowski定理</h1>
+            <h1 id="seo-header">Average- and worst-case complexity</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="minkowski-theorem">Minkowski Theorem</h1>
-<p><strong>Minkowski Theorem 1</strong></p>
-<p>若多面体 <span class="math inline">\(\mathrm{S}\)</span> 的体积 <span
-class="math inline">\(\operatorname{Vol}(S)&gt;\operatorname{Vol}(P)\)</span>,
-则 <span class="math inline">\(\mathrm{S}\)</span> 中必然存在两点 <span
-class="math inline">\(\mathrm{x}, \mathrm{y}\)</span> 满足 <span
-class="math inline">\(x \neq y, x-y \in L\)</span></p>
-<p>证明：首先, 我们可以把 <span class="math inline">\(S\)</span>
-进行分割, 分割方法为 <span class="math display">\[
-S=\cup_{l \in L}((P+l) \cap S)=(P \cap S) \cap S_1 \cap \ldots S_k
-\]</span></p>
-<p>之后把所有 <span class="math inline">\(\mathrm{S}\)</span> 中不属于
-<span class="math inline">\(P\)</span> 的部分平移到 <span
-class="math inline">\(\mathrm{P}\)</span> 中, 也就 <span
-class="math inline">\(S_i\)</span> 若位于 <span
-class="math inline">\(P+l_i\)</span>, 则将其平移为 <span
-class="math inline">\(S_i-l=S_i^{\prime}\)</span>, 这样经过处理之后,
-<span class="math inline">\(\mathrm{S}\)</span> 的所有部分都位于P中,
-由于 <span
-class="math inline">\(\operatorname{Vol}(S)&gt;\operatorname{Vol}(P)\)</span>,
-所以有 <span class="math inline">\(\operatorname{Vol}(S \cap P)+\sum
-\operatorname{Vol}\left(S_i^{\prime}\right)&gt;\operatorname{Vol}(P)\)</span>,
-这意味着, <span class="math inline">\(S \cap P, S_i^{\prime}\)</span>
-中必然不可能两两不想交。</p>
-<p>这就意味着, 存在 <span class="math inline">\(\mathrm{s}\)</span> 属于
-(为简单设 <span class="math inline">\(S_0=S \cap P\)</span> ) , <span
-class="math inline">\(S_i^{\prime}, S_j^{\prime}(0 \leq i&lt;j \leq
-k\)</span> ) , 则意味着平移之前, <span
-class="math inline">\(\mathrm{S}\)</span> 中有两点 (分别是 <span
-class="math inline">\(s+l_i, s+l_j\)</span> ) 位于 <span
-class="math inline">\(S_i, S_j\)</span> 中, 则令 <span
-class="math inline">\(x=s+l_i, y=s+l_j\)</span>, 则 <span
-class="math inline">\(x-y=l_i-l_j \in L, x \neq y(i \neq j)\)</span></p>
-<p>闵科夫斯基格点定理: 按照上述定义, 凸体 <span
-class="math inline">\(S\)</span> 关于原点中心对称, 且体积 <span
-class="math inline">\(\operatorname{Vol}(S)&gt;\operatorname{Vol}(P) *
-2^n\)</span> ，则必然存在除了原点之外的格点 <span
-class="math inline">\(\mathrm{s}\)</span> 满足 <span
-class="math inline">\(s \in L, s \in S\)</span></p>
-<p>证明：考虑 <span class="math inline">\((1 / 2) S:=\{x \mid x=y / 2, y
-\in S\}\)</span> ，显然其体积为 <span
-class="math inline">\(\operatorname{Vol}(S) /
-2^n&gt;\operatorname{Vol}(P)\)</span> ，则根据引理，存在点 <span
-class="math inline">\(\mathrm{x}, \mathrm{y}\)</span> 满足 <span
-class="math inline">\(x, y \in S / 2, x \neq y, x-y \in L\)</span> 则有
-<span class="math inline">\(2 x, 2 y \in S\)</span>, 根据中心对称, 有
-<span class="math inline">\(-2 y \in S\)</span>, 再根据凸体性质, 取
-<span class="math inline">\(=0.5\)</span>, 则有 <span
-class="math inline">\(0.5 *(2 x)+(1-0.5) *(2 y)=x-y \in S\)</span></p>
-<p>又因为$ x-y L<span
-class="math inline">\(，因此\)</span>S$中存在格中的点。</p>
-<p><strong>Corollary 1.1</strong> <span class="math display">\[
-\lambda_1(\mathcal{L}) \leq \sqrt{n}(\operatorname{det}
-\mathcal{L})^{\frac{1}{n}}
-\]</span></p>
-<p>Proof. We give a proof of the corollary using the following two
-facts:</p>
+                <h2 id="average-case-hardness平均困难度">Average Case
+Hardness（平均困难度）</h2>
+<p>平均情况下的困难度：随机选择参数，解决该问题的困难度。</p>
+<p>密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度</p>
+<p>例如：</p>
 <ul>
-<li>A ball of radius <span
-class="math inline">\(&gt;\sqrt{n}(\operatorname{det}
-\mathcal{L})^{\frac{1}{n}}\)</span> is convex and centrally
-symmetric.</li>
-<li><span class="math inline">\(B\left(0, \sqrt{n}(\operatorname{det}
-\mathcal{L})^{\frac{1}{n}}\right) \supset\)</span> a cube of side length
-<span class="math inline">\(2(\operatorname{det}
-\mathcal{L})^{\frac{1}{n}}\)</span>, since</li>
+<li><strong>大整数分解问题</strong>，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解；</li>
+<li>对于<strong>Ajtai的OWF</strong>问题，如果我们随机的抽取 <span
+class="math inline">\(\mathbf{A}\)</span> 矩阵,
+并且给予它来构造OWF。只要保证大部分时候 <span
+class="math inline">\(\Lambda(\mathbf{A})\)</span>中的SVP是困难的,
+那么我们得到的 <span class="math inline">\(f_{\mathrm{A}}\)</span>​
+就是单向 (OWF) 并且collision resistant的。</li>
 </ul>
-<p><span class="math display">\[
-\operatorname{dist}((1, \ldots, 1),(0, \ldots, 0))=\sqrt{n} \text {. }
-\]</span></p>
-<p>It follows that <span class="math display">\[
-\operatorname{vol}\left(B\left(0, \sqrt{n}(\operatorname{det}
-\mathcal{L})^{\frac{1}{n}}\right)\right)&gt;2^n \operatorname{det}
-\mathcal{L} .
-\]</span></p>
-<p><strong>Remark 1.2</strong> We could obtain a more refined inequality
-if we use the exact formula for <span
-class="math inline">\(\operatorname{vol}(B(0, R))\)</span>. Choose <span
-class="math inline">\(R\)</span> such that <span
-class="math inline">\(\operatorname{vol}(B(0, R))=2^n \operatorname{det}
-\mathcal{L}\)</span>. Then <span
-class="math inline">\(\lambda_1(\mathcal{L}) \leq R\)</span>.</p>
-<p><strong>Minkowski Theorem 2</strong><br />
+<p>对于<strong>大整数分解问题</strong>，如果我们随机挑选N，我们知道
 <span class="math display">\[
-\left(\prod_{i=1}^n \lambda_i(\mathcal{L})\right)^{\frac{1}{n}} \leq
-\sqrt{n}(\operatorname{det} \mathcal{L})^{\frac{1}{n}}
-\]</span> <strong>Proof.</strong> We may assume <span
-class="math inline">\(\left\|\mathbf{b}_i\right\|=\lambda_i(\mathcal{L})\)</span>
-for <span class="math inline">\(i=1, \ldots, n\)</span>, and consider a
-lattice generated by <span class="math inline">\(\mathbf{b}_1, \ldots,
-\mathbf{b}_n\)</span>, possibly a sublattice of <span
-class="math inline">\(\mathcal{L}\)</span>​. <span
+\operatorname{Pr}\left[\mathbf{N}=2 \cdot
+\frac{\mathbf{N}}{2}\right]=\frac{1}{2}
+\]</span> 对于这个问题，我们挑选 <span
+class="math inline">\(\mathbf{N}=p \cdot q\)</span>, 并且选取 <span
+class="math inline">\(p, q\)</span> 为随机的质数, 那么在这个新的 <span
+class="math inline">\(\mathbf{N}\)</span> 的分布下,
+我们相信factoring是困难的。</p>
+<p>对于<strong>Ajtai的OWF</strong>问题，只要 <span
+class="math inline">\(\Lambda^{\perp}(\mathbf{A})\)</span>
+的SVP问题困难,
+我们的SIS构造的OWF就是安全的。那么如果我们均匀的随机生成矩阵 <span
+class="math inline">\(\mathbf{A}\)</span>, 这个矩阵构成的格 <span
+class="math inline">\(\Lambda, \Lambda^{\perp}\)</span>​
+中的SVP问题到底难不难呢? 这个问题很难回答</p>
+<p>我们可以尝试看能否把<strong>平均困难度</strong>归约成<strong>最坏情况困难度</strong></p>
+<h2 id="worst-case-hardness最坏情况困难度">Worst Case
+Hardness（最坏情况困难度）</h2>
+<p>首先, 我们先随机的生成一个 <span
+class="math inline">\(\Lambda\)</span> 中的格点 <span
+class="math inline">\(\mathbf{v}_i\)</span>
+。然后我们从随机噪音分布中生成一个噪音向量 <span
+class="math inline">\(\mathbf{r}_i\)</span>, 并且根据我们模糊化的结果,
+<span class="math inline">\(\|\mathbf{r}\| \leq \sqrt{n} \cdot
+\lambda_n\)</span> 。 <span class="math display">\[
+\mathbf{a}_i=\mathbf{v}_i+\mathbf{r}_i
+\]</span> 此时的<span
+class="math inline">\(\mathbf{a}_i\)</span>可以看作是平均分布的。 <span
 class="math display">\[
-T:=\left\{\mathbf{y} \in \mathbb{R}^n:
-\sum_{i=1}^n\left(\frac{\left\langle\mathbf{y},
-\widetilde{\mathbf{b}}_i\right\rangle}{\left\|\widetilde{\mathbf{b}}_i\right\|
-\lambda_i}\right)^2&lt;1\right\} .
+\mathbf{A}=\left[\mathbf{a}_1, \ldots, \mathbf{a}_m\right] \in
+\mathbb{R}_q^{n \times m}
 \]</span></p>
-<p><strong>Claim:</strong> The ellipsoid <span
-class="math inline">\(T\)</span> does not contain any nonzero lattice
-point. Let <span class="math inline">\(0 \neq \mathbf{y} \in
-\mathcal{L}\)</span>, and <span class="math inline">\(1 \leq k \leq
-n\)</span> maximal such that <span class="math display">\[
-\lambda_{k+1}(\mathcal{L}) \not\ge \|\mathbf{y}\| \geq
-\lambda_k(\mathcal{L}) .
-\]</span> We claim <span class="math inline">\(\mathbf{y} \in
-\operatorname{span}\left\{\mathbf{b}_1, \ldots,
-\mathbf{b}_k\right\}=\operatorname{span}\left\{\tilde{\mathbf{b}}_1,
-\ldots, \tilde{\mathbf{b}}_k\right\}\)</span>. If not, <span
-class="math inline">\(\mathbf{b}_1, \ldots, \mathbf{b}_k,
-\mathbf{y}\)</span> are <span class="math inline">\(k+1\)</span>
-linearly independent and their norms are less than <span
-class="math inline">\(\lambda_{k+1}\)</span>, a contradiction. Hence,
-<span class="math display">\[
-\begin{aligned}
-\sum_{i=1}^n\left(\frac{\left\langle\mathbf{y},
-\tilde{\mathbf{b}}_i\right\rangle}{\left\|\tilde{\mathbf{b}}_i\right\|
-\lambda_i}\right)^2 &amp;
-=\sum_{i=1}^k\left(\frac{\left\langle\mathbf{y},
-\tilde{\mathbf{b}}_i\right\rangle}{\left\|\tilde{\mathbf{b}}_i\right\|
-\lambda_i}\right)^2 \\
-&amp; \geq \sum_{i=1}^k
-\frac{1}{\lambda_k^2}\left(\frac{\left\langle\mathbf{y},
-\tilde{\mathbf{b}}_i\right\rangle}{\left\|\tilde{\mathbf{b}}_i\right\|}\right)^2
-\\
-&amp; =\frac{\|\mathbf{y}\|^2}{\lambda_k^2} \geq 1
-\end{aligned}
-\]</span> so <span class="math inline">\(\mathbf{y} \notin T\)</span>,
-i.e., <span class="math inline">\(T\)</span> does not contain any
-nonzero lattice vector. Hence, <span class="math display">\[
-2^n \operatorname{det}(\mathcal{L}) \geq
-\operatorname{vol}(T)=\left(\prod_{i=1}^n \lambda_i\right)
-\operatorname{vol}(B(0: 1)) \geq\left(\prod_{i=1}^n
-\lambda_i\right)\left(\frac{2}{\sqrt{n}}\right)^n
+<p>因为我们是拼接了 <span class="math inline">\(m\)</span>
+个类似的随机向量得到矩阵 <span class="math inline">\(\mathbf{A}\)</span>
+的, 所以这个矩阵也可以被看作是随机分布的。</p>
+<p>得到了 <span class="math inline">\(\mathbf{A}\)</span> 之后,
+我们使用这个矩阵来构造一个Ajtai OWF的实例 <span
+class="math inline">\(f_{\mathbf{A}}\)</span> 。这个时候, 因为从 <span
+class="math inline">\(\mathbf{A}\)</span>
+根本看不出来我们原本的Lattice是什么结构的, 对于一个adversary来说, 这个
+<span class="math inline">\(f_{\mathbf{A}}\)</span> 就是一个平均情况的,
+可能是任何Lattice形成的一个Ajtai OWF实例。这个时候,
+就算我们一开始使用的是空间中 “最难的”一个Lattice生成的随机向量,
+因为adversary并不知道这一回事,
+所以他只会觉得他在求解一个平均难度的问题。</p>
+<p>如果adversary可以成功的破解这个 <span
+class="math inline">\(f_{\mathrm{A}}\)</span> 实例的话,
+那么就代表我们找到了一个短向量 <span class="math inline">\(\mathbf{z}
+\in\{-1,0,1\}^m\)</span> 并且满足: <span class="math display">\[
+\sum\left(\mathbf{v}_i+\mathbf{r}_i\right) \mathbf{z}_i=\sum
+\mathbf{a}_i \mathbf{z}_i=0
 \]</span></p>
-<p>So</p>
-<p><span class="math display">\[
-\left(\prod_{i=1}^n \lambda_i\right)^{\frac{1}{n}} \leq
-\sqrt{n}(\operatorname{det} \mathcal{L})^{\frac{1}{n}}
+<p>我们把这个等式变换一下, 就可以得到如下的形式: <span
+class="math display">\[
+\sum \mathbf{v}_i \mathbf{z}_i=-\sum \mathbf{r}_i \mathbf{z}_i
 \]</span></p>
+<p>观察可以发现, 等式的左侧我们可以得到一个格点,
+而右侧我们可以得到一个相对来说较短的向量（并不是格点）。因为 <span
+class="math inline">\(\mathbf{r}\)</span> 向量长度的上限和 <span
+class="math inline">\(\mathbf{z}\)</span> 向量是个短向量的原因,
+我们可以约束右侧的向量: <span class="math display">\[
+\left\|\sum \mathbf{r}_i \mathbf{z}_i\right\| \approx \sqrt{m} \cdot
+\max \left\|\mathbf{r}_i\right\| \approx n \cdot \lambda_n
+\]</span></p>
+<p>虽然右侧的向量并不在格点上,
+但是我们发现这个向量相对来说还是比较短的。因为左侧的在 <span
+class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量的值,
+这就代表说左侧的格点向量也是很短的。这样一来, 我们就等于间接的解决了
+<span class="math inline">\(\Lambda\)</span>​ 中的短向量了。</p>
 
                 
               </div>
@@ -439,7 +383,7 @@ nonzero lattice vector. Hence, <span class="math display">\[
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Math-Lattice/" class="print-no-link">#Math, Lattice</a>
+        <a href="/tags/Lattice/" class="print-no-link">#Lattice</a>
       
     </div>
   
@@ -451,8 +395,8 @@ nonzero lattice vector. Hence, <span class="math display">\[
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Minkowski定理</div>
-      <div>http://example.com/2024/04/18/Minkowski定理/</div>
+      <div>Average- and worst-case complexity</div>
+      <div>http://example.com/2024/04/18/Average-and-worst-case-complexity/</div>
     </div>
     <div class="license-meta">
       
@@ -496,18 +440,12 @@ nonzero lattice vector. Hence, <span class="math display">\[
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/18/Average-and-worst-case-complexity/" title="Average- and worst-case complexity">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Average- and worst-case complexity</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/17/%E5%85%B3%E4%BA%8ELipschitz%E7%9A%84%E6%80%9D%E8%80%83/" title="关于Lipschitz的思考">
-                        <span class="hidden-mobile">关于Lipschitz的思考</span>
+                      <a href="/2024/04/18/Minkowski%E5%AE%9A%E7%90%86/" title="Minkowski定理">
+                        <span class="hidden-mobile">Minkowski定理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

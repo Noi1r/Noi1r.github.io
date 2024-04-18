@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Average- and worst-case complexity</title>
+    <link href="/2024/04/18/Average-and-worst-case-complexity/"/>
+    <url>/2024/04/18/Average-and-worst-case-complexity/</url>
+    
+    <content type="html"><![CDATA[<h2 id="average-case-hardness平均困难度">Average CaseHardness（平均困难度）</h2><p>平均情况下的困难度：随机选择参数，解决该问题的困难度。</p><p>密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度</p><p>例如：</p><ul><li><strong>大整数分解问题</strong>，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解；</li><li>对于<strong>Ajtai的OWF</strong>问题，如果我们随机的抽取 <spanclass="math inline">\(\mathbf{A}\)</span> 矩阵,并且给予它来构造OWF。只要保证大部分时候 <spanclass="math inline">\(\Lambda(\mathbf{A})\)</span>中的SVP是困难的,那么我们得到的 <span class="math inline">\(f_{\mathrm{A}}\)</span>​就是单向 (OWF) 并且collision resistant的。</li></ul><p>对于<strong>大整数分解问题</strong>，如果我们随机挑选N，我们知道<span class="math display">\[\operatorname{Pr}\left[\mathbf{N}=2 \cdot\frac{\mathbf{N}}{2}\right]=\frac{1}{2}\]</span> 对于这个问题，我们挑选 <spanclass="math inline">\(\mathbf{N}=p \cdot q\)</span>, 并且选取 <spanclass="math inline">\(p, q\)</span> 为随机的质数, 那么在这个新的 <spanclass="math inline">\(\mathbf{N}\)</span> 的分布下,我们相信factoring是困难的。</p><p>对于<strong>Ajtai的OWF</strong>问题，只要 <spanclass="math inline">\(\Lambda^{\perp}(\mathbf{A})\)</span>的SVP问题困难,我们的SIS构造的OWF就是安全的。那么如果我们均匀的随机生成矩阵 <spanclass="math inline">\(\mathbf{A}\)</span>, 这个矩阵构成的格 <spanclass="math inline">\(\Lambda, \Lambda^{\perp}\)</span>​中的SVP问题到底难不难呢? 这个问题很难回答</p><p>我们可以尝试看能否把<strong>平均困难度</strong>归约成<strong>最坏情况困难度</strong></p><h2 id="worst-case-hardness最坏情况困难度">Worst CaseHardness（最坏情况困难度）</h2><p>首先, 我们先随机的生成一个 <spanclass="math inline">\(\Lambda\)</span> 中的格点 <spanclass="math inline">\(\mathbf{v}_i\)</span>。然后我们从随机噪音分布中生成一个噪音向量 <spanclass="math inline">\(\mathbf{r}_i\)</span>, 并且根据我们模糊化的结果,<span class="math inline">\(\|\mathbf{r}\| \leq \sqrt{n} \cdot\lambda_n\)</span> 。 <span class="math display">\[\mathbf{a}_i=\mathbf{v}_i+\mathbf{r}_i\]</span> 此时的<spanclass="math inline">\(\mathbf{a}_i\)</span>可以看作是平均分布的。 <spanclass="math display">\[\mathbf{A}=\left[\mathbf{a}_1, \ldots, \mathbf{a}_m\right] \in\mathbb{R}_q^{n \times m}\]</span></p><p>因为我们是拼接了 <span class="math inline">\(m\)</span>个类似的随机向量得到矩阵 <span class="math inline">\(\mathbf{A}\)</span>的, 所以这个矩阵也可以被看作是随机分布的。</p><p>得到了 <span class="math inline">\(\mathbf{A}\)</span> 之后,我们使用这个矩阵来构造一个Ajtai OWF的实例 <spanclass="math inline">\(f_{\mathbf{A}}\)</span> 。这个时候, 因为从 <spanclass="math inline">\(\mathbf{A}\)</span>根本看不出来我们原本的Lattice是什么结构的, 对于一个adversary来说, 这个<span class="math inline">\(f_{\mathbf{A}}\)</span> 就是一个平均情况的,可能是任何Lattice形成的一个Ajtai OWF实例。这个时候,就算我们一开始使用的是空间中 “最难的”一个Lattice生成的随机向量,因为adversary并不知道这一回事,所以他只会觉得他在求解一个平均难度的问题。</p><p>如果adversary可以成功的破解这个 <spanclass="math inline">\(f_{\mathrm{A}}\)</span> 实例的话,那么就代表我们找到了一个短向量 <span class="math inline">\(\mathbf{z}\in\{-1,0,1\}^m\)</span> 并且满足: <span class="math display">\[\sum\left(\mathbf{v}_i+\mathbf{r}_i\right) \mathbf{z}_i=\sum\mathbf{a}_i \mathbf{z}_i=0\]</span></p><p>我们把这个等式变换一下, 就可以得到如下的形式: <spanclass="math display">\[\sum \mathbf{v}_i \mathbf{z}_i=-\sum \mathbf{r}_i \mathbf{z}_i\]</span></p><p>观察可以发现, 等式的左侧我们可以得到一个格点,而右侧我们可以得到一个相对来说较短的向量（并不是格点）。因为 <spanclass="math inline">\(\mathbf{r}\)</span> 向量长度的上限和 <spanclass="math inline">\(\mathbf{z}\)</span> 向量是个短向量的原因,我们可以约束右侧的向量: <span class="math display">\[\left\|\sum \mathbf{r}_i \mathbf{z}_i\right\| \approx \sqrt{m} \cdot\max \left\|\mathbf{r}_i\right\| \approx n \cdot \lambda_n\]</span></p><p>虽然右侧的向量并不在格点上,但是我们发现这个向量相对来说还是比较短的。因为左侧的在 <spanclass="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量的值,这就代表说左侧的格点向量也是很短的。这样一来, 我们就等于间接的解决了<span class="math inline">\(\Lambda\)</span>​ 中的短向量了。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Lattice</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Minkowski定理</title>
     <link href="/2024/04/18/Minkowski%E5%AE%9A%E7%90%86/"/>
     <url>/2024/04/18/Minkowski%E5%AE%9A%E7%90%86/</url>
