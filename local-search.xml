@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Moment Generationg Function</title>
+    <link href="/2024/05/13/Moment-Generationg-Function/"/>
+    <url>/2024/05/13/Moment-Generationg-Function/</url>
+    
+    <content type="html"><![CDATA[<h1 id="moment-generating-function">Moment Generating Function</h1><p>“我们需要更多的特征来描述分布，例如峰度，偏度，除了常用的平均值，方差，这些特征统一称为矩，那么有没有一个函数能够计算所有矩呢？当然有，矩母函数，你就可以通过微分来计算各种矩，而不是从定义的积分算，你肯定知道微分比积分容易吧！”</p><h2 id="矩moment的实际含义">「矩」（moment）的实际含义</h2><h3 id="物理意义">物理意义</h3><p>数学中矩的概念来自物理学。在物理学中，矩是表示距离和物理量乘积的物理量，表征物体的空间分布。由其定义，矩通常需要一个参考点（基点或参考系）来定义距离。如力和参考点距离乘积得到的力矩（或扭矩），原则上任何物理量和距离相乘都会产生<ahref="https://www.zhihu.com/search?q=力矩&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">力矩</a>，质量，电荷分布等。</p><h3 id="数学意义">数学意义</h3><p>矩是物体形状识别的重要参数指标。在统计学中，矩表征随机量的分布。如一个“<ahref="https://www.zhihu.com/search?q=二阶矩&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">二阶矩</a>”在一维上可测量其“宽度”，在更高阶的维度上由于其使用于橢球的空间分布，我们还可以对点的云结构进行测量和描述。其他矩用来描述诸如与均值的<ahref="https://www.zhihu.com/search?q=偏差分布&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">偏差分布</a>情况（偏态），或峰值的分布情况（<ahref="https://www.zhihu.com/search?q=峰态&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">峰态</a>）</p><p>定义在实数域的实函数相对于值c的n阶矩为： <spanclass="math display">\[\mu_n^{\prime}=\int_{-\infty}^{\infty}(x-c)^n f(x) d x\]</span> <strong>如果点表示<ahref="https://www.zhihu.com/search?q=概率密度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">概率密度</a></strong>，则第零阶矩表示总概率（即1），一阶（原点）矩则表示期望：<span class="math display">\[E(x)=\int_{-\infty}^{\infty} x f(x) d x\]</span>在方差等定义中，则将<strong>期望</strong>视作矩的中心，因为<strong>中心矩可以更好的体现关于分布形状的信息</strong>，而原点矩则体现的是关于原点的分布状况。<span class="math display">\[\operatorname{Var}(x)=\int_{-\infty}^{\infty}[x-E(x)]^2 f(x) d x\]</span>高阶矩则用作测量一个分布的<strong>重尾程度</strong>，通常用于金融分析中，比如说极小的概率赔1000w，也极其恐怖。</p><h2 id="矩生成函数moment-generating-function">矩生成函数（momentgenerating function）</h2><p>矩生成函数，顾名思义，是用于生成矩的函数。随机变量<spanclass="math inline">\(X\)</span>的矩生成函数定义为： <spanclass="math display">\[M_X(t)=\mathbb{E}(e^{tx}),\quad t\in R\]</span> 如果 <span class="math inline">\(X\)</span>具有连续概率密度函数 <span class="math inline">\(f(x)\)</span>,则它的矩生成函数由下式给出: <span class="math display">\[\begin{aligned}M_X(t) &amp; =\int_{-\infty}^{\infty} e^{t x} f(x) \mathrm{d} x \\&amp; =\int_{-\infty}^{\infty}\left(1+t x+\frac{t^2x^2}{2!}+\cdots\right) f(x) \mathrm{d} x \\&amp; =1+t m_1+\frac{t^2 m_2}{2!}+\cdots\end{aligned}\]</span></p><p>其中 <span class="math inline">\(m_i\)</span> 是第 <spanclass="math inline">\(i\)</span> 个矩。 <spanclass="math inline">\(M_X(-t)\)</span> 是 <spanclass="math inline">\(f(x)\)</span> 的双边拉普拉斯变换。</p><p>对MGF取n次导数，并令t=0，则可以得到n阶矩<spanclass="math inline">\(E(x^n)\)</span> <span class="math display">\[E\left(X^n\right)=\left.\frac{d^n}{d t^n} M G F_x(t)\right|_{t=0}\]</span></p><p><span class="math display">\[\begin{aligned}&amp; E(X)=\left.\frac{d}{d t} M G F_x(t)\right|_{t=0}=M GF_x^{\prime}(0) \\&amp; E\left(X^2\right)=\left.\frac{d^2}{d t^2} M GF_x(t)\right|_{t=0}=M G F_x^{\prime \prime}(0)\end{aligned}\]</span></p><p>而求微分肯定比求积分容易，这也就是矩生成函数的意义所在。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Probability theory</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Average- and worst-case complexity</title>
     <link href="/2024/04/18/Average-and-worst-case-complexity/"/>
     <url>/2024/04/18/Average-and-worst-case-complexity/</url>

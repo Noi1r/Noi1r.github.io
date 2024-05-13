@@ -16,24 +16,24 @@
   <meta name="author" content="Wang Lizheng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Average Case Hardness（平均困难度） 平均情况下的困难度：随机选择参数，解决该问题的困难度。 密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度 例如：  大整数分解问题，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解； 对于Ajtai的OWF问题，如果我们随机的抽取 \(\mathbf">
+    <meta name="description" content="Moment Generating Function “我们需要更多的特征来描述分布，例如峰度，偏度，除了常用的平均值，方差，这些特征统一称为矩，那么有没有一个函数能够计算所有矩呢？当然有，矩母函数，你就可以通过微分来计算各种矩，而不是从定义的积分算，你肯定知道微分比积分容易吧！” 「矩」（moment）的实际含义 物理意义 数学中矩的概念来自物理学。在物理学中，矩是表示距离和物理量乘积的物理量，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Average- and worst-case complexity">
-<meta property="og:url" content="http://example.com/2024/04/18/Average-and-worst-case-complexity/index.html">
+<meta property="og:title" content="Moment Generationg Function">
+<meta property="og:url" content="http://example.com/2024/05/13/Moment-Generationg-Function/index.html">
 <meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
-<meta property="og:description" content="Average Case Hardness（平均困难度） 平均情况下的困难度：随机选择参数，解决该问题的困难度。 密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度 例如：  大整数分解问题，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解； 对于Ajtai的OWF问题，如果我们随机的抽取 \(\mathbf">
+<meta property="og:description" content="Moment Generating Function “我们需要更多的特征来描述分布，例如峰度，偏度，除了常用的平均值，方差，这些特征统一称为矩，那么有没有一个函数能够计算所有矩呢？当然有，矩母函数，你就可以通过微分来计算各种矩，而不是从定义的积分算，你肯定知道微分比积分容易吧！” 「矩」（moment）的实际含义 物理意义 数学中矩的概念来自物理学。在物理学中，矩是表示距离和物理量乘积的物理量，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-18T15:04:07.000Z">
-<meta property="article:modified_time" content="2024-04-18T15:23:32.778Z">
+<meta property="article:published_time" content="2024-05-13T10:33:12.000Z">
+<meta property="article:modified_time" content="2024-05-13T10:33:55.642Z">
 <meta property="article:author" content="Wang Lizheng">
-<meta property="article:tag" content="Lattice">
+<meta property="article:tag" content="Probability theory">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Average- and worst-case complexity - Wang Lizheng&#39;s Blog</title>
+  <title>Moment Generationg Function - Wang Lizheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Average- and worst-case complexity"></span>
+            <span id="subtitle" data-typed-text="Moment Generationg Function"></span>
           
         </div>
 
@@ -222,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-18 23:04" pubdate>
-          2024年4月18日 晚上
+        <time datetime="2024-05-13 18:33" pubdate>
+          2024年5月13日 晚上
         </time>
       </span>
     
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          791 字
+          601 字
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          7 分钟
+          6 分钟
         
       </span>
     
@@ -282,95 +282,68 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Average- and worst-case complexity</h1>
+            <h1 id="seo-header">Moment Generationg Function</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="average-case-hardness平均困难度">Average Case
-Hardness（平均困难度）</h2>
-<p>平均情况下的困难度：随机选择参数，解决该问题的困难度。</p>
-<p>密码学中要求的困难：随机选择一个key，没有敌手能在多项式时间内以不可忽略的概率破解该问题，即平均困难度</p>
-<p>例如：</p>
-<ul>
-<li><strong>大整数分解问题</strong>，我们要求的并非是最难分解的N难以分解，而是按照我们的方式选择出来的N大部分都难以分解；</li>
-<li>对于<strong>Ajtai的OWF</strong>问题，如果我们随机的抽取 <span
-class="math inline">\(\mathbf{A}\)</span> 矩阵,
-并且给予它来构造OWF。只要保证大部分时候 <span
-class="math inline">\(\Lambda(\mathbf{A})\)</span>中的SVP是困难的,
-那么我们得到的 <span class="math inline">\(f_{\mathrm{A}}\)</span>​
-就是单向 (OWF) 并且collision resistant的。</li>
-</ul>
-<p>对于<strong>大整数分解问题</strong>，如果我们随机挑选N，我们知道
+                <h1 id="moment-generating-function">Moment Generating Function</h1>
+<p>“我们需要更多的特征来描述分布，例如峰度，偏度，除了常用的平均值，方差，这些特征统一称为矩，那么有没有一个函数能够计算所有矩呢？当然有，矩母函数，你就可以通过微分来计算各种矩，而不是从定义的积分算，你肯定知道微分比积分容易吧！”</p>
+<h2 id="矩moment的实际含义">「矩」（moment）的实际含义</h2>
+<h3 id="物理意义">物理意义</h3>
+<p>数学中矩的概念来自物理学。在物理学中，矩是表示距离和物理量乘积的物理量，表征物体的空间分布。由其定义，矩通常需要一个参考点（基点或参考系）来定义距离。如力和参考点距离乘积得到的力矩（或扭矩），原则上任何物理量和距离相乘都会产生<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=力矩&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">力矩</a>，质量，电荷分布等。</p>
+<h3 id="数学意义">数学意义</h3>
+<p>矩是物体形状识别的重要参数指标。在统计学中，矩表征随机量的分布。如一个“<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=二阶矩&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">二阶矩</a>”在一维上可测量其“宽度”，在更高阶的维度上由于其使用于橢球的空间分布，我们还可以对点的云结构进行测量和描述。其他矩用来描述诸如与均值的<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=偏差分布&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">偏差分布</a>情况（偏态），或峰值的分布情况（<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=峰态&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">峰态</a>）</p>
+<p>定义在实数域的实函数相对于值c的n阶矩为： <span
+class="math display">\[
+\mu_n^{\prime}=\int_{-\infty}^{\infty}(x-c)^n f(x) d x
+\]</span> <strong>如果点表示<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=概率密度&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A151157559%7D">概率密度</a></strong>，则第零阶矩表示总概率（即1），一阶（原点）矩则表示期望：
 <span class="math display">\[
-\operatorname{Pr}\left[\mathbf{N}=2 \cdot
-\frac{\mathbf{N}}{2}\right]=\frac{1}{2}
-\]</span> 对于这个问题，我们挑选 <span
-class="math inline">\(\mathbf{N}=p \cdot q\)</span>, 并且选取 <span
-class="math inline">\(p, q\)</span> 为随机的质数, 那么在这个新的 <span
-class="math inline">\(\mathbf{N}\)</span> 的分布下,
-我们相信factoring是困难的。</p>
-<p>对于<strong>Ajtai的OWF</strong>问题，只要 <span
-class="math inline">\(\Lambda^{\perp}(\mathbf{A})\)</span>
-的SVP问题困难,
-我们的SIS构造的OWF就是安全的。那么如果我们均匀的随机生成矩阵 <span
-class="math inline">\(\mathbf{A}\)</span>, 这个矩阵构成的格 <span
-class="math inline">\(\Lambda, \Lambda^{\perp}\)</span>​
-中的SVP问题到底难不难呢? 这个问题很难回答</p>
-<p>我们可以尝试看能否把<strong>平均困难度</strong>归约成<strong>最坏情况困难度</strong></p>
-<h2 id="worst-case-hardness最坏情况困难度">Worst Case
-Hardness（最坏情况困难度）</h2>
-<p>首先, 我们先随机的生成一个 <span
-class="math inline">\(\Lambda\)</span> 中的格点 <span
-class="math inline">\(\mathbf{v}_i\)</span>
-。然后我们从随机噪音分布中生成一个噪音向量 <span
-class="math inline">\(\mathbf{r}_i\)</span>, 并且根据我们模糊化的结果,
-<span class="math inline">\(\|\mathbf{r}\| \leq \sqrt{n} \cdot
-\lambda_n\)</span> 。 <span class="math display">\[
-\mathbf{a}_i=\mathbf{v}_i+\mathbf{r}_i
-\]</span> 此时的<span
-class="math inline">\(\mathbf{a}_i\)</span>可以看作是平均分布的。 <span
+E(x)=\int_{-\infty}^{\infty} x f(x) d x
+\]</span>
+在方差等定义中，则将<strong>期望</strong>视作矩的中心，因为<strong>中心矩可以更好的体现关于分布形状的信息</strong>，而原点矩则体现的是关于原点的分布状况。
+<span class="math display">\[
+\operatorname{Var}(x)=\int_{-\infty}^{\infty}[x-E(x)]^2 f(x) d x
+\]</span>
+高阶矩则用作测量一个分布的<strong>重尾程度</strong>，通常用于金融分析中，比如说极小的概率赔1000w，也极其恐怖。</p>
+<h2 id="矩生成函数moment-generating-function">矩生成函数（moment
+generating function）</h2>
+<p>矩生成函数，顾名思义，是用于生成矩的函数。随机变量<span
+class="math inline">\(X\)</span>的矩生成函数定义为： <span
 class="math display">\[
-\mathbf{A}=\left[\mathbf{a}_1, \ldots, \mathbf{a}_m\right] \in
-\mathbb{R}_q^{n \times m}
+M_X(t)=\mathbb{E}(e^{tx}),\quad t\in R
+\]</span> 如果 <span class="math inline">\(X\)</span>
+具有连续概率密度函数 <span class="math inline">\(f(x)\)</span>,
+则它的矩生成函数由下式给出: <span class="math display">\[
+\begin{aligned}
+M_X(t) &amp; =\int_{-\infty}^{\infty} e^{t x} f(x) \mathrm{d} x \\
+&amp; =\int_{-\infty}^{\infty}\left(1+t x+\frac{t^2
+x^2}{2!}+\cdots\right) f(x) \mathrm{d} x \\
+&amp; =1+t m_1+\frac{t^2 m_2}{2!}+\cdots
+\end{aligned}
 \]</span></p>
-<p>因为我们是拼接了 <span class="math inline">\(m\)</span>
-个类似的随机向量得到矩阵 <span class="math inline">\(\mathbf{A}\)</span>
-的, 所以这个矩阵也可以被看作是随机分布的。</p>
-<p>得到了 <span class="math inline">\(\mathbf{A}\)</span> 之后,
-我们使用这个矩阵来构造一个Ajtai OWF的实例 <span
-class="math inline">\(f_{\mathbf{A}}\)</span> 。这个时候, 因为从 <span
-class="math inline">\(\mathbf{A}\)</span>
-根本看不出来我们原本的Lattice是什么结构的, 对于一个adversary来说, 这个
-<span class="math inline">\(f_{\mathbf{A}}\)</span> 就是一个平均情况的,
-可能是任何Lattice形成的一个Ajtai OWF实例。这个时候,
-就算我们一开始使用的是空间中 “最难的”一个Lattice生成的随机向量,
-因为adversary并不知道这一回事,
-所以他只会觉得他在求解一个平均难度的问题。</p>
-<p>如果adversary可以成功的破解这个 <span
-class="math inline">\(f_{\mathrm{A}}\)</span> 实例的话,
-那么就代表我们找到了一个短向量 <span class="math inline">\(\mathbf{z}
-\in\{-1,0,1\}^m\)</span> 并且满足: <span class="math display">\[
-\sum\left(\mathbf{v}_i+\mathbf{r}_i\right) \mathbf{z}_i=\sum
-\mathbf{a}_i \mathbf{z}_i=0
+<p>其中 <span class="math inline">\(m_i\)</span> 是第 <span
+class="math inline">\(i\)</span> 个矩。 <span
+class="math inline">\(M_X(-t)\)</span> 是 <span
+class="math inline">\(f(x)\)</span> 的双边拉普拉斯变换。</p>
+<p>对MGF取n次导数，并令t=0，则可以得到n阶矩<span
+class="math inline">\(E(x^n)\)</span> <span class="math display">\[
+E\left(X^n\right)=\left.\frac{d^n}{d t^n} M G F_x(t)\right|_{t=0}
 \]</span></p>
-<p>我们把这个等式变换一下, 就可以得到如下的形式: <span
-class="math display">\[
-\sum \mathbf{v}_i \mathbf{z}_i=-\sum \mathbf{r}_i \mathbf{z}_i
+<p><span class="math display">\[
+\begin{aligned}
+&amp; E(X)=\left.\frac{d}{d t} M G F_x(t)\right|_{t=0}=M G
+F_x^{\prime}(0) \\
+&amp; E\left(X^2\right)=\left.\frac{d^2}{d t^2} M G
+F_x(t)\right|_{t=0}=M G F_x^{\prime \prime}(0)
+\end{aligned}
 \]</span></p>
-<p>观察可以发现, 等式的左侧我们可以得到一个格点,
-而右侧我们可以得到一个相对来说较短的向量（并不是格点）。因为 <span
-class="math inline">\(\mathbf{r}\)</span> 向量长度的上限和 <span
-class="math inline">\(\mathbf{z}\)</span> 向量是个短向量的原因,
-我们可以约束右侧的向量: <span class="math display">\[
-\left\|\sum \mathbf{r}_i \mathbf{z}_i\right\| \approx \sqrt{m} \cdot
-\max \left\|\mathbf{r}_i\right\| \approx n \cdot \lambda_n
-\]</span></p>
-<p>虽然右侧的向量并不在格点上,
-但是我们发现这个向量相对来说还是比较短的。因为左侧的在 <span
-class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量的值,
-这就代表说左侧的格点向量也是很短的。这样一来, 我们就等于间接的解决了
-<span class="math inline">\(\Lambda\)</span>​ 中的短向量了。</p>
+<p>而求微分肯定比求积分容易，这也就是矩生成函数的意义所在。</p>
 
                 
               </div>
@@ -383,7 +356,7 @@ class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Lattice/" class="print-no-link">#Lattice</a>
+        <a href="/tags/Probability-theory/" class="print-no-link">#Probability theory</a>
       
     </div>
   
@@ -395,8 +368,8 @@ class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Average- and worst-case complexity</div>
-      <div>http://example.com/2024/04/18/Average-and-worst-case-complexity/</div>
+      <div>Moment Generationg Function</div>
+      <div>http://example.com/2024/05/13/Moment-Generationg-Function/</div>
     </div>
     <div class="license-meta">
       
@@ -408,7 +381,7 @@ class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年4月18日</div>
+          <div>2024年5月13日</div>
         </div>
       
       
@@ -440,18 +413,12 @@ class="math inline">\(\Lambda\)</span>格中的向量的值等于右侧的向量
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/13/Moment-Generationg-Function/" title="Moment Generationg Function">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Moment Generationg Function</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/18/Minkowski%E5%AE%9A%E7%90%86/" title="Minkowski定理">
-                        <span class="hidden-mobile">Minkowski定理</span>
+                      <a href="/2024/04/18/Average-and-worst-case-complexity/" title="Average- and worst-case complexity">
+                        <span class="hidden-mobile">Average- and worst-case complexity</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
