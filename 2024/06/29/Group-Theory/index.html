@@ -1,0 +1,1172 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.icon">
+  <link rel="icon" href="/img/favicon.icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wang Lizheng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="合成法则  结合律比交换律更为基础，因为函数（映射）的复合要满足结合律，先计算其中的哪几个映射关系并不影响最后的运算结果。 如果元素\(a\)有左逆\(l\)和右逆\(r\)，即\(la&#x3D;1\)和\(ar&#x3D;1\)，则\(l&#x3D;r\)，且\(a\)是可逆的，其逆元为\(l\)。证明如下：\(la &#x3D; 1,lar &#x3D; r\)，因此有\(l1&#x3D;r\)，即\(l&#x3D;r\) 如果\(a\)有逆元，则其逆元是唯一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Group Theory">
+<meta property="og:url" content="http://example.com/2024/06/29/Group-Theory/index.html">
+<meta property="og:site_name" content="Wang Lizheng&#39;s Blog">
+<meta property="og:description" content="合成法则  结合律比交换律更为基础，因为函数（映射）的复合要满足结合律，先计算其中的哪几个映射关系并不影响最后的运算结果。 如果元素\(a\)有左逆\(l\)和右逆\(r\)，即\(la&#x3D;1\)和\(ar&#x3D;1\)，则\(l&#x3D;r\)，且\(a\)是可逆的，其逆元为\(l\)。证明如下：\(la &#x3D; 1,lar &#x3D; r\)，因此有\(l1&#x3D;r\)，即\(l&#x3D;r\) 如果\(a\)有逆元，则其逆元是唯一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-29T13:37:20.000Z">
+<meta property="article:modified_time" content="2024-06-29T13:40:09.422Z">
+<meta property="article:author" content="Wang Lizheng">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Group Theory - Wang Lizheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wang Lizheng</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Group Theory"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-29 21:37" pubdate>
+          2024年6月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Group Theory</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="合成法则">合成法则</h2>
+<ol type="1">
+<li><p><strong>结合律</strong>比<strong>交换律</strong>更为基础，因为函数（映射）的复合要满足结合律，先计算其中的哪几个映射关系并不影响最后的运算结果。</p></li>
+<li><p>如果元素<span class="math inline">\(a\)</span>有左逆<span
+class="math inline">\(l\)</span>和右逆<span
+class="math inline">\(r\)</span>，即<span
+class="math inline">\(la=1\)</span>和<span
+class="math inline">\(ar=1\)</span>，则<span
+class="math inline">\(l=r\)</span>，且<span
+class="math inline">\(a\)</span>是可逆的，其逆元为<span
+class="math inline">\(l\)</span>。证明如下：<span
+class="math inline">\(la = 1,lar = r\)</span>，因此有<span
+class="math inline">\(l1=r\)</span>，即<span
+class="math inline">\(l=r\)</span></p></li>
+<li><p>如果<span
+class="math inline">\(a\)</span>有逆元，则其逆元是唯一的。证明如下：假设<span
+class="math inline">\(a\)</span>有两个逆元<span
+class="math inline">\(r\)</span>和<span
+class="math inline">\(r^\prime\)</span>，则有<span
+class="math inline">\(r = r ar^\prime=r^\prime\)</span></p></li>
+<li><p>一个元素<span
+class="math inline">\(a\)</span>可以有左逆和右逆，即使它是不可逆的。证明如下：
+Artin‘s Algebre 2.1.3：令<span
+class="math inline">\(\mathbb{N}\)</span>表示自然数集合<span
+class="math inline">\(\{1,2,3,\cdots\}\)</span>，且令<span
+class="math inline">\(s:\mathbb{N}\rightarrow
+\mathbb{N}\)</span>是平移映射，定义<span
+class="math inline">\(s(n)=n+1\)</span>，证明<span
+class="math inline">\(s\)</span>没有右逆，但是有无穷多个左逆。
+右逆：因为我们无法能构造出映射，使得<span class="math inline">\(\exists
+n\in \mathbb{N},f(n)+1=1\)</span>； 左逆：<span
+class="math inline">\(g(n)=\max\{n-1,1\}\)</span>，其中<span
+class="math inline">\(g(1)\)</span>可以为任何值，因此有无穷多个。</p></li>
+<li><p>注意：除非合成法则满足交换律，否则不应使用<span
+class="math inline">\(\frac{c}{a}\)</span>，因为我们无法确定该符号表示<span
+class="math inline">\(ab^{-1}\)</span>还是<span
+class="math inline">\(ba^{-1}\)</span></p></li>
+<li><p>If a square matrix has a left inverse or right inverse B (<span
+class="math inline">\(AB=I_n\)</span> or <span
+class="math inline">\(BA=I_n\)</span>), then A must be invertible and B
+is the inverse Proof: We first perform row reduction on A. There are
+elementary matrix <span class="math inline">\(E_1,E_2,\dots,E_k\)</span>
+so that <span class="math inline">\(A^\prime = E_k\dots E_1 A\)</span>
+either identity matrix or has bottom row zero. Then <span
+class="math inline">\(A^\prime B = E_k\dots E_1\)</span>, which is
+invertible. Hence the bottom row of <span class="math inline">\(A^\prime
+B\)</span> is not zero, and so is <span
+class="math inline">\(A^\prime\)</span>. So <span
+class="math inline">\(A^\prime=I_n\)</span>. Now we know <span
+class="math inline">\(E_k\dots E_1 A = I_n\)</span> and <span
+class="math inline">\(AB=I_n\)</span>, then there is <span
+class="math display">\[
+B = I_nB=E_k\dots E_1AB=E_k\dots E_1
+\]</span> so A is invertible and B is the inverse.</p></li>
+</ol>
+<h2 id="群与子群">群与子群</h2>
+<ol type="1">
+<li>一个群是带有下列性质的合成法则的集合<span
+class="math inline">\(G\)</span>：
+<ol type="1">
+<li>合成法则满足结合律，<span
+class="math inline">\(a(bc)=(ab)c\)</span>对<span
+class="math inline">\(G\)</span>中任意元素<span
+class="math inline">\(a,b,c\)</span>成立</li>
+<li><span class="math inline">\(G\)</span>中含有单位元<span
+class="math inline">\(e\)</span>，使得对于<span
+class="math inline">\(G\)</span>中任意元素<span
+class="math inline">\(a\)</span>有<span
+class="math inline">\(ea=ae=a\)</span></li>
+<li><span class="math inline">\(G\)</span>中任意元素<span
+class="math inline">\(a\)</span>均有逆元，即存在元素<span
+class="math inline">\(b\)</span>使得<span
+class="math inline">\(ab=ba=e\)</span></li>
+</ol></li>
+<li>阿贝尔群是合成法则满足交换律的群</li>
+<li>通过将不可逆元素去掉，<span class="math inline">\(n\times
+n\)</span>一般线性群是由所有<span class="math inline">\(n\times
+n\)</span>可逆矩阵构成的群，将它记为<span
+class="math inline">\(GL_n=\{n\times n \text{可逆矩阵}
+A\}\)</span>，实数矩阵<span
+class="math inline">\(GL_n(\mathbb{R})\)</span>，复数矩阵<span
+class="math inline">\(GL_n(\mathbb{C})\)</span></li>
+<li>置换（permutation）的集合在映射合成法则下构成一个群，指标集合<span
+class="math inline">\(\{1,2,3,\dots,n\}\)</span>的置换群成为对称群，用<span
+class="math inline">\(S_n\)</span>表示，为<span
+class="math inline">\(n!\)</span>阶</li>
+<li>群<span class="math inline">\(G\)</span>的子集<span
+class="math inline">\(H\)</span>称为一个子群，如果它具有以下性质：
+<ol type="1">
+<li>封闭性：若<span class="math inline">\(a\in H\)</span>并且<span
+class="math inline">\(b\in H\)</span>，则<span
+class="math inline">\(ab\in H\)</span></li>
+<li>恒等元：<span class="math inline">\(1\in H\)</span></li>
+<li>逆元：若<span class="math inline">\(a\in H\)</span> ，则<span
+class="math inline">\(a^{-1} \in H\)</span></li>
+</ol></li>
+<li>所有行列式为<span class="math inline">\(1\)</span>的<span
+class="math inline">\(n\times n\)</span>实矩阵构成一般线性群<span
+class="math inline">\(GL_n\)</span>的子群，称为<strong>特殊线性群</strong>，记为<span
+class="math inline">\(SL_n\)</span></li>
+<li>每个群<span
+class="math inline">\(G\)</span>都有两个明显的子群：群<span
+class="math inline">\(G\)</span>和由单独一个恒等元构成的平凡子群，单群（simple
+group）是正规子群仅有群<span
+class="math inline">\(G\)</span>和平凡子群的群</li>
+</ol>
+<h2 id="整数加群的子群">整数加群的子群</h2>
+<ol type="1">
+<li><span class="math inline">\(S\)</span>是整数加群<span
+class="math inline">\(\mathbb{Z}^+\)</span>的子群，则<span
+class="math inline">\(S\)</span>或为平凡子群<span
+class="math inline">\(\{0\}\)</span>，或是有形式<span
+class="math inline">\(\mathbb{Z}a\)</span>，其中<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(S\)</span>中最小正整数。
+<strong>证明</strong>：令<span class="math inline">\(S\)</span>是<span
+class="math inline">\(Z^+\)</span>的一个子群，则<span
+class="math inline">\(0\in S\)</span>。如果<span
+class="math inline">\(0\)</span>是<span
+class="math inline">\(S\)</span>中的唯一元素，则<span
+class="math inline">\(S\)</span>是平凡子群，因而对这一情形结论成立。否则，<span
+class="math inline">\(S\)</span>包含异于<span
+class="math inline">\(0\)</span>的整数<span
+class="math inline">\(n\)</span>，则<span
+class="math inline">\(S\)</span>包含正整数<span
+class="math inline">\(n\)</span>或<span
+class="math inline">\(-n\)</span>。接下来我们要证明<span
+class="math inline">\(S=\mathbb{Z}a\)</span>，其中<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(S\)</span>中最小正整数。 首先证明，<span
+class="math inline">\(\mathbb{Z}a\)</span>是<span
+class="math inline">\(S\)</span>的子集，即对于任意整数<span
+class="math inline">\(k\)</span>，<span class="math inline">\(ka\in
+S\)</span>成立。如果<span
+class="math inline">\(k\)</span>是正整数，则<span
+class="math inline">\(ka=a+a+a+\dots+a(k 项)\)</span>，由于<span
+class="math inline">\(a\in S\)</span>，可知<span
+class="math inline">\(ka \in S\)</span>，因此<span
+class="math inline">\(-ka\in S\)</span>，最后<span
+class="math inline">\(0a=0 \in S\)</span> 接下来证明<span
+class="math inline">\(S\)</span>是<span
+class="math inline">\(\mathbb{Z}a\)</span>的子集，记<span
+class="math inline">\(n=qa+r \in S\)</span>，有<span
+class="math inline">\(0\leq r &lt;a\)</span>，因为<span
+class="math inline">\(a\)</span>是<span
+class="math inline">\(S\)</span>中的最小正整数，因此<span
+class="math inline">\(r=0\)</span>，因此S中的任意整数均有<span
+class="math inline">\(qa\)</span>的形式。</li>
+<li>设<span class="math inline">\(a,b\)</span>是不全为<span
+class="math inline">\(0\)</span>的整数，并设<span
+class="math inline">\(d\)</span>是<span
+class="math inline">\(a\)</span>与<span
+class="math inline">\(b\)</span>的最大公约数，则有<span
+class="math inline">\(\mathbb{Z}d=\mathbb{Z}a+\mathbb{Z}b\)</span>
+<ol type="1">
+<li>若存在整数<span class="math inline">\(e\)</span>整除<span
+class="math inline">\(a\)</span>和<span
+class="math inline">\(b\)</span>，则一定有<span
+class="math inline">\(e|d\)</span></li>
+<li>存在整数<span class="math inline">\(r\)</span>和<span
+class="math inline">\(s\)</span>，使得<span
+class="math inline">\(d\)</span>可以写作<span
+class="math inline">\(d=ra+sb\)</span>的形式</li>
+</ol></li>
+<li><span class="math inline">\(p\)</span>是一个素数，若<span
+class="math inline">\(p\)</span>整除<span
+class="math inline">\(ab\)</span>，则<span
+class="math inline">\(p|a\)</span>或<span
+class="math inline">\(p|b\)</span> 证明如下：假设<span
+class="math inline">\(p\not \mid a\)</span>，则有<span
+class="math inline">\(\gcd(a,p)=1\)</span>，即<span
+class="math inline">\(ra+sp=1\)</span>，则有<span
+class="math inline">\(rab+spb=b\)</span>，因为<span
+class="math inline">\(p\mid rab\)</span>和<span
+class="math inline">\(p\mid spb\)</span>，因此有<span
+class="math inline">\(p|b\)</span></li>
+<li>令<span class="math inline">\(a,b\)</span>是非零整数，且<span
+class="math inline">\(m\)</span>是它们的最小公倍数，故<span
+class="math inline">\(\mathbb{Z}m=\mathbb{Z}a \cap \mathbb{Z}b\)</span>
+证明如下：<span class="math inline">\(\mathbb{Z}a \cap
+\mathbb{Z}b\)</span>是一个子群，但是它不是平凡子群，因为包含元素<span
+class="math inline">\(ab\)</span>，而<span
+class="math inline">\(ab\not=0\)</span>，故<span
+class="math inline">\(\mathbb{Z}a \cap
+\mathbb{Z}b\)</span>对于某个整数<span
+class="math inline">\(m\)</span>具有形式<span
+class="math inline">\(\mathbb{Z}m\)</span>，这个整数<span
+class="math inline">\(m\)</span>称为<span
+class="math inline">\(a\)</span>和<span
+class="math inline">\(b\)</span>的最小公倍数</li>
+<li><span class="math inline">\(d=\gcd{(a,b)}\)</span>和<span
+class="math inline">\(m=\operatorname{lcm}(a,b)\)</span>，有<span
+class="math inline">\(ab=dm\)</span> 证明如下：由于<span
+class="math inline">\(b/d\)</span>是一个整数，则<span
+class="math inline">\(a\)</span>整除<span
+class="math inline">\(ab/d\)</span>，同样<span
+class="math inline">\(b\)</span>整除<span
+class="math inline">\(ab/d\)</span>，根据定义，<span
+class="math inline">\(m\)</span>整除<span
+class="math inline">\(ab/d\)</span>，因此有<span
+class="math inline">\(dm|ab\)</span>；其次，记<span
+class="math inline">\(d=ra+sb\)</span>，有<span
+class="math inline">\(dm=ram+sbm\)</span>，因为<span
+class="math inline">\(ab|ram\)</span>和<span
+class="math inline">\(ab|sbm\)</span>，因此<span
+class="math inline">\(ab|rm\)</span>。因此<span
+class="math inline">\(dm=ab\)</span></li>
+</ol>
+<h2 id="循环群">循环群</h2>
+<ol type="1">
+<li>由<span class="math inline">\(x\)</span>生成的循环子群<span
+class="math inline">\(H\)</span>是<span
+class="math inline">\(x\)</span>的所有幂的元素的集合：<span
+class="math inline">\(H=\{\cdots,x^{-2},x^{-1},x^0,x,x^2,\cdots\}\)</span>，它是<span
+class="math inline">\(G\)</span>中包含<span
+class="math inline">\(x\)</span>的最小子群，记作<span
+class="math inline">\(\langle x \rangle\)</span></li>
+<li>令 <span class="math inline">\(\langle x\rangle\)</span> 是群 <span
+class="math inline">\(G\)</span> 的由元素 <span
+class="math inline">\(x\)</span> 生成的循环子群，且令 <span
+class="math inline">\(S\)</span> 表示满足 <span
+class="math inline">\(x^k=1\)</span> 的整数 <span
+class="math inline">\(k\)</span>的集合：
+<ol type="1">
+<li>集合 <span class="math inline">\(S\)</span> 是整数加群 <span
+class="math inline">\(\mathbf{Z}^{+}\)</span>的子群；</li>
+<li>两个幂 <span class="math inline">\(x^r=x^s\)</span> 对于 <span
+class="math inline">\(r \geqslant s\)</span> 成立当且仅当 <span
+class="math inline">\(x^{r-s}=1\)</span>，即当且仅当 <span
+class="math inline">\(r-s \in S\)</span>；</li>
+<li>假设 <span class="math inline">\(S\)</span> 是非平凡子群，则 <span
+class="math inline">\(S=\mathbf{Z} n\)</span> 对某个正整数 <span
+class="math inline">\(n\)</span> 成立。则幂 <span
+class="math inline">\(1, x, x^2, \cdots, x^{n-1}\)</span>是子群 <span
+class="math inline">\(\langle x\rangle\)</span> 中不同的元素，且 <span
+class="math inline">\(\langle x\rangle\)</span> 的阶为 <span
+class="math inline">\(n\)</span>。</li>
+</ol></li>
+<li>令 <span class="math inline">\(x\)</span> 是群中阶为 <span
+class="math inline">\(n\)</span> 的元素，且 <span
+class="math inline">\(k\)</span> 是一个整数，写成 <span
+class="math inline">\(k=q n+r\)</span>，其中 <span
+class="math inline">\(q\)</span> 和 <span
+class="math inline">\(r\)</span>均为整数，且 <span
+class="math inline">\(0 \leqslant r&lt;n\)</span>。今 <span
+class="math inline">\(d=\operatorname{gcd}(k, n)\)</span>，则 <span
+class="math inline">\(x^k\)</span> 的阶等于 <span
+class="math inline">\(\dfrac{n}{d}\)</span>，即利用<span
+class="math inline">\(k,d\)</span>和<span
+class="math inline">\(n\)</span>构造<span
+class="math inline">\(\operatorname{lcm}{(k,n)}\)</span></li>
+</ol>
+<h2 id="同态">同态</h2>
+<ol type="1">
+<li>设 <span class="math inline">\(G\)</span> 和 <span
+class="math inline">\(G^{\prime}\)</span>
+为用乘法记号表示的两个群，一个同态 <span class="math inline">\(\varphi:
+G \rightarrow G^{\prime}\)</span> 是 <span
+class="math inline">\(G\)</span> 到 <span
+class="math inline">\(G^{\prime}\)</span> 的映射，使得又于 <span
+class="math inline">\(G\)</span> 中任意元素 <span
+class="math inline">\(a, b\)</span> 有</li>
+</ol>
+<p><span class="math display">\[
+\varphi(a b)=\varphi(a) \varphi(b)
+\]</span></p>
+<p>即保持运算结构</p>
+<ol start="2" type="1">
+<li><strong>平凡同态</strong>：<span class="math inline">\(\forall x\in
+G, \varphi(x)=e\)</span>；若<span
+class="math inline">\(H\)</span>是<span
+class="math inline">\(G\)</span>的子群，则包含映射<span
+class="math inline">\(i:H\rightarrow G\)</span>定义为<span
+class="math inline">\(\forall x\in H, i(x)=x\)</span></li>
+<li>同态 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> 的像常记作 <span
+class="math inline">\(\operatorname{im} \varphi\)</span>, 它是 <span
+class="math inline">\(\varphi\)</span> 的像的集合:</li>
+</ol>
+<p><span class="math display">\[
+\operatorname{im} \varphi=\left\{x \in G^{\prime} \mid x=\varphi(a), a
+\in G\right\}
+\]</span></p>
+<ol start="4" type="1">
+<li><span class="math inline">\(\varphi\)</span> 的核记作 <span
+class="math inline">\(\operatorname{ker} \varphi\)</span>，是 <span
+class="math inline">\(G\)</span> 中所有映射到 <span
+class="math inline">\(G^{\prime}\)</span> 恒等元的那些元素的集合：</li>
+</ol>
+<p><span class="math display">\[
+\operatorname{ker} \varphi=\{a \in G \mid \varphi(a)=1\}
+\]</span></p>
+<ol start="5" type="1">
+<li>同态 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> 是单射的当且仅当它的核 <span
+class="math inline">\(K\)</span> 是 <span
+class="math inline">\(G\)</span> 的平凡子群 <span
+class="math inline">\(\{1\}\)</span></li>
+<li>群 <span class="math inline">\(G\)</span> 的子群 <span
+class="math inline">\(N\)</span> 是正规子群，如果对于 <span
+class="math inline">\(N\)</span> 中任意元素 <span
+class="math inline">\(a\)</span> 和 <span
+class="math inline">\(G\)</span> 中任意元素 <span
+class="math inline">\(g\)</span>，共轮 <span
+class="math inline">\(gag^{-1} \in N\)</span></li>
+<li>一个同态的核是一个正规子群</li>
+<li>群 <span class="math inline">\(G\)</span> 的中心(用 <span
+class="math inline">\(Z\)</span> 表示) 是与 <span
+class="math inline">\(G\)</span> 中每个元素都可以交换的元素的集合：</li>
+</ol>
+<p><span class="math display">\[
+Z=\{z \in G \mid z x=x z \text {, 对于任意 } x \in G\}
+\]</span></p>
+<p>可以证明，群的中心是群的子群（封闭性、单位元、逆元）
+<strong>群的中心是群的正规子群，但是群的正规子群并不一定是群的中心。</strong>假设
+<span class="math inline">\(H\triangleleft G\)</span>， 我们有<span
+class="math inline">\(\forall a \in G, aHa^{-1} = H\)</span>， 即有<span
+class="math inline">\(aH = Ha\)</span>，但是这并不意味者<span
+class="math inline">\(H\)</span>中的每一个元素对于群元素都是可交换的，可能存在<span
+class="math inline">\(h\in G, h^\prime \in G, ah=h^\prime a\)</span></p>
+<ol start="9" type="1">
+<li>对于任意一个正规子群，均可以构造出来一个同态将其作为核（商群）</li>
+</ol>
+<h2 id="同构">同构</h2>
+<ol type="1">
+<li>一个从群 <span class="math inline">\(G\)</span> 到群 <span
+class="math inline">\(G^{\prime}\)</span> 的同构 <span
+class="math inline">\(\varphi: G \rightarrow G^{\prime}\)</span>
+是双射群同态，使得 <span class="math inline">\(\varphi(a b)=\varphi(a)
+\varphi(b)\)</span> 对于所有 <span class="math inline">\(a, b \in
+G\)</span> 成立。</li>
+<li>如果 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> 是同构，则其逆映射 <span
+class="math inline">\(\varphi^{-1}: G^{\prime} \rightarrow G\)</span>
+也是同构</li>
+<li>恒等映射和共轭都是自同构</li>
+<li>利用共轭构造出来的新元素与原元素阶相同，该结论可以单独证明，也可以直接利用同构得出</li>
+</ol>
+<h2 id="等价关系和划分">等价关系和划分</h2>
+<ol type="1">
+<li>集合 <span class="math inline">\(S\)</span> 上的等价关系是 <span
+class="math inline">\(S\)</span>
+中某些元素对之间的关系，我们通常将它们记为 <span class="math inline">\(a
+\sim b\)</span>，并称为 <span class="math inline">\(a\)</span> 与 <span
+class="math inline">\(b\)</span>
+的一个等价。一个等价关系需要满足下面的条件：
+<ul>
+<li>传递的：若 <span class="math inline">\(a \sim b\)</span> 且 <span
+class="math inline">\(b \sim c\)</span>, 则 <span
+class="math inline">\(a \sim c\)</span>.</li>
+<li>对称的：若 <span class="math inline">\(a \sim b\)</span>, 则 <span
+class="math inline">\(b \sim a\)</span>.</li>
+<li>自反的：对所有 <span class="math inline">\(a, a \sim
+a\)</span>.</li>
+</ul></li>
+<li>集合 <span class="math inline">\(S\)</span> 上的一个等价关系确定集合
+<span class="math inline">\(S\)</span> 的一个划分，反之亦然</li>
+<li>集合之间的任意映射 <span class="math inline">\(f: S \rightarrow
+T\)</span> 在其定义域 <span class="math inline">\(S\)</span>
+上定义了一个等价关系，是由规则 “如果 <span
+class="math inline">\(f(a)=f(b)\)</span> 则 <span
+class="math inline">\(a \sim b\)</span>. ”给出的等价关系。</li>
+<li>令 <span class="math inline">\(K\)</span> 是同态 <span
+class="math inline">\(\varphi: G \rightarrow G^{\prime}\)</span> 的核.
+<span class="math inline">\(\varphi\)</span> 的包含 <span
+class="math inline">\(G\)</span> 中元素 <span
+class="math inline">\(a\)</span> 的纤维是核 <span
+class="math inline">\(K\)</span> 的陪集 <span class="math inline">\(a
+K\)</span>. 这些陪集构成了群 <span class="math inline">\(G\)</span>
+的划分, 且这个划分对应着 <span class="math inline">\(\varphi\)</span>
+的像的元素。</li>
+</ol>
+<h2 id="陪集">陪集</h2>
+<ol type="1">
+<li>群 <span class="math inline">\(G\)</span> 的子群 <span
+class="math inline">\(H\)</span> 的左陪集是群 <span
+class="math inline">\(G\)</span> 的划分，群 <span
+class="math inline">\(G\)</span> 的子群 <span
+class="math inline">\(H\)</span> 的所有左陪集 <span
+class="math inline">\(a H\)</span> 有相同的阶</li>
+<li>设 <span class="math inline">\(G\)</span> 是有限群且 <span
+class="math inline">\(H\)</span> 是 <span
+class="math inline">\(G\)</span> 的子群. <span
+class="math inline">\(H\)</span> 的阶整除 <span
+class="math inline">\(G\)</span> 的阶</li>
+<li>设 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> : 是有限群的一个同态，则
+<ul>
+<li><span class="math inline">\(|G|=|\operatorname{ker} \varphi|
+\cdot|\operatorname{im} \varphi|\)</span>；</li>
+<li><span class="math inline">\(|\operatorname{ker} \varphi|\)</span>
+整除 <span class="math inline">\(|G|\)</span>；</li>
+<li><span class="math inline">\(|\operatorname{im} \varphi|\)</span>
+整除 <span class="math inline">\(|G|\)</span> 和 <span
+class="math inline">\(\left|G^{\prime}\right|\)</span>。</li>
+</ul></li>
+<li>令 <span class="math inline">\(G \supset H \supset K\)</span> 是群
+<span class="math inline">\(G\)</span> 的子群, 则 <span
+class="math inline">\([G: K]=[G: H][H: K]\)</span></li>
+</ol>
+<h2 id="对应定理">对应定理</h2>
+<ol type="1">
+<li>令 <span class="math inline">\(\varphi: G \rightarrow
+\mathcal{G}\)</span> 是一个群同态且其核为 <span
+class="math inline">\(K\)</span>, 令 <span
+class="math inline">\(\mathcal{H}\)</span> 是 <span
+class="math inline">\(\mathcal{G}\)</span> 的子群. 记逆像 <span
+class="math inline">\(\varphi^{-1}(\mathcal{H})\)</span> 为 <span
+class="math inline">\(H\)</span>. 则 <span
+class="math inline">\(H\)</span> 是 <span
+class="math inline">\(G\)</span> 的子群且 <span class="math inline">\(H
+\supset K\)</span>. 如果 <span
+class="math inline">\(\mathcal{H}\)</span> 是 <span
+class="math inline">\(\mathcal{G}\)</span> 的正规子群, 则 <span
+class="math inline">\(H\)</span> 是 <span
+class="math inline">\(G\)</span> 的正规子群. 如果 <span
+class="math inline">\(\varphi\)</span> 是满射, 且 <span
+class="math inline">\(H\)</span> 是 <span
+class="math inline">\(G\)</span> 的正规子群, 则 <span
+class="math inline">\(\mathcal{H}\)</span> 是 <span
+class="math inline">\(\mathcal{G}\)</span> 的正规子群.</li>
+</ol>
+<h2 id="商群">商群</h2>
+<ol type="1">
+<li>令 <span class="math inline">\(N\)</span> 是 <span
+class="math inline">\(G\)</span> 的正规子群, 令<span
+class="math inline">\(\bar{G}\)</span>表示 <span
+class="math inline">\(N\)</span> 在 <span
+class="math inline">\(G\)</span> 中的陪集的集合. 存在 <span
+class="math inline">\(\bar{G}\)</span> 上的一个合成法则使其成为一个群,
+使得定义为 <span class="math inline">\(\pi(a)=\bar{a}\)</span> 的映射
+<span class="math inline">\(\pi: G \rightarrow \bar{G}\)</span>
+是一个核为 <span class="math inline">\(N\)</span> 的满同态。</li>
+<li>第一同构定理：设 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> 是一个满群同态, 其核 <span
+class="math inline">\(N=\operatorname{ker} \varphi\)</span>, 则商群
+<span class="math inline">\(\bar{G}=\)</span> <span
+class="math inline">\(G / N\)</span> 与像 <span
+class="math inline">\(G^{\prime}\)</span> 同构. 准确地说, 令 <span
+class="math inline">\(\pi: G \rightarrow \bar{G}\)</span> 是典范映射,
+则存在唯一一个同构映射 <span class="math inline">\(\bar{\varphi}:
+\bar{G} \rightarrow G^{\prime}\)</span> 使得 <span
+class="math inline">\(\varphi=\bar{\varphi} \circ \pi\)</span>. 证明：
+<span class="math inline">\(\bar{G}\)</span> 的元素是 <span
+class="math inline">\(N\)</span> 的陪集, 也是映射 <span
+class="math inline">\(\varphi\)</span> 的纤维 . 映射 <span
+class="math inline">\(\bar{\varphi}\)</span> 将非空纤维映射到纤维的像:
+<span class="math inline">\(\bar{\varphi}(\bar{x})=\varphi(x)\)</span>.
+对于任何集合间的满射 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span>, 可以形成纤维的集合 <span
+class="math inline">\(\bar{G}\)</span>, 然后可得到如上的图, 其中 <span
+class="math inline">\(\bar{\varphi}\)</span> 是双射,
+它将一个纤维映射到它的像. 当 <span
+class="math inline">\(\varphi\)</span> 是群同态时, <span
+class="math inline">\(\bar{\varphi}\)</span> 是同构, 这是因为 <span
+class="math inline">\(\bar{\varphi}(\overline{a b})=\varphi(a
+b)=\varphi(a) \varphi(b)=\bar{\varphi}(\bar{a})
+\bar{\varphi}(\bar{b})\)</span>.</li>
+<li>令 <span class="math inline">\(\varphi: G \rightarrow
+G^{\prime}\)</span> 是一个群同态, 其核为 <span
+class="math inline">\(N\)</span>, 像为 <span
+class="math inline">\(H^{\prime}\)</span>. 商群 <span
+class="math inline">\(\bar{G}=G / N\)</span> 同构于 <span
+class="math inline">\(H^{\prime}\)</span></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Mathematics/" class="print-no-link">#Mathematics</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Group Theory</div>
+      <div>http://example.com/2024/06/29/Group-Theory/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wang Lizheng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/13/Moment-Generationg-Function/" title="Moment Generationg Function">
+                        <span class="hidden-mobile">Moment Generationg Function</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
