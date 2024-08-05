@@ -24,7 +24,7 @@
 <meta property="og:description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。 我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。 该证明是基于随机编码，这不是很实用。为了">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-07-01T07:46:42.000Z">
-<meta property="article:modified_time" content="2024-07-01T07:48:33.813Z">
+<meta property="article:modified_time" content="2024-08-05T04:49:31.451Z">
 <meta property="article:author" content="Wang Lizheng">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary_large_image">
@@ -321,8 +321,8 @@ k\)</span>构成了消息空间的基础，<span
 class="math inline">\(e_i\)</span>的码字完全描述了线性码。因此，不需要带有2^k$条目的代码本。我们仅需要一个矩阵即可</p>
 <p>我们可以假设生成矩阵<span
 class="math inline">\(G\)</span>采取特定形式。事实上，如果我们在<span
-class="math inline">\(G\)</span>上执行基本行操作（超过<span
-class="math inline">\(Z_2\)</span>，这意味着我们将一行添加到另一行），我们不会更改代码中的码字集合。我们甚至可以在不从根本上改变代码属性的情况下对列进行排列。因此，使用高斯消除，我们可以假设<span
+class="math inline">\(G\)</span>上执行基本行操作（在<span
+class="math inline">\(Z_2\)</span>上，这意味着我们将一行添加到另一行），我们不会更改代码中的码字集合。我们甚至可以在不从根本上改变代码属性的情况下对列进行排列。因此，使用高斯消除，我们可以假设<span
 class="math inline">\(G\)</span>采取更简单的形式：</p>
 <p><span class="math display">\[
 G=\left[I_{k \times k} S\right]，
