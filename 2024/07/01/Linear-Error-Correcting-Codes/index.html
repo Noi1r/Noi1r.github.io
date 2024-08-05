@@ -24,7 +24,7 @@
 <meta property="og:description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。 我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。 该证明是基于随机编码，这不是很实用。为了">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-07-01T07:46:42.000Z">
-<meta property="article:modified_time" content="2024-08-05T04:49:31.451Z">
+<meta property="article:modified_time" content="2024-08-05T04:51:39.742Z">
 <meta property="article:author" content="Wang Lizheng">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary_large_image">
@@ -318,7 +318,8 @@ class="math display">\[
 c(01101)=c(01000)+c(00100)+c(00001)=c\left(e_2\right)+c\left(e_3\right)+c\left(e_5\right)\]</span>
 <span class="math inline">\(e_i, 1 \leq i \leq
 k\)</span>构成了消息空间的基础，<span
-class="math inline">\(e_i\)</span>的码字完全描述了线性码。因此，不需要带有2^k$条目的代码本。我们仅需要一个矩阵即可</p>
+class="math inline">\(e_i\)</span>的码字完全描述了线性码。因此，不需要带有<span
+class="math inline">\(2^k\)</span>条目的代码本。我们仅需要一个矩阵即可</p>
 <p>我们可以假设生成矩阵<span
 class="math inline">\(G\)</span>采取特定形式。事实上，如果我们在<span
 class="math inline">\(G\)</span>上执行基本行操作（在<span
