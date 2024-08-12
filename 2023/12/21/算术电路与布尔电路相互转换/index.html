@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="布尔电路 to 算术电路 在\((\mathbb{F},+,\cdot)\)上考虑一个函数\(f\)，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT} \}\)。要在\(\mathbb {F}\)上模拟计算，请将\(0\)编码为\(0_ \mathbb {F}\)(在\(\mathbb {F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Conversion between arithmetic circuit and Boolean circuit">
+<meta property="og:url" content="http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:site_name" content="瓦楞纸">
+<meta property="og:description" content="布尔电路 to 算术电路 在\((\mathbb{F},+,\cdot)\)上考虑一个函数\(f\)，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT} \}\)。要在\(\mathbb {F}\)上模拟计算，请将\(0\)编码为\(0_ \mathbb {F}\)(在\(\mathbb {F">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-21T13:55:16.000Z">
+<meta property="article:modified_time" content="2024-08-10T17:24:58.346Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Conversion between arithmetic circuit and Boolean circuit</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/04/17/%E5%85%B3%E4%BA%8ELipschitz%E7%9A%84%E6%80%9D%E8%80%83/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/12/12/ECDSA/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&text=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&is_video=false&description=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Conversion between arithmetic circuit and Boolean circuit&body=Check out this article: http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&name=Conversion between arithmetic circuit and Boolean circuit&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&t=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF-to-%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">布尔电路 to 算术电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF-to-%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">算术电路 to 布尔电路</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Conversion between arithmetic circuit and Boolean circuit
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-21T13:55:16.000Z" class="dt-published" itemprop="datePublished">2023-12-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="布尔电路-to-算术电路">布尔电路 to 算术电路</h2>
+<p>在<span
+class="math inline">\((\mathbb{F},+,\cdot)\)</span>上考虑一个函数<span
+class="math inline">\(f\)</span>，该函数可以由大小为多项式的布尔电路在其输入大小上计算，例如，在标准基础<span
+class="math inline">\(\{ \mathsf{XOR}，\mathsf{AND}，\mathsf{NOT}
+\}\)</span>。要在<span class="math inline">\(\mathbb
+{F}\)</span>上模拟计算，请将<span
+class="math inline">\(0\)</span>编码为<span class="math inline">\(0_
+\mathbb {F}\)</span>(在<span class="math inline">\(\mathbb
+{F}\)</span>中加法的中性)，将<span
+class="math inline">\(1\)</span>编码为<span class="math inline">\(1_
+\mathbb {F}\)</span>(乘法的中性)。布尔门可以模拟如下：</p>
+<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
+class="math inline">\(\mathsf{OR}\)</span>门，返回<span
+class="math inline">\(x+y - x \cdot y\)</span></p>
+<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
+class="math inline">\(\mathsf{AND}\)</span>门，返回<span
+class="math inline">\(x \cdot y\)</span></p>
+<p>要计算输入<span class="math inline">\((x，y)\)</span>的<span
+class="math inline">\(\mathsf{XOR}\)</span>门，返回<span
+class="math inline">\(x + y-2 \cdot x \cdot y\)</span></p>
+<p>要计算输入<span class="math inline">\(x\)</span>的<span
+class="math inline">\(\mathsf{NOT}\)</span>门，请返回<span
+class="math inline">\(1_ \mathbb{F} -x\)</span>。</p>
+<h2 id="算术电路-to-布尔电路">算术电路 to 布尔电路</h2>
+<p>考虑<span class="math inline">\(\mathbb{F}\)</span>的任何元素<span
+class="math inline">\(x\)</span>的二进制分解：<span
+class="math inline">\(x = \ sum_ {i = 0} ^ {\lceil \log | \mathbb {F} ||
+\rceil-1} b_i \cdot 2 ^ i\)</span>，<span class="math inline">\(b_i \in
+\{0_\mathbb{F}，1_\mathbb {F} \}\)</span>。</p>
+<ul>
+<li><span class="math inline">\(\mathbb {F}\)</span>上的加法: 通过<span
+class="math inline">\(\mathsf{XOR}\)</span>门得到第<span
+class="math inline">\(i\)</span>位的值，通过<span
+class="math inline">\(\mathsf{AND}\)</span>门得到第<span
+class="math inline">\(i\)</span>位的进位。</li>
+<li><span class="math inline">\(\mathbb {F}\)</span>上的乘法: 通过<span
+class="math inline">\(\mathsf{AND}\)</span>门和上述加法即可实现。</li>
+</ul>
+<p>其实就是模拟我们计算机所做的事情。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF-to-%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">布尔电路 to 算术电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF-to-%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">算术电路 to 布尔电路</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&text=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&is_video=false&description=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Conversion between arithmetic circuit and Boolean circuit&body=Check out this article: http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&title=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&name=Conversion between arithmetic circuit and Boolean circuit&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/12/21/%E7%AE%97%E6%9C%AF%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%B8%83%E5%B0%94%E7%94%B5%E8%B7%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/&t=Conversion between arithmetic circuit and Boolean circuit"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

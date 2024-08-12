@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Linux环境变量配置文件 笔者最近在配置服务器环境，第一次仔细琢磨了一下Linux的几个环境变量配置文件，遂（以Ubuntu22.04为例）写下这一篇博客： Linux环境变量 在自定义安装软件的时候，经常需要配置环境变量：  export命令显示当前系统定义的所有环境变量 echo $PATH命令输出当前的PATH环境变量的值  Linux环境变量配置方法一：export PATH 使用exp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux环境变量配置文件">
+<meta property="og:url" content="http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="瓦楞纸">
+<meta property="og:description" content="Linux环境变量配置文件 笔者最近在配置服务器环境，第一次仔细琢磨了一下Linux的几个环境变量配置文件，遂（以Ubuntu22.04为例）写下这一篇博客： Linux环境变量 在自定义安装软件的时候，经常需要配置环境变量：  export命令显示当前系统定义的所有环境变量 echo $PATH命令输出当前的PATH环境变量的值  Linux环境变量配置方法一：export PATH 使用exp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-03T06:54:50.000Z">
+<meta property="article:modified_time" content="2024-08-10T17:31:33.222Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux环境变量配置文件</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/08/12/Cyclotomic-polynomial/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/07/01/Linear-Error-Correcting-Codes/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&text=Linux环境变量配置文件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&is_video=false&description=Linux环境变量配置文件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux环境变量配置文件&body=Check out this article: http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&name=Linux环境变量配置文件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&t=Linux环境变量配置文件"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Linux环境变量配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">Linux环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E4%B8%80export-path"><span class="toc-number">1.1.1.</span> <span class="toc-text">Linux环境变量配置方法一：export PATH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E4%BA%8C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">Linux环境变量配置方法二：修改配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%99%BB%E5%BD%95linux%E6%97%B6%E8%A6%81%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">在登录Linux时要执行文件的过程如下：</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Linux环境变量配置文件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-03T06:54:50.000Z" class="dt-published" itemprop="datePublished">2024-08-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Linux/" rel="tag">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="linux环境变量配置文件">Linux环境变量配置文件</h1>
+<p>笔者最近在配置服务器环境，第一次仔细琢磨了一下Linux的几个环境变量配置文件，遂（以Ubuntu22.04为例）写下这一篇博客：</p>
+<h2 id="linux环境变量">Linux环境变量</h2>
+<p>在自定义安装软件的时候，经常需要配置环境变量：</p>
+<ul>
+<li><code>export</code>命令显示当前系统定义的所有环境变量</li>
+<li><code>echo $PATH</code>命令输出当前的<code>PATH</code>环境变量的值</li>
+</ul>
+<h3
+id="linux环境变量配置方法一export-path">Linux环境变量配置方法一：<code>export PATH</code></h3>
+<p>使用<code>export</code>命令直接修改<code>PATH</code>的值，使用该方法立即生效，但只在当前终端有效，切换终端后即失效，配置的环境变量中不要忘了加上原来的配置，即<code>$PATH</code>部分，避免覆盖原来配置。</p>
+<h3
+id="linux环境变量配置方法二修改配置文件">Linux环境变量配置方法二：修改配置文件</h3>
+<p>环境变量配置文件有：<code>/etc/profile</code>,
+<code>/etc/bash.bashrc</code>, <code>/etc/profile.d/*</code>,
+<code>~/.bashrc</code>, <code>~/.profile</code></p>
+<ul>
+<li><code>/etc/profile</code>：为系统的每个用户设置环境信息，当用户第一次登录(login
+shell)时，该文件被执行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/profile: system-wide .profile file <span class="keyword">for</span> the Bourne shell (sh(1))</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).</span></span><br><span class="line"></span><br><span class="line">if [ &quot;$&#123;PS1-&#125;&quot; ]; then</span><br><span class="line">  if [ &quot;$&#123;BASH-&#125;&quot; ] &amp;&amp; [ &quot;$BASH&quot; != &quot;/bin/sh&quot; ]; then</span><br><span class="line">    # The file bash.bashrc already sets the default PS1.</span><br><span class="line">    # PS1=&#x27;\h:\w\$ &#x27;</span><br><span class="line">    if [ -f /etc/bash.bashrc ]; then</span><br><span class="line">      . /etc/bash.bashrc</span><br><span class="line">    fi</span><br><span class="line">  else</span><br><span class="line">    if [ &quot;$(id -u)&quot; -eq 0 ]; then</span><br><span class="line">      PS1=&#x27;# &#x27;</span><br><span class="line">    else</span><br><span class="line">      PS1=&#x27;$ &#x27;</span><br><span class="line">    fi</span><br><span class="line">  fi</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ -d /etc/profile.d ]; then</span><br><span class="line">  for i in /etc/profile.d/*.sh; do</span><br><span class="line">    if [ -r $i ]; then</span><br><span class="line">      . $i</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">  unset i</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>我们可以观察到Ubuntu22.04的默认<code>/etc/profile</code>会首先执行<code>/etc/bash.bashrc</code>，之后判断是否为<code>root</code>用户，来确定终端提示符是<code>$</code>
+或 <code>#</code>，最后逐个执行<code>/etc/profile.d/</code>中的所有脚本
+由于
+<code>/etc/profile</code>只会在登录时自动执行，因此我们在自动切换用户的时候要注意手动执行<code>source /etc/profile</code></p>
+<ul>
+<li><code>/etc/profile.d</code>：目录中存放的是一些应用程序所需的启动脚本，而这些脚本文件是用来设置一些变量和运行一些初始化过程的。其中包括了颜色、语言、less、vim及which等命令的一些附加设置，其是由<code>/etc/profile</code>调用的，因此也仅在登录时启用。/etc/profile.d/
+比 /etc/profile 好维护。不想要什么变量直接删除/etc/profile.d/下对应的.sh
+的shell脚本即可，不用像/etc/profile需要改动此文件。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(base) ubuntu@VM-4-15-ubuntu:~$ ls /etc/profile.d/</span><br><span class="line">01-locale-fix.sh  bash_completion.sh  gawk.sh    Z97-byobu.sh               Z99-cloud-locale-test.sh</span><br><span class="line">apps-bin-path.sh  gawk.csh            qcloud.sh  Z99-cloudinit-warnings.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>/etc/bash.bashrc</code>：为每一个运行bash
+shell的用户执行此文件，当bash shell被打开时，该文件被读取。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">System-wide .bashrc file <span class="keyword">for</span> interactive bash(1) shells.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">To <span class="built_in">enable</span> the settings / commands <span class="keyword">in</span> this file <span class="keyword">for</span> login shells as well,</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">this file has to be sourced <span class="keyword">in</span> /etc/profile.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If not running interactively, don<span class="string">&#x27;t do anything</span></span></span><br><span class="line">[ -z &quot;$PS1&quot; ] &amp;&amp; return</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">check the window size after each command and, if necessary,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">update the values of LINES and COLUMNS.</span></span></span><br><span class="line">shopt -s checkwinsize</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set variable identifying the chroot you work in (used in the prompt below)</span></span></span><br><span class="line">if [ -z &quot;$&#123;debian_chroot:-&#125;&quot; ] &amp;&amp; [ -r /etc/debian_chroot ]; then</span><br><span class="line">    debian_chroot=$(cat /etc/debian_chroot)</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set a fancy prompt (non-color, overwrite the one in /etc/profile)</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">but only if not SUDOing and have SUDO_PS1 set; then assume smart user.</span></span></span><br><span class="line">if ! [ -n &quot;$&#123;SUDO_USER&#125;&quot; -a -n &quot;$&#123;SUDO_PS1&#125;&quot; ]; then</span><br><span class="line">  PS1=&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\u@\h:\w\$ &#x27;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Commented out, don&#x27;</span>t overwrite xterm -T <span class="string">&quot;title&quot;</span> -n <span class="string">&quot;icontitle&quot;</span> by default.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If this is an xterm <span class="built_in">set</span> the title to user@host:<span class="built_in">dir</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$TERM</span>&quot;</span> <span class="keyword">in</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">xterm*|rxvt*)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   PROMPT_COMMAND=<span class="string">&#x27;echo -ne &quot;\033]0;$&#123;USER&#125;@$&#123;HOSTNAME&#125;: $&#123;PWD&#125;\007&quot;&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   ;;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">*)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   ;;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="keyword">esac</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">enable</span> bash completion <span class="keyword">in</span> interactive shells</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   . /usr/share/bash-completion/bash_completion</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   . /etc/bash_completion</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> <span class="keyword">fi</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="keyword">fi</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">sudo</span> hint</span></span><br><span class="line">if [ ! -e &quot;$HOME/.sudo_as_admin_successful&quot; ] &amp;&amp; [ ! -e &quot;$HOME/.hushlogin&quot; ] ; then</span><br><span class="line">    case &quot; $(groups) &quot; in *\ admin\ *|*\ sudo\ *)</span><br><span class="line">    if [ -x /usr/bin/sudo ]; then</span><br><span class="line">        cat &lt;&lt;-EOF</span><br><span class="line">        To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.</span><br><span class="line">        See &quot;man sudo_root&quot; for details.</span><br><span class="line"></span><br><span class="line">        EOF</span><br><span class="line">    fi</span><br><span class="line">    esac</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">if</span> the command-not-found package is installed, use it</span></span><br><span class="line">if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-not-found ]; then</span><br><span class="line">        function command_not_found_handle &#123;</span><br><span class="line">                # check because c-n-f could&#x27;ve been removed in the meantime</span><br><span class="line">                if [ -x /usr/lib/command-not-found ]; then</span><br><span class="line">                   /usr/lib/command-not-found -- &quot;$1&quot;</span><br><span class="line">                   return $?</span><br><span class="line">                elif [ -x /usr/share/command-not-found/command-not-found ]; then</span><br><span class="line">                   /usr/share/command-not-found/command-not-found -- &quot;$1&quot;</span><br><span class="line">                   return $?</span><br><span class="line">                else</span><br><span class="line">                   printf &quot;%s: command not found\n&quot; &quot;$1&quot; &gt;&amp;2</span><br><span class="line">                   return 127</span><br><span class="line">                fi</span><br><span class="line">        &#125;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>~/.profile</code>：每个用户都可使用该文件输入专用于自己使用的shell信息，当用户登录时，该文件仅仅执行一次。是交互式login
+方式进入 bash 运行的。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">~/.profile: executed by the <span class="built_in">command</span> interpreter <span class="keyword">for</span> login shells.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file is not <span class="built_in">read</span> by bash(1), <span class="keyword">if</span> ~/.bash_profile or ~/.bash_login</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">exists.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">see /usr/share/doc/bash/examples/startup-files <span class="keyword">for</span> examples.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the files are located <span class="keyword">in</span> the bash-doc package.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the default <span class="built_in">umask</span> is <span class="built_in">set</span> <span class="keyword">in</span> /etc/profile; <span class="keyword">for</span> setting the <span class="built_in">umask</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> ssh logins, install and configure the libpam-umask package.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">umask</span> 022</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">if</span> running bash</span></span><br><span class="line">if [ -n &quot;$BASH_VERSION&quot; ]; then</span><br><span class="line">    # include .bashrc if it exists</span><br><span class="line">    if [ -f &quot;$HOME/.bashrc&quot; ]; then</span><br><span class="line">        . &quot;$HOME/.bashrc&quot;</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">set</span> PATH so it includes user<span class="string">&#x27;s private bin if it exists</span></span></span><br><span class="line">if [ -d &quot;$HOME/bin&quot; ] ; then</span><br><span class="line">    PATH=&quot;$HOME/bin:$PATH&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set PATH so it includes user&#x27;</span>s private bin <span class="keyword">if</span> it exists</span></span><br><span class="line">if [ -d &quot;$HOME/.local/bin&quot; ] ; then</span><br><span class="line">    PATH=&quot;$HOME/.local/bin:$PATH&quot;</span><br><span class="line">fi</span><br><span class="line">. &quot;$HOME/.cargo/env&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>~/.bashrc</code>：该文件包含专用于你的bash
+shell的bash信息，当登录时以及每次打开新的shell时，该文件被读取。交互式non-login
+方式进入 bash 运行的。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">~/.profile: executed by the <span class="built_in">command</span> interpreter <span class="keyword">for</span> login shells.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file is not <span class="built_in">read</span> by bash(1), <span class="keyword">if</span> ~/.bash_profile or ~/.bash_login</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">exists.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">see /usr/share/doc/bash/examples/startup-files <span class="keyword">for</span> examples.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the files are located <span class="keyword">in</span> the bash-doc package.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the default <span class="built_in">umask</span> is <span class="built_in">set</span> <span class="keyword">in</span> /etc/profile; <span class="keyword">for</span> setting the <span class="built_in">umask</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> ssh logins, install and configure the libpam-umask package.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">umask</span> 022</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">if</span> running bash</span></span><br><span class="line">if [ -n &quot;$BASH_VERSION&quot; ]; then</span><br><span class="line">    # include .bashrc if it exists</span><br><span class="line">    if [ -f &quot;$HOME/.bashrc&quot; ]; then</span><br><span class="line">        . &quot;$HOME/.bashrc&quot;</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">set</span> PATH so it includes user<span class="string">&#x27;s private bin if it exists</span></span></span><br><span class="line">if [ -d &quot;$HOME/bin&quot; ] ; then</span><br><span class="line">    PATH=&quot;$HOME/bin:$PATH&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set PATH so it includes user&#x27;</span>s private bin <span class="keyword">if</span> it exists</span></span><br><span class="line">if [ -d &quot;$HOME/.local/bin&quot; ] ; then</span><br><span class="line">    PATH=&quot;$HOME/.local/bin:$PATH&quot;</span><br><span class="line">fi</span><br><span class="line">. &quot;$HOME/.cargo/env&quot;</span><br><span class="line">(base) ubuntu@VM-4-15-ubuntu:~$ cat ~/.bashrc </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">~/.bashrc: executed by bash(1) <span class="keyword">for</span> non-login shells.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">see /usr/share/doc/bash/examples/startup-files (<span class="keyword">in</span> the package bash-doc)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> examples</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If not running interactively, don<span class="string">&#x27;t do anything</span></span></span><br><span class="line">case $- in</span><br><span class="line">    *i*) ;;</span><br><span class="line">      *) return;;</span><br><span class="line">esac</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">don&#x27;</span>t put duplicate lines or lines starting with space <span class="keyword">in</span> the <span class="built_in">history</span>.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">See bash(1) <span class="keyword">for</span> more options</span></span><br><span class="line">HISTCONTROL=ignoreboth</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">append to the <span class="built_in">history</span> file, don<span class="string">&#x27;t overwrite it</span></span></span><br><span class="line">shopt -s histappend</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">for setting history length see HISTSIZE and HISTFILESIZE in bash(1)</span></span></span><br><span class="line">HISTSIZE=1000</span><br><span class="line">HISTFILESIZE=2000</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">check the window size after each command and, if necessary,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">update the values of LINES and COLUMNS.</span></span></span><br><span class="line">shopt -s checkwinsize</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">If set, the pattern &quot;**&quot; used in a pathname expansion context will</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">match all files and zero or more directories and subdirectories.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">shopt -s globstar</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">make less more friendly for non-text input files, see lesspipe(1)</span></span></span><br><span class="line">[ -x /usr/bin/lesspipe ] &amp;&amp; eval &quot;$(SHELL=/bin/sh lesspipe)&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set variable identifying the chroot you work in (used in the prompt below)</span></span></span><br><span class="line">if [ -z &quot;$&#123;debian_chroot:-&#125;&quot; ] &amp;&amp; [ -r /etc/debian_chroot ]; then</span><br><span class="line">    debian_chroot=$(cat /etc/debian_chroot)</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">set a fancy prompt (non-color, unless we know we &quot;want&quot; color)</span></span></span><br><span class="line">case &quot;$TERM&quot; in</span><br><span class="line">    xterm-color|*-256color) color_prompt=yes;;</span><br><span class="line">esac</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">uncomment for a colored prompt, if the terminal has the capability; turned</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">off by default to not distract the user: the focus in a terminal window</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">should be on the output of commands, not on the prompt</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">force_color_prompt=yes</span></span></span><br><span class="line"></span><br><span class="line">if [ -n &quot;$force_color_prompt&quot; ]; then</span><br><span class="line">    if [ -x /usr/bin/tput ] &amp;&amp; tput setaf 1 &gt;&amp;/dev/null; then</span><br><span class="line">        # We have color support; assume it&#x27;s compliant with Ecma-48</span><br><span class="line">        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such</span><br><span class="line">        # a case would tend to support setf rather than setaf.)</span><br><span class="line">        color_prompt=yes</span><br><span class="line">    else</span><br><span class="line">        color_prompt=</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ &quot;$color_prompt&quot; = yes ]; then</span><br><span class="line">    PS1=&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &#x27;</span><br><span class="line">else</span><br><span class="line">    PS1=&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\u@\h:\w\$ &#x27;</span><br><span class="line">fi</span><br><span class="line">unset color_prompt force_color_prompt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">If this is an xterm set the title to user@host:dir</span></span></span><br><span class="line">case &quot;$TERM&quot; in</span><br><span class="line">xterm*|rxvt*)</span><br><span class="line">    PS1=&quot;\[\e]0;$&#123;debian_chroot:+($debian_chroot)&#125;\u@\h: \w\a\]$PS1&quot;</span><br><span class="line">    ;;</span><br><span class="line">*)</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">enable color support of ls and also add handy aliases</span></span></span><br><span class="line">if [ -x /usr/bin/dircolors ]; then</span><br><span class="line">    test -r ~/.dircolors &amp;&amp; eval &quot;$(dircolors -b ~/.dircolors)&quot; || eval &quot;$(dircolors -b)&quot;</span><br><span class="line">    alias ls=&#x27;ls --color=auto&#x27;</span><br><span class="line">    #alias dir=&#x27;dir --color=auto&#x27;</span><br><span class="line">    #alias vdir=&#x27;vdir --color=auto&#x27;</span><br><span class="line"></span><br><span class="line">    alias grep=&#x27;grep --color=auto&#x27;</span><br><span class="line">    alias fgrep=&#x27;fgrep --color=auto&#x27;</span><br><span class="line">    alias egrep=&#x27;egrep --color=auto&#x27;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">colored GCC warnings and errors</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export GCC_COLORS=&#x27;</span>error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01<span class="string">&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">some more ls aliases</span></span></span><br><span class="line">alias ll=&#x27;ls -alF&#x27;</span><br><span class="line">alias la=&#x27;ls -A&#x27;</span><br><span class="line">alias l=&#x27;ls -CF&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Add an &quot;alert&quot; alias for long running commands.  Use like so:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">  sleep 10; alert</span></span></span><br><span class="line">alias alert=&#x27;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot; &quot;$(history|tail -n1|sed -e &#x27;\&#x27;&#x27;s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//&#x27;\&#x27;&#x27;)&quot;&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Alias definitions.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">You may want to put all your additions into a separate file like</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">~/.bash_aliases, instead of adding them here directly.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">See /usr/share/doc/bash-doc/examples in the bash-doc package.</span></span></span><br><span class="line"></span><br><span class="line">if [ -f ~/.bash_aliases ]; then</span><br><span class="line">    . ~/.bash_aliases</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">enable programmable completion features (you don&#x27;</span>t need to <span class="built_in">enable</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">this, <span class="keyword">if</span> it<span class="string">&#x27;s already enabled in /etc/bash.bashrc and /etc/profile</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">sources /etc/bash.bashrc).</span></span></span><br><span class="line">if ! shopt -oq posix; then</span><br><span class="line">  if [ -f /usr/share/bash-completion/bash_completion ]; then</span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  elif [ -f /etc/bash_completion ]; then</span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  fi</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>~/.bash_logout</code>：当每次退出系统(退出bash
+shell)时，执行该文件。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">~/.bash_logout: executed by bash(1) when login shell exits.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">when leaving the console clear the screen to increase privacy</span></span><br><span class="line"></span><br><span class="line">if [ &quot;$SHLVL&quot; = 1 ]; then</span><br><span class="line">    [ -x /usr/bin/clear_console ] &amp;&amp; /usr/bin/clear_console -q</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3
+id="在登录linux时要执行文件的过程如下">在登录Linux时要执行文件的过程如下：</h3>
+<p>在刚登录Linux时，首先启动<code>/etc/profile</code>
+文件，然后再启动用户目录下的<code>~/.bash_profile</code>、<code>~/.bash_login</code>或<code>~/.profile</code>文件中的其中一个(根据不同的linux操作系统的不同，命名不一样)</p>
+<p>如果<code>~/.bash_profile</code>文件存在的话，一般还会执行
+<code>~/.bashrc</code>文件因为在
+<code>~/.bash_profile</code>文件中一般会有下面的代码：<code>if [ -f ~/.bashrc ] ; then . ./bashrc fi ~/.bashrc</code>。最后，在退出shell时，还会执行<code>~/.bash_logout</code>文件。</p>
+<p>执行顺序为： <code>/etc/profile</code> -&gt;
+<code>/etc/bash.bashrc</code> -&gt; <code>/etc/profile.d</code> -&gt;
+<code>~/.profile</code> -&gt; <code>~/.bashrc</code> -&gt;
+<code>~/.bash_logout</code></p>
+<p>笔者在写的时候也注意到貌似和网上一些介绍不太一样，但是这是笔者所观察到的情况，也没有去查阅Linux官方文档，因此可以辩证地看待。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Linux环境变量配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">Linux环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E4%B8%80export-path"><span class="toc-number">1.1.1.</span> <span class="toc-text">Linux环境变量配置方法一：export PATH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E4%BA%8C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">Linux环境变量配置方法二：修改配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%99%BB%E5%BD%95linux%E6%97%B6%E8%A6%81%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">在登录Linux时要执行文件的过程如下：</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&text=Linux环境变量配置文件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&is_video=false&description=Linux环境变量配置文件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux环境变量配置文件&body=Check out this article: http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Linux环境变量配置文件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&name=Linux环境变量配置文件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&t=Linux环境变量配置文件"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

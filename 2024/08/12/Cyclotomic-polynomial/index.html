@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前置知识 在复数域 \(\mathbb{C}\) 中，多项式 \(x^n-1\) 有 \(n\) 个根： \(\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1\) 。由 Euler 公式，可以写作 \(\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cyclotomic polynomial">
+<meta property="og:url" content="http://example.com/2024/08/12/Cyclotomic-polynomial/index.html">
+<meta property="og:site_name" content="瓦楞纸">
+<meta property="og:description" content="前置知识 在复数域 \(\mathbb{C}\) 中，多项式 \(x^n-1\) 有 \(n\) 个根： \(\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1\) 。由 Euler 公式，可以写作 \(\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \ma">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-12T03:31:13.000Z">
+<meta property="article:modified_time" content="2024-08-12T14:16:53.664Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cyclotomic polynomial</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/08/03/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/12/Cyclotomic-polynomial/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&text=Cyclotomic polynomial"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&is_video=false&description=Cyclotomic polynomial"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cyclotomic polynomial&body=Check out this article: http://example.com/2024/08/12/Cyclotomic-polynomial/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&name=Cyclotomic polynomial&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/12/Cyclotomic-polynomial/&t=Cyclotomic polynomial"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9%E7%BE%A4"><span class="toc-number">2.</span> <span class="toc-text">单位根群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%9C%86%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">分圆多项式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cyclotomic polynomial
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-12T03:31:13.000Z" class="dt-published" itemprop="datePublished">2024-08-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Mathematics/" rel="tag">Mathematics</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前置知识">前置知识</h2>
+<p>在复数域 <span class="math inline">\(\mathbb{C}\)</span> 中，多项式
+<span class="math inline">\(x^n-1\)</span> 有 <span
+class="math inline">\(n\)</span> 个根： <span class="math inline">\(\cos
+\frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k=0,1, \cdots,
+n-1\)</span> 。由 Euler 公式，可以写作 <span
+class="math inline">\(\mathrm{e}^{2 \pi i k / n}=\exp \frac{2 \pi
+\mathrm{i} k}{n}\)</span> 。 以下为了方便，记 <span
+class="math inline">\(\omega\_n=\exp \frac{2 \pi i}{n}\)</span> ，则
+<span class="math inline">\(\omega\_n^k=\left(\omega\_n\right)^k=\exp
+\frac{2 \pi i k}{n}\)</span> 。在上下文已知的情况下，可以用 <span
+class="math inline">\(\omega\)</span> 代替 <span
+class="math inline">\(\omega\_n\)</span> （在某些文献中，用 <span
+class="math inline">\(\varepsilon\)</span> 表达相同的含义）。
+根据上述记号， <span class="math inline">\(x^n-1\)</span> 的 <span
+class="math inline">\(n\)</span> 个根可以记作 <span
+class="math inline">\(1, \omega, \omega^2, \cdots, \omega^{n-1}\)</span>
+因此, 由 <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Vieta%27s_formulas">Vieta
+定理</a>（根与系数的关系），可以得到 性质 1.1: <span
+class="math inline">\(x^n-1=(x-1)(x-\omega)\left(x-\omega^2\right)
+\cdots\left(x-\omega^{n-1}\right)\)</span> 由初中的因式分解技巧，有
+<span
+class="math inline">\(x^n-1=(x-1)\left(x^{n-1}+x^{n-2}+\cdots+x+1\right)\)</span>
+，于是就有 推论 1.1: <span
+class="math inline">\(x^{n-1}+x^{n-2}+\cdots+x+1=(x-\omega)\left(x-\omega^2\right)
+\cdots\left(x-\omega^{n-1}\right)\)</span> 在上式中代入任何一个 <span
+class="math inline">\(\omega\_n^i\)</span>, 即可得到： 推论 1.2: <span
+class="math display">\[
+1 + \omega_n^k + \omega_n^{2k} + \cdots + \omega_n^{(n-1)k} =
+\begin{cases}
+0 &amp; \text{if } n \nmid k \\
+n &amp; \text{if } n \mid k
+\end{cases}
+\]</span></p>
+<h2 id="单位根群">单位根群</h2>
+<p>由公式 <span
+class="math inline">\(\omega\_n^k=\exp\frac{2\pi\mathrm{i}k}{n}\)</span>
+得知，<span class="math inline">\(1, \omega\_n, \omega\_n^2, \cdots,
+\omega\_n^{n-1}\)</span> 关于乘法运算<span
+class="math inline">\(\cdot\)</span>构成了一个 <span
+class="math inline">\(n\)</span> 阶循环群 <span
+class="math inline">\(\omega\_n\)</span> 被称为<strong>单位根群 (Group
+of root or unity)</strong>，其中 <span
+class="math inline">\(\omega\_n\)</span> 是 <span
+class="math inline">\(\omega\_n\)</span> 的一个生成元。 从而有 <span
+class="math inline">\(\omega\_n^a \cdot
+\omega\_n^b=\omega\_n^{a+b},\left(\omega\_n^a\right)^b=\omega\_n^{a b},
+\omega\_n^k=\omega\_{\lambda n}^{\lambda k}\)</span> ，以及特殊地 <span
+class="math inline">\(\overline{\omega\_n^k}=\omega\_n^{-k}\)</span>
+提到群，自然就会想到它的生成元。那哪些元素会成为它的生成元呢？
+如果一个单位根, 比如 <span
+class="math inline">\(\omega\_6^2=\frac{-1+\sqrt{3}
+\mathrm{i}}{2}\)</span>, 它其实也是一个 3 次的单位根,
+因此它所生成的所有单位根都是 3 次的, 而不会生成 <span
+class="math inline">\(\omega\_6=\frac{1+\sqrt{3} \mathrm{i}}{2}
+。\)</span> 由有限循环群的结论， <span
+class="math inline">\(\omega\_n^k\)</span> 是 <span
+class="math inline">\(\omega\_n\)</span> 的生成元，当且仅当 <span
+class="math inline">\(n \perp k\)</span> ，即 <span
+class="math inline">\((n, k)=1\)</span> 。因此，这些满足 <span
+class="math inline">\(n \perp k\)</span> 的单位根 <span
+class="math inline">\(\omega\_n^k\)</span>
+有着特殊的性质，这就是我们即将讨论的重点。 辨析：
+<strong>单位根:</strong> <span class="math inline">\(n\)</span>
+阶单位根是满足 $ x^n = 1$
+的复数根，这些根在复平面上均匀分布在单位圆上。单位根的一般形式为 <span
+class="math inline">\(\omega\_n^k\)</span>，其中 <span
+class="math inline">\(\omega\_n = e^{2\pi i / n}\)</span> 是一个主 <span
+class="math inline">\(n\)</span> 阶单位根，而 <span
+class="math inline">\(k\)</span> 是从 <span
+class="math inline">\(0\)</span> 到 <span
+class="math inline">\(n-1\)</span> 的整数。 <strong>本原单位根</strong>:
+一个 <span class="math inline">\(n\)</span>
+阶本原单位根是一种特殊的单位根，它的任意次幂（除了 <span
+class="math inline">\(n\)</span> 的倍数次）都不等于 <span
+class="math inline">\(1\)</span>。具体地，如果 <span
+class="math inline">\(\omega\_n^k\)</span> 是一个 <span
+class="math inline">\(n\)</span> 阶的本原单位根，那么对于任意非零整数
+<span class="math inline">\(m &lt; n\)</span> ，都有 <span
+class="math inline">\((\omega\_n^k)^m \neq 1\)</span>。</p>
+<h2 id="分圆多项式">分圆多项式</h2>
+<p>如果一个 <span class="math inline">\(n\)</span> 阶单位根 <span
+class="math inline">\(\omega\_n^k\)</span>, 满足对于任意的 <span
+class="math inline">\(i=1,2, \cdots, n-1, \omega\_n^{k-i} \neq
+1\)</span> (即 <span class="math inline">\(\omega\_n^k\)</span> 是群
+<span class="math inline">\(\omega\_n\)</span> 的生成元), 则称 <span
+class="math inline">\(n\)</span> 阶单位根 <span
+class="math inline">\(\omega\_n^k\)</span> 是<strong>本原的
+(Primitive)</strong>, <span class="math inline">\(\omega\_n^k\)</span>
+称为<strong>本原单位根 (Primitive root of unity)</strong>,
+简称<strong>原根</strong>。 定理 3.1: <span
+class="math inline">\(\omega\_n^k\)</span> 是 <span
+class="math inline">\(n\)</span> 阶本原单位根的充要条件是 <span
+class="math inline">\(n \perp k\)</span> 。 由定理3.1，可知 <span
+class="math inline">\(n\)</span> 阶本原单位根恰有 <span
+class="math inline">\(\phi(n)\)</span> 个 上面提到过, 以所有 <span
+class="math inline">\(n\)</span> 阶单位根为根的多项式为 <span
+class="math inline">\(x^n-1\)</span>， 那么以所有 <span
+class="math inline">\(\phi(n)\)</span> 个 <span
+class="math inline">\(n\)</span>
+阶本原单位根为根的多项式又有什么样的性质呢？这就是我们接下来要提到的分圆多项式。
+定义<strong>分圆多项式 (Cyclotomic polynomial)</strong> 所有以 <span
+class="math inline">\(n\)</span> 阶本原单位根为单根的首一多项式, 记作
+<span class="math inline">\(\Phi\_n(x)\)</span>, 即 <span
+class="math display">\[
+\Phi\_n(x)=\prod_{\substack{1 \leq k \leq n,(k,
+n)=1}}\left(x-\omega\_n^{\star}\right)
+\]</span> 注意到 <span class="math inline">\(n\)</span>
+个单位根将复平面上的单位圆 <span class="math inline">\(|z|=1\)</span>
+等分成了 <span class="math inline">\(n\)</span> 等分, 因此得名为<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/分圆多项式">分圆多项式
+(Cyclotomic)</a>。 由于 <span class="math inline">\(n\)</span>
+阶本原单位根一共有 <span class="math inline">\(\phi(n)\)</span> 个, 因此
+<span class="math inline">\(n\)</span> 阶分圆多项式的次数 <span
+class="math inline">\(\operatorname{deg} \Phi\_n(x)=\phi(n)\)</span>,
+这解释了为什么分圆多项式用 <span
+class="math inline">\(\Phi\_n(x)\)</span> 表示。
+分圆多项式的一个最基础最重要的定理由下面的定理 3.2 给出。 定理 3.2:
+<span class="math inline">\(\prod\_{d|n} \Phi\_d(x)=x^n-1 。\)</span>
+证明：
+证明这个定理之前，我们比较两边的次数，可以发现一个有趣的事实：<span
+class="math inline">\(\sum\_{d|n}\phi(d)=n\)</span>，这个的理解笔者刚学抽代的时候就有点迷糊，先给出该定理的证明（记录一下），之后再给出定理3.2的证明
+1. 如果 <span class="math inline">\(n=1\)</span>，<span
+class="math inline">\(\phi(n)=\phi(1)=1=n\)</span> 2. 如果 <span
+class="math inline">\(n\)</span> 是质数，<span
+class="math inline">\(\phi(n) = n-1\)</span>，因此有 <span
+class="math inline">\(\phi(n)+\phi(1)=n\)</span> 3. 如果 <span
+class="math inline">\(n\)</span> 是一个质数的幂，即<span
+class="math inline">\(n=p^k\)</span>，则有<span
+class="math inline">\(\sum\_{d \mid n} \phi(d)=\sum\_{i=0}^k
+\phi\left(p^i\right)=\sum\_{i=1}^k p^{i-1}(p-1)+1=p^k\)</span> 4. 如果
+<span class="math inline">\(n\)</span>
+是任意整数，则由整数环是唯一分解整环可得 <span
+class="math inline">\(n=p_1^{k\_1} p_2^{k\_2} p_3^{k\_3}\dots
+p_n^{k\_n}\)</span>，有<span
+class="math inline">\(\sum\_{d|n}\phi(d)=\sum\_{i_1=0}^{k\_1}\sum\_{i_2=0}^{k\_2}\dots\sum\_{i_n=0}^{k\_n}\phi(p_1^{i_1}
+p_2^{i_2} p_3^{i_3}\dots
+p_n^{i_n})=n(相互独立互质，利用欧拉函数的积性)\)</span>
+接下来我们证明定理3.2 给定一个 <span class="math inline">\(n\)</span>
+阶单位根 <span class="math inline">\(\omega\_n^k\)</span>, 我们定义
+<span class="math inline">\(d=\operatorname{gcd}(n, k)\)</span>
+。这意味着我们可以将 <span class="math inline">\(n\)</span> 和 <span
+class="math inline">\(k\)</span> 分别写为 <span
+class="math inline">\(n=n\_1d\)</span> 和 <span
+class="math inline">\(k=k\_1 d\)</span>, 其中 <span
+class="math inline">\(\operatorname{gcd}\left(n\_1,
+k\_1\right)=1\)</span> 。因此, <span
+class="math inline">\(\omega\_n^k=\omega\_{n\_1 d}^{k\_1
+d}=\left(\omega\_{n\_1 d}^d\right)^{k\_1}=\omega\_{n}^{k\_1}\)</span>
+。这里 <span class="math inline">\(\omega\_{n\_1}^{k\_1}\)</span> 是一个
+<span class="math inline">\(n\_1\)</span> 阶单位根 由于 <span
+class="math inline">\(n\_1\)</span> 和 <span
+class="math inline">\(k\_1\)</span> 互质, 所以 <span
+class="math inline">\(\omega\_{n\_1}^{k\_1}\)</span> 实际上是一个 <span
+class="math inline">\(n\_1\)</span> 阶的本原单位根。这表明, 从任意 <span
+class="math inline">\(n\)</span> 阶单位根出发, 通过适当的因子分解和简化,
+总能找到一个相对 "更原始" 的单位根, 即某个较小阶数的本原单位根
+<strong>互斥性</strong>：对于 <span class="math inline">\(n\)</span>
+的不同因数 <span class="math inline">\(d\)</span> 和 <span
+class="math inline">\(d^{\prime}\)</span>, 其中 <span
+class="math inline">\(d \neq d^{\prime}, d\)</span> 阶的本原单位根和
+<span class="math inline">\(d^{\prime}\)</span>
+阶的本原单位根是不同的。本原单位根的定义保证了它不能通过较小的幂次得到
+<span class="math inline">\(1\)</span> ,
+这意味着两个不同阶数的本原单位根不可能相等。 对于 <span
+class="math inline">\(n\)</span> 的每一个因数 <span
+class="math inline">\(d\)</span>，一个 <span
+class="math inline">\(d\)</span> 阶的本原单位根 <span
+class="math inline">\(\omega\_d^e\)</span> (其中 <span
+class="math inline">\(e\)</span> 是小于 <span
+class="math inline">\(d\)</span> 并与 <span
+class="math inline">\(d\)</span> 互质的整数), 也是一个 <span
+class="math inline">\(n\)</span> 阶单位根, 因为 <span
+class="math inline">\(\omega\_d^e=\omega\_{d /(n / d)}^{e(n /
+d)}=\omega\_n^{e(n / d)}\)</span> 从以上分析可知，所有 <span
+class="math inline">\(n\)</span> 的因数 <span
+class="math inline">\(d\)</span> 对应的 <span
+class="math inline">\(d\)</span> 阶本原单位根的乘积实际上构成了多项式
+<span class="math inline">\(x^n-1\)</span> 的根（性质1.1）。因为 <span
+class="math inline">\(x^n-1\)</span> 的根包括了所有 <span
+class="math inline">\(n\)</span> 阶单位根,
+而这些单位根又可以通过本原单位根表示。</p>
+<p>在定理 3.2 的等式两端代入 <span class="math inline">\(n=p\)</span> (
+<span class="math inline">\(p\)</span> 是素数), 由于 <span
+class="math inline">\(p\)</span> 的因子只有 1 和 <span
+class="math inline">\(p\)</span>, 就有 <span
+class="math inline">\(\Phi\_1(x) \Phi\_p(x)=x^p-1\)</span>, 由于 <span
+class="math inline">\(\Phi\_1(x)=x-1\)</span>, 因此我们得到了 <span
+class="math display">\[
+\Phi_p(x)=\frac{x^p-1}{x-1}=x^{p-1}+x^{p-2}+\cdots+1
+\]</span></p>
+<p>当 <span class="math inline">\(n\)</span> 比较小时, <span
+class="math inline">\(\Phi\_n(x)\)</span> 的性状如下: <span
+class="math display">\[
+\begin{aligned}
+&amp; \Phi\_1(x)=x-1 \\
+&amp; \Phi\_2(x)=x+1 \\
+&amp; \Phi\_3(x)=x^2+x+1 \\
+&amp; \Phi\_4(x)=x^2+1 \\
+&amp; \Phi\_5(x)=x^4+x^3+x^2+x+1 \\
+&amp; \Phi\_6(x)=x^2-x+1 \\
+&amp; \Phi\_7(x)=x^6+x^5+x^4+x^3+x^2+x+1 \\
+&amp; \Phi\_8(x)=x^4+1 \\
+&amp; \Phi\_9(x)=x^6+x^3+1 \\
+&amp; \Phi\_{10}(x)=x^4-x^3+x^2-x+1 \\
+&amp; \Phi\_{11}(x)=x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+&amp; \Phi\_{12}(x)=x^4-x^2+1 \\
+&amp;
+\Phi\_{13}(x)=x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
+\\
+&amp; \Phi\_{14}(x)=x^6-x^5+x^4-x^3+x^2-x+1 \\
+&amp; \Phi\_{15}(x)=x^8-x^7+x^5-x^4+x^3-x+1 \\
+&amp; \Phi\_{16}(x)=x^8+1 \\
+&amp;
+\Phi\_{17}(x)=x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
+\\
+&amp; \Phi\_{18}(x)=x^6-x^3+1 \\
+&amp;
+\Phi\_{19}(x)=x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
+\\
+&amp; \Phi\_{20}(x)=x^8-x^6+x^4-x^2+1 \\
+&amp; \Phi\_{21}(x)=x^{12}-x^{11}+x^9-x^8+x^6-x^4+x^3-x+1 \\
+&amp; \Phi\_{22}(x)=x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1 \\
+&amp;
+\Phi\_{23}(x)=x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}
+\\
+&amp; \quad+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+&amp; \Phi\_{24}(x)=x^8-x^4+1 \\
+&amp; \Phi\_{25}(x)=x^{20}+x^{15}+x^{10}+x^5+1 \\
+&amp;
+\Phi\_{26}(x)=x^{12}-x^{11}+x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1
+\\
+&amp; \Phi\_{27}(x)=x^{18}+x^9+1 \\
+&amp; \Phi\_{28}(x)=x^{12}-x^{10}+x^8-x^6+x^4-x^2+1 \\
+&amp;
+\Phi\_{29}(x)=x^{28}+x^{27}+x^{26}+x^{25}+x^{24}+x^{23}+x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14}
+\\
+&amp;
+\quad+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+&amp; \Phi\_{30}(x)=x^8+x^7-x^5-x^4-x^3+x+1
+\end{aligned}
+\]</span></p>
+<p>直觉告诉你, 分圆多项式的系数一定在 <span
+class="math inline">\(\{-1,0,1\}\)</span> 的范围中 ! 然而这却是假的。当
+<span class="math inline">\(n=105\)</span> 时, <span
+class="math display">\[
+\begin{aligned}
+\Phi\_{105}(x) &amp; =x^{48}+x^{47}+x^{46}-x^{43}-x^{42}-2
+x^{41}-x^{40}-x^{39}+x^{36}+x^{35}+x^{34}+x^{33}+x^{32}+x^{31}-x^{28}-x^{26}-x^{24}-x^{22}-x^{20}
+\\
+&amp; +x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}-x^9-x^8-2
+x^7-x^6-x^5+x^2+x+1
+\end{aligned}
+\]</span> 进一步, 当 <span class="math inline">\(n=463505=5 \times 7
+\times 17 \times 19 \times 41\)</span> 时, <span
+class="math inline">\(\Phi\_n(x)\)</span> 的绝对值最大的系数竟有 <span
+class="math inline">\(-17310!\)</span> 这也可以说明分圆多项式在 <span
+class="math inline">\(n\)</span> 较大时的增长速度是非常迅猛的。
+不过，虽然分圆多项式的系数很大，但是我们还是可以非常容易地求出它的值。因为如果对定理
+3.2 的等式两端取对数，我们就能得到 <span class="math display">\[
+\log \left(x^n-1\right)=\sum_{d, n} \log \Phi_d(x)
+\]</span></p>
+<p>可以看出，这是一个 Möbius 变换 (Dirichlet 前缀和)
+的形式。因此，我们尝试使用 Möbius 反转变换，即 <span
+class="math display">\[
+\log \Phi_n(x)=\sum_{d \mid n} \mu\left(\frac{n}{d}\right) \cdot \log
+\left(x^d-1\right)
+\]</span></p>
+<p>两边再取指数, 就有 <span class="math display">\[
+\Phi_n(x)=\prod_{d \mid n}\left(x^d-1\right)^{\mu(n / d)}
+\]</span></p>
+<p>于是我们就得到了一个计算 <span
+class="math inline">\(\Phi\_n(x)\)</span> 的表达式。 而定理 3.2
+中的式子是一个分解式，所有的分圆多项式都是在 <span
+class="math inline">\(\mathbb{Z}\)</span> 中不可约 (irreducible)
+的。</p>
+<h2 id="参考">参考</h2>
+<p>[1] https://yhx-12243.github.io/OI-transit/memos/17.html#mjx-eqn-2
+[2] https://blog.csdn.net/ADjky/article/details/61198817</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9%E7%BE%A4"><span class="toc-number">2.</span> <span class="toc-text">单位根群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%9C%86%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">分圆多项式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/12/Cyclotomic-polynomial/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&text=Cyclotomic polynomial"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&is_video=false&description=Cyclotomic polynomial"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cyclotomic polynomial&body=Check out this article: http://example.com/2024/08/12/Cyclotomic-polynomial/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&title=Cyclotomic polynomial"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/12/Cyclotomic-polynomial/&name=Cyclotomic polynomial&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/12/Cyclotomic-polynomial/&t=Cyclotomic polynomial"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
