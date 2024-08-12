@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Assumption 指数知识假设 (knowledge of exponent assumption, KEA) 是指给定 \(p\) 阶群 \(\mathbb{G}\) 和群 \(\mathbb{G}_T\) 、双线性映射关系 \(e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}\) 上生成元 \(g\)">
+    <meta name="description" content="Assumption指数知识假设 (knowledge of exponent assumption, KEA)  是指给定 $p$ 阶群 $\mathbb{G}$ 和群 $\mathbb{G}_T$ 、双线性映射关系 $e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}$ 上生成元 $g$ 及 $g^\alp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KEA-Knowledge-of-Exponent Assumption">
 <meta property="og:url" content="http://example.com/2023/12/12/%E7%AE%80%E5%8D%95%E8%AE%B2%E8%AE%B2KEA/index.html">
 <meta property="og:site_name" content="瓦楞纸">
-<meta property="og:description" content="Assumption 指数知识假设 (knowledge of exponent assumption, KEA) 是指给定 \(p\) 阶群 \(\mathbb{G}\) 和群 \(\mathbb{G}_T\) 、双线性映射关系 \(e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}\) 上生成元 \(g\)">
+<meta property="og:description" content="Assumption指数知识假设 (knowledge of exponent assumption, KEA)  是指给定 $p$ 阶群 $\mathbb{G}$ 和群 $\mathbb{G}_T$ 、双线性映射关系 $e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}$ 上生成元 $g$ 及 $g^\alp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-12T10:53:15.000Z">
 <meta property="article:modified_time" content="2024-08-10T17:24:58.346Z">
@@ -124,7 +124,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#assumption"><span class="toc-number">1.</span> <span class="toc-text">Assumption</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proof"><span class="toc-number">2.</span> <span class="toc-text">Proof</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Assumption"><span class="toc-number">1.</span> <span class="toc-text">Assumption</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof"><span class="toc-number">2.</span> <span class="toc-text">Proof</span></a></li></ol>
       </div>
     
   </span>
@@ -174,82 +174,36 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="assumption">Assumption</h2>
-<p><strong>指数知识假设</strong> (knowledge of exponent assumption, KEA)
-是指给定 <span class="math inline">\(p\)</span> 阶群 <span
-class="math inline">\(\mathbb{G}\)</span> 和群 <span
-class="math inline">\(\mathbb{G}_T\)</span> 、双线性映射关系 <span
-class="math inline">\(e: \mathbb{G} \times \mathbb{G} \rightarrow
-\mathbb{G}_T 、 \mathbb{G}\)</span> 上生成元 <span
-class="math inline">\(g\)</span> 及 <span
-class="math inline">\(g^\alpha\)</span>, 在不知道 <span
-class="math inline">\(a\)</span> 的情况下难以构造 <span
-class="math inline">\(\hat{c} 、 c\)</span> 且 <span
-class="math inline">\(\hat{c}=c^\alpha\)</span>, 其中 <span
-class="math inline">\(c=g^a,
-\hat{c}=\left(g^\alpha\right)^a\)</span>.</p>
-<p><strong><span class="math inline">\(q\)</span>
-阶指数知识假设</strong> ( <span class="math inline">\(q\)</span>-Power
-PKE, 即 <span class="math inline">\(q\)</span>-PKE 假设)是指给定 <span
-class="math inline">\(\left(g, g^x, \cdots, g^{x^q}, g^\alpha, g^{\alpha
-x}, \cdots, g^{\alpha x^q}\right)\)</span>, 在不知道 <span
-class="math inline">\(a_0, a_1, \cdots, a_q\)</span> 的情况下难以构造
-<span class="math inline">\(\hat{c} 、 c\)</span> 且 <span
-class="math inline">\(\hat{c}=c^\alpha\)</span>,其中 <span
-class="math inline">\(c=\prod_{i=0}^q\left(g^{x^i}\right)^{a_i},
-\hat{c}=\prod_{i=0}^q\left(g^{\alpha x^i}\right)^{a_i}\)</span>.
-值得注意的是, <span class="math inline">\(q\)</span> - PKE
-假设是一种不可证伪 (non-falsifiable)的假设.</p>
-<h2 id="proof">Proof</h2>
-<ol type="1">
-<li><p>Alice 有一个值<span class="math inline">\(a\)</span>，她想要 Bob
-对其进行任意指数的求幂（这里 <span class="math inline">\(a\)</span>
-是一个有限域群的生成元），唯一的要求是只能对 <span
-class="math inline">\(a\)</span> 进行求幂，为了保证这一点，她要:</p>
+    <h2 id="Assumption"><a href="#Assumption" class="headerlink" title="Assumption"></a>Assumption</h2><p><strong>指数知识假设</strong> (knowledge of exponent assumption, KEA)  是指给定 $p$ 阶群 $\mathbb{G}$ 和群 $\mathbb{G}_T$ 、双线性映射关系 $e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}$ 上生成元 $g$ 及 $g^\alpha$, 在不知道 $a$ 的情况下难以构造 $\hat{c} 、 c$ 且 $\hat{c}=c^\alpha$, 其中 $c=g^a, \hat{c}=\left(g^\alpha\right)^a$. </p>
+<p><strong>$q$ 阶指数知识假设</strong> ( $q$-Power PKE, 即 $q$-PKE 假设)是指给定 $\left(g, g^x, \cdots, g^{x^q}, g^\alpha, g^{\alpha x}, \cdots, g^{\alpha x^q}\right)$, 在不知道 $a<em>0, a_1, \cdots, a_q$ 的情况下难以构造 $\hat{c} 、 c$ 且 $\hat{c}=c^\alpha$,其中 $c=\prod</em>{i=0}^q\left(g^{x^i}\right)^{a<em>i}, \hat{c}=\prod</em>{i=0}^q\left(g^{\alpha x^i}\right)^{a_i}$. 值得注意的是, $q$ - PKE 假设是一种不可证伪 (non-falsifiable)的假设.</p>
+<h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2><ol>
+<li><p>Alice 有一个值$a$，她想要 Bob 对其进行任意指数的求幂（这里 $a$ 是一个有限域群的生成元），唯一的要求是只能对  $a$ 进行求幂，为了保证这一点，她要:</p>
 <ul>
-<li>选择一个随机数<span class="math inline">\(\alpha\)</span></li>
-<li>计算<span class="math inline">\(a^\prime = a^\alpha (\mod
-n)\)</span></li>
-<li>提供一个元组<span
-class="math inline">\((a,a^\prime)\)</span>给Bob，然后让他对这两个值执行求幂运算，返回结果元组<span
-class="math inline">\((b,b^\prime)\)</span>，这里的指数"<span
-class="math inline">\(\alpha -\)</span>变换"依然保持不变，即<span
-class="math inline">\(b^\alpha=b^\prime (\mod n)\)</span></li>
-</ul></li>
-<li><p>因为 Bob 无法从元组 <span class="math inline">\((a,
-a&#39;)\)</span> 中提取 <span class="math inline">\(α\)</span>
-的值，通过暴力破解也难以实现，那就可以推断 Bob
-生成有效元组的唯一方法就是执行下面的步骤：</p>
+<li>选择一个随机数$\alpha$</li>
+<li>计算$a^\prime = a^\alpha (\mod n)$</li>
+<li>提供一个元组$(a,a^\prime)$给Bob，然后让他对这两个值执行求幂运算，返回结果元组$(b,b^\prime)$，这里的指数”$\alpha -$变换”依然保持不变，即$b^\alpha=b^\prime (\mod n)$</li>
+</ul>
+</li>
+<li><p>因为 Bob 无法从元组 $(a, a’)$ 中提取 $α$ 的值，通过暴力破解也难以实现，那就可以推断 Bob 生成有效元组的唯一方法就是执行下面的步骤：</p>
 <ul>
-<li>选择一个值 <span class="math inline">\(c\)</span></li>
-<li>计算 <span class="math inline">\(b=a^c(mod n)\)</span> 和 <span
-class="math inline">\(b&#39; = (a^\prime)^ c (mod n)\)</span></li>
-<li>回复 <span class="math inline">\((b,b&#39;)\)</span></li>
-</ul></li>
-<li><p>有了回复的元组和 <em>α</em>，Alice 就可以验证等式： <span
-class="math display">\[
-b^\alpha = b&#39;
-\]</span></p>
-<p><span class="math display">\[
-(a^c)^\alpha = (a^\prime)^c
-\]</span></p>
-<p><span class="math display">\[
-a^{c\cdot \alpha} = (a^\alpha)^c
-\]</span></p>
-<p>结论是：</p>
+<li>选择一个值 $c$</li>
+<li>计算 $b=a^c(mod n)$ 和 $b’ = (a^\prime)^ c (mod n)$</li>
+<li>回复 $(b,b’)$</li>
+</ul>
+</li>
+<li><p>有了回复的元组和 <em>α</em>，Alice 就可以验证等式：</p>
+<script type="math/tex; mode=display">
+b^\alpha = b'</script><script type="math/tex; mode=display">
+(a^c)^\alpha = (a^\prime)^c</script><script type="math/tex; mode=display">
+a^{c\cdot \alpha} = (a^\alpha)^c</script><p>结论是：</p>
 <ul>
-<li>Bob 在元组的两个值的计算上都用了同一个指数（即 <span
-class="math inline">\(c\)</span>）</li>
-<li>Bob 只能用 Alice 原本的元组来保持 <span
-class="math inline">\(α\)</span> 关系</li>
-<li>Bob 知道指数 <span class="math inline">\(c\)</span>，因为构造验证值
-<span class="math inline">\((b,b^′)\)</span>
-的唯一方式是用同一个指数</li>
-<li>Alice 并不知道 <span class="math inline">\(c\)</span>，这和 Bob
-不知道 <span class="math inline">\(α\)</span> 的原因一样</li>
-<li>虽然 <span class="math inline">\(c\)</span>
-是被加密的，但它的可能取值范围并不足够大到保持其零知识的性质</li>
-</ul></li>
+<li>Bob 在元组的两个值的计算上都用了同一个指数（即 $c$）</li>
+<li>Bob 只能用 Alice 原本的元组来保持 $α$ 关系</li>
+<li>Bob 知道指数 $c$，因为构造验证值 $(b,b^′)$ 的唯一方式是用同一个指数</li>
+<li>Alice 并不知道 $c$，这和 Bob 不知道 $α$ 的原因一样</li>
+<li>虽然 $c$ 是被加密的，但它的可能取值范围并不足够大到保持其零知识的性质</li>
+</ul>
+</li>
 </ol>
 
   </div>
@@ -280,7 +234,7 @@ class="math inline">\(α\)</span> 关系</li>
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#assumption"><span class="toc-number">1.</span> <span class="toc-text">Assumption</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proof"><span class="toc-number">2.</span> <span class="toc-text">Proof</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Assumption"><span class="toc-number">1.</span> <span class="toc-text">Assumption</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof"><span class="toc-number">2.</span> <span class="toc-text">Proof</span></a></li></ol>
       </div>
     
 

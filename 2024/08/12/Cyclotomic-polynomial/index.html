@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="前置知识 在复数域 \(\mathbb{C}\) 中，多项式 \(x^n-1\) 有 \(n\) 个根： \(\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1\) 。由 Euler 公式，可以写作 \(\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \ma">
+    <meta name="description" content="前置知识在复数域 $\mathbb{C}$ 中，多项式 $x^n-1$ 有 $n$ 个根： $\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1$ 。由 Euler 公式，可以写作 $\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \mathrm{i} k}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cyclotomic polynomial">
 <meta property="og:url" content="http://example.com/2024/08/12/Cyclotomic-polynomial/index.html">
 <meta property="og:site_name" content="瓦楞纸">
-<meta property="og:description" content="前置知识 在复数域 \(\mathbb{C}\) 中，多项式 \(x^n-1\) 有 \(n\) 个根： \(\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1\) 。由 Euler 公式，可以写作 \(\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \ma">
+<meta property="og:description" content="前置知识在复数域 $\mathbb{C}$ 中，多项式 $x^n-1$ 有 $n$ 个根： $\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k&#x3D;0,1, \cdots, n-1$ 。由 Euler 公式，可以写作 $\mathrm{e}^{2 \pi i k &#x2F; n}&#x3D;\exp \frac{2 \pi \mathrm{i} k}">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-12T03:31:13.000Z">
-<meta property="article:modified_time" content="2024-08-12T14:16:53.664Z">
+<meta property="article:modified_time" content="2024-08-12T14:26:03.087Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary">
@@ -169,287 +169,73 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="前置知识">前置知识</h2>
-<p>在复数域 <span class="math inline">\(\mathbb{C}\)</span> 中，多项式
-<span class="math inline">\(x^n-1\)</span> 有 <span
-class="math inline">\(n\)</span> 个根： <span class="math inline">\(\cos
-\frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k=0,1, \cdots,
-n-1\)</span> 。由 Euler 公式，可以写作 <span
-class="math inline">\(\mathrm{e}^{2 \pi i k / n}=\exp \frac{2 \pi
-\mathrm{i} k}{n}\)</span> 。 以下为了方便，记 <span
-class="math inline">\(\omega\_n=\exp \frac{2 \pi i}{n}\)</span> ，则
-<span class="math inline">\(\omega\_n^k=\left(\omega\_n\right)^k=\exp
-\frac{2 \pi i k}{n}\)</span> 。在上下文已知的情况下，可以用 <span
-class="math inline">\(\omega\)</span> 代替 <span
-class="math inline">\(\omega\_n\)</span> （在某些文献中，用 <span
-class="math inline">\(\varepsilon\)</span> 表达相同的含义）。
-根据上述记号， <span class="math inline">\(x^n-1\)</span> 的 <span
-class="math inline">\(n\)</span> 个根可以记作 <span
-class="math inline">\(1, \omega, \omega^2, \cdots, \omega^{n-1}\)</span>
-因此, 由 <a
-target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Vieta%27s_formulas">Vieta
-定理</a>（根与系数的关系），可以得到 性质 1.1: <span
-class="math inline">\(x^n-1=(x-1)(x-\omega)\left(x-\omega^2\right)
-\cdots\left(x-\omega^{n-1}\right)\)</span> 由初中的因式分解技巧，有
-<span
-class="math inline">\(x^n-1=(x-1)\left(x^{n-1}+x^{n-2}+\cdots+x+1\right)\)</span>
-，于是就有 推论 1.1: <span
-class="math inline">\(x^{n-1}+x^{n-2}+\cdots+x+1=(x-\omega)\left(x-\omega^2\right)
-\cdots\left(x-\omega^{n-1}\right)\)</span> 在上式中代入任何一个 <span
-class="math inline">\(\omega\_n^i\)</span>, 即可得到： 推论 1.2: <span
-class="math display">\[
-1 + \omega_n^k + \omega_n^{2k} + \cdots + \omega_n^{(n-1)k} =
+    <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>在复数域 $\mathbb{C}$ 中，多项式 $x^n-1$ 有 $n$ 个根： $\cos \frac{2 \pi k}{n}+\mathrm{i} \sin \frac{2 \pi k}{n}, k=0,1, \cdots, n-1$ 。由 Euler 公式，可以写作 $\mathrm{e}^{2 \pi i k / n}=\exp \frac{2 \pi \mathrm{i} k}{n}$ 。<br>以下为了方便，记 $\omega_n=\exp \frac{2 \pi i}{n}$ ，则 $\omega_n^k=\left(\omega_n\right)^k=\exp \frac{2 \pi i k}{n}$ 。在上下文已知的情况下，可以用 $\omega$ 代替 $\omega_n$ （在某些文献中，用 $\varepsilon$ 表达相同的含义）。</p>
+<p>根据上述记号， $x^n-1$ 的 $n$ 个根可以记作 $1, \omega, \omega^2, \cdots, \omega^{n-1}$<br>因此, 由 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Vieta%27s_formulas">Vieta 定理</a>（根与系数的关系），可以得到<br>    性质 1.1: $x^n-1=(x-1)(x-\omega)\left(x-\omega^2\right) \cdots\left(x-\omega^{n-1}\right)$<br>由初中的因式分解技巧，有 $x^n-1=(x-1)\left(x^{n-1}+x^{n-2}+\cdots+x+1\right)$ ，于是就有<br>    推论 1.1: $x^{n-1}+x^{n-2}+\cdots+x+1=(x-\omega)\left(x-\omega^2\right) \cdots\left(x-\omega^{n-1}\right)$<br>在上式中代入任何一个 $\omega_n^i$, 即可得到：<br>    推论 1.2: </p>
+<script type="math/tex; mode=display">
+1 + \omega_n^k + \omega_n^{2k} + \cdots + \omega_n^{(n-1)k} = 
 \begin{cases}
-0 &amp; \text{if } n \nmid k \\
-n &amp; \text{if } n \mid k
-\end{cases}
-\]</span></p>
-<h2 id="单位根群">单位根群</h2>
-<p>由公式 <span
-class="math inline">\(\omega\_n^k=\exp\frac{2\pi\mathrm{i}k}{n}\)</span>
-得知，<span class="math inline">\(1, \omega\_n, \omega\_n^2, \cdots,
-\omega\_n^{n-1}\)</span> 关于乘法运算<span
-class="math inline">\(\cdot\)</span>构成了一个 <span
-class="math inline">\(n\)</span> 阶循环群 <span
-class="math inline">\(\omega\_n\)</span> 被称为<strong>单位根群 (Group
-of root or unity)</strong>，其中 <span
-class="math inline">\(\omega\_n\)</span> 是 <span
-class="math inline">\(\omega\_n\)</span> 的一个生成元。 从而有 <span
-class="math inline">\(\omega\_n^a \cdot
-\omega\_n^b=\omega\_n^{a+b},\left(\omega\_n^a\right)^b=\omega\_n^{a b},
-\omega\_n^k=\omega\_{\lambda n}^{\lambda k}\)</span> ，以及特殊地 <span
-class="math inline">\(\overline{\omega\_n^k}=\omega\_n^{-k}\)</span>
-提到群，自然就会想到它的生成元。那哪些元素会成为它的生成元呢？
-如果一个单位根, 比如 <span
-class="math inline">\(\omega\_6^2=\frac{-1+\sqrt{3}
-\mathrm{i}}{2}\)</span>, 它其实也是一个 3 次的单位根,
-因此它所生成的所有单位根都是 3 次的, 而不会生成 <span
-class="math inline">\(\omega\_6=\frac{1+\sqrt{3} \mathrm{i}}{2}
-。\)</span> 由有限循环群的结论， <span
-class="math inline">\(\omega\_n^k\)</span> 是 <span
-class="math inline">\(\omega\_n\)</span> 的生成元，当且仅当 <span
-class="math inline">\(n \perp k\)</span> ，即 <span
-class="math inline">\((n, k)=1\)</span> 。因此，这些满足 <span
-class="math inline">\(n \perp k\)</span> 的单位根 <span
-class="math inline">\(\omega\_n^k\)</span>
-有着特殊的性质，这就是我们即将讨论的重点。 辨析：
-<strong>单位根:</strong> <span class="math inline">\(n\)</span>
-阶单位根是满足 $ x^n = 1$
-的复数根，这些根在复平面上均匀分布在单位圆上。单位根的一般形式为 <span
-class="math inline">\(\omega\_n^k\)</span>，其中 <span
-class="math inline">\(\omega\_n = e^{2\pi i / n}\)</span> 是一个主 <span
-class="math inline">\(n\)</span> 阶单位根，而 <span
-class="math inline">\(k\)</span> 是从 <span
-class="math inline">\(0\)</span> 到 <span
-class="math inline">\(n-1\)</span> 的整数。 <strong>本原单位根</strong>:
-一个 <span class="math inline">\(n\)</span>
-阶本原单位根是一种特殊的单位根，它的任意次幂（除了 <span
-class="math inline">\(n\)</span> 的倍数次）都不等于 <span
-class="math inline">\(1\)</span>。具体地，如果 <span
-class="math inline">\(\omega\_n^k\)</span> 是一个 <span
-class="math inline">\(n\)</span> 阶的本原单位根，那么对于任意非零整数
-<span class="math inline">\(m &lt; n\)</span> ，都有 <span
-class="math inline">\((\omega\_n^k)^m \neq 1\)</span>。</p>
-<h2 id="分圆多项式">分圆多项式</h2>
-<p>如果一个 <span class="math inline">\(n\)</span> 阶单位根 <span
-class="math inline">\(\omega\_n^k\)</span>, 满足对于任意的 <span
-class="math inline">\(i=1,2, \cdots, n-1, \omega\_n^{k-i} \neq
-1\)</span> (即 <span class="math inline">\(\omega\_n^k\)</span> 是群
-<span class="math inline">\(\omega\_n\)</span> 的生成元), 则称 <span
-class="math inline">\(n\)</span> 阶单位根 <span
-class="math inline">\(\omega\_n^k\)</span> 是<strong>本原的
-(Primitive)</strong>, <span class="math inline">\(\omega\_n^k\)</span>
-称为<strong>本原单位根 (Primitive root of unity)</strong>,
-简称<strong>原根</strong>。 定理 3.1: <span
-class="math inline">\(\omega\_n^k\)</span> 是 <span
-class="math inline">\(n\)</span> 阶本原单位根的充要条件是 <span
-class="math inline">\(n \perp k\)</span> 。 由定理3.1，可知 <span
-class="math inline">\(n\)</span> 阶本原单位根恰有 <span
-class="math inline">\(\phi(n)\)</span> 个 上面提到过, 以所有 <span
-class="math inline">\(n\)</span> 阶单位根为根的多项式为 <span
-class="math inline">\(x^n-1\)</span>， 那么以所有 <span
-class="math inline">\(\phi(n)\)</span> 个 <span
-class="math inline">\(n\)</span>
-阶本原单位根为根的多项式又有什么样的性质呢？这就是我们接下来要提到的分圆多项式。
-定义<strong>分圆多项式 (Cyclotomic polynomial)</strong> 所有以 <span
-class="math inline">\(n\)</span> 阶本原单位根为单根的首一多项式, 记作
-<span class="math inline">\(\Phi\_n(x)\)</span>, 即 <span
-class="math display">\[
-\Phi\_n(x)=\prod_{\substack{1 \leq k \leq n,(k,
-n)=1}}\left(x-\omega\_n^{\star}\right)
-\]</span> 注意到 <span class="math inline">\(n\)</span>
-个单位根将复平面上的单位圆 <span class="math inline">\(|z|=1\)</span>
-等分成了 <span class="math inline">\(n\)</span> 等分, 因此得名为<a
-target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/分圆多项式">分圆多项式
-(Cyclotomic)</a>。 由于 <span class="math inline">\(n\)</span>
-阶本原单位根一共有 <span class="math inline">\(\phi(n)\)</span> 个, 因此
-<span class="math inline">\(n\)</span> 阶分圆多项式的次数 <span
-class="math inline">\(\operatorname{deg} \Phi\_n(x)=\phi(n)\)</span>,
-这解释了为什么分圆多项式用 <span
-class="math inline">\(\Phi\_n(x)\)</span> 表示。
-分圆多项式的一个最基础最重要的定理由下面的定理 3.2 给出。 定理 3.2:
-<span class="math inline">\(\prod\_{d|n} \Phi\_d(x)=x^n-1 。\)</span>
-证明：
-证明这个定理之前，我们比较两边的次数，可以发现一个有趣的事实：<span
-class="math inline">\(\sum\_{d|n}\phi(d)=n\)</span>，这个的理解笔者刚学抽代的时候就有点迷糊，先给出该定理的证明（记录一下），之后再给出定理3.2的证明
-1. 如果 <span class="math inline">\(n=1\)</span>，<span
-class="math inline">\(\phi(n)=\phi(1)=1=n\)</span> 2. 如果 <span
-class="math inline">\(n\)</span> 是质数，<span
-class="math inline">\(\phi(n) = n-1\)</span>，因此有 <span
-class="math inline">\(\phi(n)+\phi(1)=n\)</span> 3. 如果 <span
-class="math inline">\(n\)</span> 是一个质数的幂，即<span
-class="math inline">\(n=p^k\)</span>，则有<span
-class="math inline">\(\sum\_{d \mid n} \phi(d)=\sum\_{i=0}^k
-\phi\left(p^i\right)=\sum\_{i=1}^k p^{i-1}(p-1)+1=p^k\)</span> 4. 如果
-<span class="math inline">\(n\)</span>
-是任意整数，则由整数环是唯一分解整环可得 <span
-class="math inline">\(n=p_1^{k\_1} p_2^{k\_2} p_3^{k\_3}\dots
-p_n^{k\_n}\)</span>，有<span
-class="math inline">\(\sum\_{d|n}\phi(d)=\sum\_{i_1=0}^{k\_1}\sum\_{i_2=0}^{k\_2}\dots\sum\_{i_n=0}^{k\_n}\phi(p_1^{i_1}
-p_2^{i_2} p_3^{i_3}\dots
-p_n^{i_n})=n(相互独立互质，利用欧拉函数的积性)\)</span>
-接下来我们证明定理3.2 给定一个 <span class="math inline">\(n\)</span>
-阶单位根 <span class="math inline">\(\omega\_n^k\)</span>, 我们定义
-<span class="math inline">\(d=\operatorname{gcd}(n, k)\)</span>
-。这意味着我们可以将 <span class="math inline">\(n\)</span> 和 <span
-class="math inline">\(k\)</span> 分别写为 <span
-class="math inline">\(n=n\_1d\)</span> 和 <span
-class="math inline">\(k=k\_1 d\)</span>, 其中 <span
-class="math inline">\(\operatorname{gcd}\left(n\_1,
-k\_1\right)=1\)</span> 。因此, <span
-class="math inline">\(\omega\_n^k=\omega\_{n\_1 d}^{k\_1
-d}=\left(\omega\_{n\_1 d}^d\right)^{k\_1}=\omega\_{n}^{k\_1}\)</span>
-。这里 <span class="math inline">\(\omega\_{n\_1}^{k\_1}\)</span> 是一个
-<span class="math inline">\(n\_1\)</span> 阶单位根 由于 <span
-class="math inline">\(n\_1\)</span> 和 <span
-class="math inline">\(k\_1\)</span> 互质, 所以 <span
-class="math inline">\(\omega\_{n\_1}^{k\_1}\)</span> 实际上是一个 <span
-class="math inline">\(n\_1\)</span> 阶的本原单位根。这表明, 从任意 <span
-class="math inline">\(n\)</span> 阶单位根出发, 通过适当的因子分解和简化,
-总能找到一个相对 "更原始" 的单位根, 即某个较小阶数的本原单位根
-<strong>互斥性</strong>：对于 <span class="math inline">\(n\)</span>
-的不同因数 <span class="math inline">\(d\)</span> 和 <span
-class="math inline">\(d^{\prime}\)</span>, 其中 <span
-class="math inline">\(d \neq d^{\prime}, d\)</span> 阶的本原单位根和
-<span class="math inline">\(d^{\prime}\)</span>
-阶的本原单位根是不同的。本原单位根的定义保证了它不能通过较小的幂次得到
-<span class="math inline">\(1\)</span> ,
-这意味着两个不同阶数的本原单位根不可能相等。 对于 <span
-class="math inline">\(n\)</span> 的每一个因数 <span
-class="math inline">\(d\)</span>，一个 <span
-class="math inline">\(d\)</span> 阶的本原单位根 <span
-class="math inline">\(\omega\_d^e\)</span> (其中 <span
-class="math inline">\(e\)</span> 是小于 <span
-class="math inline">\(d\)</span> 并与 <span
-class="math inline">\(d\)</span> 互质的整数), 也是一个 <span
-class="math inline">\(n\)</span> 阶单位根, 因为 <span
-class="math inline">\(\omega\_d^e=\omega\_{d /(n / d)}^{e(n /
-d)}=\omega\_n^{e(n / d)}\)</span> 从以上分析可知，所有 <span
-class="math inline">\(n\)</span> 的因数 <span
-class="math inline">\(d\)</span> 对应的 <span
-class="math inline">\(d\)</span> 阶本原单位根的乘积实际上构成了多项式
-<span class="math inline">\(x^n-1\)</span> 的根（性质1.1）。因为 <span
-class="math inline">\(x^n-1\)</span> 的根包括了所有 <span
-class="math inline">\(n\)</span> 阶单位根,
-而这些单位根又可以通过本原单位根表示。</p>
-<p>在定理 3.2 的等式两端代入 <span class="math inline">\(n=p\)</span> (
-<span class="math inline">\(p\)</span> 是素数), 由于 <span
-class="math inline">\(p\)</span> 的因子只有 1 和 <span
-class="math inline">\(p\)</span>, 就有 <span
-class="math inline">\(\Phi\_1(x) \Phi\_p(x)=x^p-1\)</span>, 由于 <span
-class="math inline">\(\Phi\_1(x)=x-1\)</span>, 因此我们得到了 <span
-class="math display">\[
-\Phi_p(x)=\frac{x^p-1}{x-1}=x^{p-1}+x^{p-2}+\cdots+1
-\]</span></p>
-<p>当 <span class="math inline">\(n\)</span> 比较小时, <span
-class="math inline">\(\Phi\_n(x)\)</span> 的性状如下: <span
-class="math display">\[
+0 & \text{if } n \nmid k \\
+n & \text{if } n \mid k
+\end{cases}</script><h2 id="单位根群"><a href="#单位根群" class="headerlink" title="单位根群"></a>单位根群</h2><p>由公式 $\omega_n^k=\exp\frac{2\pi\mathrm{i}k}{n}$ 得知，$1, \omega_n, \omega_n^2, \cdots, \omega_n^{n-1}$ 关于乘法运算$\cdot$构成了一个 $n$ 阶循环群 $\omega_n$ 被称为<strong>单位根群 (Group of root or unity)</strong>，其中 $\omega_n$ 是 $\omega_n$ 的一个生成元。<br>从而有 $\omega_n^a \cdot \omega_n^b=\omega_n^{a+b},\left(\omega_n^a\right)^b=\omega_n^{a b}, \omega_n^k=\omega_{\lambda n}^{\lambda k}$ ，以及特殊地 $\overline{\omega_n^k}=\omega_n^{-k}$<br>提到群，自然就会想到它的生成元。那哪些元素会成为它的生成元呢？<br>如果一个单位根, 比如 $\omega_6^2=\frac{-1+\sqrt{3} \mathrm{i}}{2}$, 它其实也是一个 3 次的单位根, 因此它所生成的所有单位根都是 3 次的, 而不会生成 $\omega_6=\frac{1+\sqrt{3} \mathrm{i}}{2} 。$<br>由有限循环群的结论， $\omega_n^k$ 是 $\omega_n$ 的生成元，当且仅当 $n \perp k$ ，即 $(n, k)=1$ 。因此，这些满足 $n \perp k$ 的单位根 $\omega_n^k$ 有着特殊的性质，这就是我们即将讨论的重点。<br>    辨析：<br>    <strong>单位根:</strong> $n$ 阶单位根是满足 $ x^n = 1$  的复数根，这些根在复平面上均匀分布在单位圆上。单位根的一般形式为 $\omega_n^k$，其中 $\omega_n = e^{2\pi i / n}$  是一个主 $n$ 阶单位根，而  $k$  是从 $0$ 到  $n-1$  的整数。<br>    <strong>本原单位根</strong>: 一个 $n$ 阶本原单位根是一种特殊的单位根，它的任意次幂（除了  $n$  的倍数次）都不等于 $1$。具体地，如果 $\omega_n^k$ 是一个 $n$ 阶的本原单位根，那么对于任意非零整数 $m &lt; n$ ，都有 $(\omega_n^k)^m \neq 1$。</p>
+<h2 id="分圆多项式"><a href="#分圆多项式" class="headerlink" title="分圆多项式"></a>分圆多项式</h2><p>如果一个 $n$ 阶单位根 $\omega_n^k$, 满足对于任意的 $i=1,2, \cdots, n-1, \omega_n^{k-i} \neq 1$ (即 $\omega_n^k$ 是群 $\omega_n$ 的生成元), 则称 $n$ 阶单位根 $\omega_n^k$ 是<strong>本原的 (Primitive)</strong>, $\omega_n^k$ 称为<strong>本原单位根 (Primitive root of unity)</strong>, 简称<strong>原根</strong>。<br>    定理 3.1: $\omega_n^k$ 是 $n$ 阶本原单位根的充要条件是 $n \perp k$ 。<br>由定理3.1，可知 $n$ 阶本原单位根恰有 $\phi(n)$ 个<br>上面提到过, 以所有 $n$ 阶单位根为根的多项式为 $x^n-1$， 那么以所有 $\phi(n)$ 个 $n$ 阶本原单位根为根的多项式又有什么样的性质呢？这就是我们接下来要提到的分圆多项式。<br>定义<strong>分圆多项式 (Cyclotomic polynomial)</strong> 所有以 $n$ 阶本原单位根为单根的首一多项式, 记作 $\Phi_n(x)$, 即</p>
+<script type="math/tex; mode=display">
+\Phi\_n(x)=\prod_{\substack{1 \leq k \leq n,(k, n)=1}}\left(x-\omega\_n^{\star}\right)</script><p>注意到 $n$ 个单位根将复平面上的单位圆 $|z|=1$ 等分成了 $n$ 等分, 因此得名为<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/分圆多项式">分圆多项式 (Cyclotomic)</a>。<br>由于 $n$ 阶本原单位根一共有 $\phi(n)$ 个, 因此 $n$ 阶分圆多项式的次数 $\operatorname{deg} \Phi_n(x)=\phi(n)$, 这解释了为什么分圆多项式用 $\Phi_n(x)$ 表示。<br>分圆多项式的一个最基础最重要的定理由下面的定理 3.2 给出。<br>定理 3.2: $\prod_{d|n} \Phi_d(x)=x^n-1 。$<br>证明：<br>证明这个定理之前，我们比较两边的次数，可以发现一个有趣的事实：$\sum_{d|n}\phi(d)=n$，这个的理解笔者刚学抽代的时候就有点迷糊，先给出该定理的证明（记录一下），之后再给出定理3.2的证明</p>
+<pre><code>1. 如果 $n=1$，$\phi(n)=\phi(1)=1=n$
+2. 如果 $n$ 是质数，$\phi(n) = n-1$，因此有 $\phi(n)+\phi(1)=n$
+3. 如果 $n$ 是一个质数的幂，即$n=p^k$，则有$\sum\_&#123;d \mid n&#125; \phi(d)=\sum\_&#123;i=0&#125;^k \phi\left(p^i\right)=\sum\_&#123;i=1&#125;^k p^&#123;i-1&#125;(p-1)+1=p^k$
+4. 如果 $n$ 是任意整数，则由整数环是唯一分解整环可得 $n=p_1^&#123;k\_1&#125; p_2^&#123;k\_2&#125; p_3^&#123;k\_3&#125;\dots p_n^&#123;k\_n&#125;$，有$\sum\_&#123;d|n&#125;\phi(d)=\sum\_&#123;i_1=0&#125;^&#123;k\_1&#125;\sum\_&#123;i_2=0&#125;^&#123;k\_2&#125;\dots\sum\_&#123;i_n=0&#125;^&#123;k\_n&#125;\phi(p_1^&#123;i_1&#125; p_2^&#123;i_2&#125; p_3^&#123;i_3&#125;\dots p_n^&#123;i_n&#125;)=n(相互独立互质，利用欧拉函数的积性)$
+</code></pre><p>接下来我们证明定理3.2<br>给定一个 $n$ 阶单位根 $\omega_n^k$, 我们定义 $d=\operatorname{gcd}(n, k)$ 。这意味着我们可以将 $n$ 和 $k$ 分别写为 $n=n_1d$ 和 $k=k_1 d$, 其中 $\operatorname{gcd}\left(n_1, k_1\right)=1$ 。因此, $\omega_n^k=\omega_{n_1 d}^{k_1 d}=\left(\omega_{n_1 d}^d\right)^{k_1}=\omega_{n}^{k_1}$ 。这里 $\omega_{n_1}^{k_1}$ 是一个 $n_1$ 阶单位根<br>由于 $n_1$ 和 $k_1$ 互质, 所以 $\omega_{n_1}^{k_1}$ 实际上是一个 $n_1$ 阶的本原单位根。这表明, 从任意 $n$ 阶单位根出发, 通过适当的因子分解和简化, 总能找到一个相对 “更原始” 的单位根, 即某个较小阶数的本原单位根<br><strong>互斥性</strong>：对于 $n$ 的不同因数 $d$ 和 $d^{\prime}$, 其中 $d \neq d^{\prime}, d$ 阶的本原单位根和 $d^{\prime}$ 阶的本原单位根是不同的。本原单位根的定义保证了它不能通过较小的幂次得到 $1$ , 这意味着两个不同阶数的本原单位根不可能相等。<br>对于 $n$ 的每一个因数 $d$，一个 $d$ 阶的本原单位根 $\omega_d^e$ (其中 $e$ 是小于 $d$ 并与 $d$ 互质的整数), 也是一个 $n$ 阶单位根, 因为 $\omega_d^e=\omega_{d /(n / d)}^{e(n / d)}=\omega_n^{e(n / d)}$<br>从以上分析可知，所有 $n$ 的因数 $d$ 对应的 $d$ 阶本原单位根的乘积实际上构成了多项式 $x^n-1$ 的根（性质1.1）。因为 $x^n-1$ 的根包括了所有 $n$ 阶单位根, 而这些单位根又可以通过本原单位根表示。</p>
+<p>在定理 3.2 的等式两端代入 $n=p$ ( $p$ 是素数), 由于 $p$ 的因子只有 1 和 $p$, 就有 $\Phi_1(x) \Phi_p(x)=x^p-1$, 由于 $\Phi_1(x)=x-1$, 因此我们得到了</p>
+<script type="math/tex; mode=display">
+\Phi_p(x)=\frac{x^p-1}{x-1}=x^{p-1}+x^{p-2}+\cdots+1</script><p>当 $n$ 比较小时, $\Phi_n(x)$ 的性状如下:</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-&amp; \Phi\_1(x)=x-1 \\
-&amp; \Phi\_2(x)=x+1 \\
-&amp; \Phi\_3(x)=x^2+x+1 \\
-&amp; \Phi\_4(x)=x^2+1 \\
-&amp; \Phi\_5(x)=x^4+x^3+x^2+x+1 \\
-&amp; \Phi\_6(x)=x^2-x+1 \\
-&amp; \Phi\_7(x)=x^6+x^5+x^4+x^3+x^2+x+1 \\
-&amp; \Phi\_8(x)=x^4+1 \\
-&amp; \Phi\_9(x)=x^6+x^3+1 \\
-&amp; \Phi\_{10}(x)=x^4-x^3+x^2-x+1 \\
-&amp; \Phi\_{11}(x)=x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
-&amp; \Phi\_{12}(x)=x^4-x^2+1 \\
-&amp;
-\Phi\_{13}(x)=x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
-\\
-&amp; \Phi\_{14}(x)=x^6-x^5+x^4-x^3+x^2-x+1 \\
-&amp; \Phi\_{15}(x)=x^8-x^7+x^5-x^4+x^3-x+1 \\
-&amp; \Phi\_{16}(x)=x^8+1 \\
-&amp;
-\Phi\_{17}(x)=x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
-\\
-&amp; \Phi\_{18}(x)=x^6-x^3+1 \\
-&amp;
-\Phi\_{19}(x)=x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1
-\\
-&amp; \Phi\_{20}(x)=x^8-x^6+x^4-x^2+1 \\
-&amp; \Phi\_{21}(x)=x^{12}-x^{11}+x^9-x^8+x^6-x^4+x^3-x+1 \\
-&amp; \Phi\_{22}(x)=x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1 \\
-&amp;
-\Phi\_{23}(x)=x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}
-\\
-&amp; \quad+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
-&amp; \Phi\_{24}(x)=x^8-x^4+1 \\
-&amp; \Phi\_{25}(x)=x^{20}+x^{15}+x^{10}+x^5+1 \\
-&amp;
-\Phi\_{26}(x)=x^{12}-x^{11}+x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1
-\\
-&amp; \Phi\_{27}(x)=x^{18}+x^9+1 \\
-&amp; \Phi\_{28}(x)=x^{12}-x^{10}+x^8-x^6+x^4-x^2+1 \\
-&amp;
-\Phi\_{29}(x)=x^{28}+x^{27}+x^{26}+x^{25}+x^{24}+x^{23}+x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14}
-\\
-&amp;
-\quad+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
-&amp; \Phi\_{30}(x)=x^8+x^7-x^5-x^4-x^3+x+1
-\end{aligned}
-\]</span></p>
-<p>直觉告诉你, 分圆多项式的系数一定在 <span
-class="math inline">\(\{-1,0,1\}\)</span> 的范围中 ! 然而这却是假的。当
-<span class="math inline">\(n=105\)</span> 时, <span
-class="math display">\[
+& \Phi\_1(x)=x-1 \\
+& \Phi\_2(x)=x+1 \\
+& \Phi\_3(x)=x^2+x+1 \\
+& \Phi\_4(x)=x^2+1 \\
+& \Phi\_5(x)=x^4+x^3+x^2+x+1 \\
+& \Phi\_6(x)=x^2-x+1 \\
+& \Phi\_7(x)=x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_8(x)=x^4+1 \\
+& \Phi\_9(x)=x^6+x^3+1 \\
+& \Phi\_{10}(x)=x^4-x^3+x^2-x+1 \\
+& \Phi\_{11}(x)=x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{12}(x)=x^4-x^2+1 \\
+& \Phi\_{13}(x)=x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{14}(x)=x^6-x^5+x^4-x^3+x^2-x+1 \\
+& \Phi\_{15}(x)=x^8-x^7+x^5-x^4+x^3-x+1 \\
+& \Phi\_{16}(x)=x^8+1 \\
+& \Phi\_{17}(x)=x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{18}(x)=x^6-x^3+1 \\
+& \Phi\_{19}(x)=x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{20}(x)=x^8-x^6+x^4-x^2+1 \\
+& \Phi\_{21}(x)=x^{12}-x^{11}+x^9-x^8+x^6-x^4+x^3-x+1 \\
+& \Phi\_{22}(x)=x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1 \\
+& \Phi\_{23}(x)=x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}+x^{11} \\
+& \quad+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{24}(x)=x^8-x^4+1 \\
+& \Phi\_{25}(x)=x^{20}+x^{15}+x^{10}+x^5+1 \\
+& \Phi\_{26}(x)=x^{12}-x^{11}+x^{10}-x^9+x^8-x^7+x^6-x^5+x^4-x^3+x^2-x+1 \\
+& \Phi\_{27}(x)=x^{18}+x^9+1 \\
+& \Phi\_{28}(x)=x^{12}-x^{10}+x^8-x^6+x^4-x^2+1 \\
+& \Phi\_{29}(x)=x^{28}+x^{27}+x^{26}+x^{25}+x^{24}+x^{23}+x^{22}+x^{21}+x^{20}+x^{19}+x^{18}+x^{17}+x^{16}+x^{15}+x^{14} \\
+& \quad+x^{13}+x^{12}+x^{11}+x^{10}+x^9+x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1 \\
+& \Phi\_{30}(x)=x^8+x^7-x^5-x^4-x^3+x+1
+\end{aligned}</script><p>直觉告诉你, 分圆多项式的系数一定在 ${-1,0,1}$ 的范围中 !<br>然而这却是假的。当 $n=105$ 时,</p>
+<script type="math/tex; mode=display">
 \begin{aligned}
-\Phi\_{105}(x) &amp; =x^{48}+x^{47}+x^{46}-x^{43}-x^{42}-2
-x^{41}-x^{40}-x^{39}+x^{36}+x^{35}+x^{34}+x^{33}+x^{32}+x^{31}-x^{28}-x^{26}-x^{24}-x^{22}-x^{20}
-\\
-&amp; +x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}-x^9-x^8-2
-x^7-x^6-x^5+x^2+x+1
-\end{aligned}
-\]</span> 进一步, 当 <span class="math inline">\(n=463505=5 \times 7
-\times 17 \times 19 \times 41\)</span> 时, <span
-class="math inline">\(\Phi\_n(x)\)</span> 的绝对值最大的系数竟有 <span
-class="math inline">\(-17310!\)</span> 这也可以说明分圆多项式在 <span
-class="math inline">\(n\)</span> 较大时的增长速度是非常迅猛的。
-不过，虽然分圆多项式的系数很大，但是我们还是可以非常容易地求出它的值。因为如果对定理
-3.2 的等式两端取对数，我们就能得到 <span class="math display">\[
-\log \left(x^n-1\right)=\sum_{d, n} \log \Phi_d(x)
-\]</span></p>
-<p>可以看出，这是一个 Möbius 变换 (Dirichlet 前缀和)
-的形式。因此，我们尝试使用 Möbius 反转变换，即 <span
-class="math display">\[
-\log \Phi_n(x)=\sum_{d \mid n} \mu\left(\frac{n}{d}\right) \cdot \log
-\left(x^d-1\right)
-\]</span></p>
-<p>两边再取指数, 就有 <span class="math display">\[
-\Phi_n(x)=\prod_{d \mid n}\left(x^d-1\right)^{\mu(n / d)}
-\]</span></p>
-<p>于是我们就得到了一个计算 <span
-class="math inline">\(\Phi\_n(x)\)</span> 的表达式。 而定理 3.2
-中的式子是一个分解式，所有的分圆多项式都是在 <span
-class="math inline">\(\mathbb{Z}\)</span> 中不可约 (irreducible)
-的。</p>
-<h2 id="参考">参考</h2>
-<p>[1] https://yhx-12243.github.io/OI-transit/memos/17.html#mjx-eqn-2
-[2] https://blog.csdn.net/ADjky/article/details/61198817</p>
-
+\Phi\_{105}(x) & =x^{48}+x^{47}+x^{46}-x^{43}-x^{42}-2 x^{41}-x^{40}-x^{39}+x^{36}+x^{35}+x^{34}+x^{33}+x^{32}+x^{31}-x^{28}-x^{26}-x^{24}-x^{22}-x^{20} \\
+& +x^{17}+x^{16}+x^{15}+x^{14}+x^{13}+x^{12}-x^9-x^8-2 x^7-x^6-x^5+x^2+x+1
+\end{aligned}</script><p>进一步, 当 $n=463505=5 \times 7 \times 17 \times 19 \times 41$ 时, $\Phi_n(x)$ 的绝对值最大的系数竟有 $-17310!$ 这也可以说明分圆多项式在 $n$ 较大时的增长速度是非常迅猛的。<br>不过，虽然分圆多项式的系数很大，但是我们还是可以非常容易地求出它的值。因为如果对定理 3.2 的等式两端取对数，我们就能得到</p>
+<script type="math/tex; mode=display">
+\log \left(x^n-1\right)=\sum_{d, n} \log \Phi_d(x)</script><p>可以看出，这是一个 Möbius 变换 (Dirichlet 前缀和) 的形式。因此，我们尝试使用 Möbius 反转变换，即</p>
+<script type="math/tex; mode=display">
+\log \Phi_n(x)=\sum_{d \mid n} \mu\left(\frac{n}{d}\right) \cdot \log \left(x^d-1\right)</script><p>两边再取指数, 就有</p>
+<script type="math/tex; mode=display">
+\Phi_n(x)=\prod_{d \mid n}\left(x^d-1\right)^{\mu(n / d)}</script><p>于是我们就得到了一个计算 $\Phi_n(x)$ 的表达式。<br>而定理 3.2 中的式子是一个分解式，所有的分圆多项式都是在 $\mathbb{Z}$ 中不可约 (irreducible) 的。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>[1] <a target="_blank" rel="noopener" href="https://yhx-12243.github.io/OI-transit/memos/17.html#mjx-eqn-2">https://yhx-12243.github.io/OI-transit/memos/17.html#mjx-eqn-2</a><br>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/ADjky/article/details/61198817">https://blog.csdn.net/ADjky/article/details/61198817</a></p>
+<!-- https://thea-r.github.io/2018/07/01/如何在Hexo中渲染公式/ -->
   </div>
 </article>
 

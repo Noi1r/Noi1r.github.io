@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。 我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。 该证明是基于随机编码，这不是很实用。为了">
+    <meta name="description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。该证明是基于随机编码，这不是很实用。为了易于">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linear Error-Correcting Codes">
 <meta property="og:url" content="http://example.com/2024/07/01/Linear-Error-Correcting-Codes/index.html">
 <meta property="og:site_name" content="瓦楞纸">
-<meta property="og:description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。 我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。 该证明是基于随机编码，这不是很实用。为了">
+<meta property="og:description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。该证明是基于随机编码，这不是很实用。为了易于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-07-01T07:46:42.000Z">
 <meta property="article:modified_time" content="2024-08-12T05:09:01.177Z">
@@ -167,87 +167,31 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。
-我们看到Shannon’s Noisy Coding
-Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。
-该证明是基于随机编码，这不是很实用。为了易于编码和解码，我们的编码/解码功能需要优良的结构。我们将研究一类称为线性分组码的代码，因为它们的结构提供了几个优点。线性性将使我们更容易地分析代码的错误纠正能力。此外，使用矩阵来编码/解码消息比随机码本容易得多，并且可以简洁地描述代码。</p>
-<p>两个概念： - Error
-detection：编码可以检测错误，但我们不知道错误在接收序列中的位置。 -
-Error correction：我们知道错误在哪里，并且可以纠正错误的位位置。</p>
-<p>在代码最多可以纠正t个错误的情况下，如果序列包含超过t个错误，解码器可能会解码到错误的信息序列。</p>
-<p>任意两个比特串之间的汉明距离<span
-class="math inline">\(d_H\)</span>是2个字符串不同的比特数。例如，码字<span
-class="math inline">\(c_1=(101101)\)</span>和<span
-class="math inline">\(c_2=(100110)\)</span>之间的汉明距离<span
-class="math inline">\(d_H\)</span>是3。表示<span
-class="math inline">\(d^*\)</span>是代码<span
-class="math inline">\(C\)</span>的任何两个不同码字之间的最小汉明距离</p>
-<p><span class="math display">\[
-D^*=d_{\min }=\min _{c_i \neq c_j} d_H\left(c_i, c_j\right)
-\]</span> 码字之间最小距离为<span
-class="math inline">\(d^*\)</span>的代码可以检测<span
-class="math inline">\(d^*-1\)</span>错误，并可以纠正<span
-class="math inline">\(\frac{d^*-1}{2}\)</span>错误。因此，要纠正一个错误，代码的最小距离必须至少为3。</p>
-<p>线性码意味着<span
-class="math inline">\(c\left(m+m^{\prime}\right)=c(m)+c\left(m^{\prime}\right)\)</span>，因此有<span
-class="math display">\[
-c(01101)=c(01000)+c(00100)+c(00001)=c\left(e_2\right)+c\left(e_3\right)+c\left(e_5\right)\]</span>
-<span class="math inline">\(e_i, 1 \leq i \leq
-k\)</span>构成了消息空间的基础，<span
-class="math inline">\(e_i\)</span>的码字完全描述了线性码。因此，不需要带有<span
-class="math inline">\(2^k\)</span>条目的代码本。我们仅需要一个矩阵即可</p>
-<p>我们可以假设生成矩阵<span
-class="math inline">\(G\)</span>采取特定形式。事实上，如果我们在<span
-class="math inline">\(G\)</span>上执行基本行操作（在<span
-class="math inline">\(Z_2\)</span>上，这意味着我们将一行添加到另一行），我们不会更改代码中的码字集合。我们甚至可以在不从根本上改变代码属性的情况下对列进行排列。因此，使用高斯消除，我们可以假设<span
-class="math inline">\(G\)</span>采取更简单的形式：</p>
-<p><span class="math display">\[
-G=\left[I_{k \times k} S\right]，
-\]</span></p>
-<p>其中<span class="math inline">\(S\)</span>是<span
-class="math inline">\(k \times(n-k)\)</span>。</p>
-<p>假设我们的矩阵<span
-class="math inline">\(G\)</span>生成单纠错代码，因此没有权重1或2的码字，<span
-class="math inline">\(G\)</span>的奇偶校验部分<span
-class="math inline">\(S\)</span>必须满足以下2个条件：</p>
+    <p>我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。<br>我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。<br>该证明是基于随机编码，这不是很实用。为了易于编码和解码，我们的编码/解码功能需要优良的结构。我们将研究一类称为线性分组码的代码，因为它们的结构提供了几个优点。线性性将使我们更容易地分析代码的错误纠正能力。此外，使用矩阵来编码/解码消息比随机码本容易得多，并且可以简洁地描述代码。</p>
+<p>两个概念：</p>
 <ul>
-<li><span
-class="math inline">\(S\)</span>中每行的权重必须至少为2，因为<span
-class="math inline">\(I\)</span>部分的每一行正好有一个权重。</li>
-<li>没有两行<span
-class="math inline">\(S\)</span>是相同的。否则，将这两行相加将给出一个权重2的码字。</li>
+<li>Error detection：编码可以检测错误，但我们不知道错误在接收序列中的位置。</li>
+<li>Error correction：我们知道错误在哪里，并且可以纠正错误的位位置。</li>
 </ul>
-<p>汉明编码是单个纠错线性块代码，具有<span class="math inline">\((n,
-k)=\left(2^m-1,2^m-1-m\right)\)</span>，其中<span
-class="math inline">\(m=n-k\)</span>是代码中的检查位数。最简单的非平凡代码是<span
-class="math inline">\(m=3\)</span>，即<span
-class="math inline">\((7,4)\)</span> Hamming代码。</p>
-<p>之所以<span class="math inline">\(k=2^m-1-m\)</span></p>
-<pre><code> $2^m$减去汉明重量为0和1的码字</code></pre>
-<p>我们知道如何用任何线性代码进行编码。由消息<span
-class="math inline">\(m\)</span>生成的码字只是<span
-class="math inline">\(c=m
-G\)</span>。但是解码怎么样？如果没有引入错误，第一个<span
-class="math inline">\(k\)</span>位构成消息。但可能已经引入了错误。当只有一个错误时，正如我们现在所显示的那样，解码很容易。</p>
-<p>对于每个生成器矩阵<span class="math inline">\(G=[I
-S]\)</span>，都有一个奇偶校验矩阵<span
-class="math inline">\(H\)</span>定义</p>
-<p><span class="math display">\[H=\left[\begin{array}{l}S \\
-I\end{array}\right]\]</span></p>
-<p>由于<span class="math inline">\(S\)</span>的大小为<span
-class="math inline">\(k \times(n-k)\)</span>，我们的单位矩阵大小为<span
-class="math inline">\((n-k) \times(n-k)\)</span>，<span
-class="math inline">\(H\)</span>的大小为<span class="math inline">\(n
-\times(n-k)\)</span>。重要的观察是<span class="math inline">\(G
-H=S+S=0\)</span>，因此<span class="math inline">\(c=m
-G\)</span>满足<span class="math inline">\(c H=m G
-H=0\)</span>。这意味着，如果有错误，并且我们收到了<span
-class="math inline">\(\tilde{c}=c+e_i\)</span>，我们可以通过计算<span
-class="math inline">\(\tilde{c} H\)</span>找到错误<span
-class="math inline">\(e_i\)</span>，因为这应该是<span
-class="math inline">\(c H+e_i H=e_i H\)</span>。因此，<span
-class="math inline">\(\tilde{c} H\)</span>必须是<span
-class="math inline">\(H\)</span>的行之一，该行的索引指示哪个位已损坏。一旦我们知道哪个位已损坏，我们就可以恢复消息。</p>
+<p>在代码最多可以纠正t个错误的情况下，如果序列包含超过t个错误，解码器可能会解码到错误的信息序列。</p>
+<p>任意两个比特串之间的汉明距离$d_H$是2个字符串不同的比特数。例如，码字$c_1=(101101)$和$c_2=(100110)$之间的汉明距离$d_H$是3。表示$d^*$是代码$C$的任何两个不同码字之间的最小汉明距离</p>
+<script type="math/tex; mode=display">
+D^*=d_{\min }=\min _{c_i \neq c_j} d_H\left(c_i, c_j\right)</script><p>码字之间最小距离为$d^<em>$的代码可以检测$d^</em>-1$错误，并可以纠正$\frac{d^*-1}{2}$错误。因此，要纠正一个错误，代码的最小距离必须至少为3。</p>
+<p>线性码意味着$c\left(m+m^{\prime}\right)=c(m)+c\left(m^{\prime}\right)$，因此有<script type="math/tex">c(01101)=c(01000)+c(00100)+c(00001)=c\left(e_2\right)+c\left(e_3\right)+c\left(e_5\right)</script><br>$e_i, 1 \leq i \leq k$构成了消息空间的基础，$e_i$的码字完全描述了线性码。因此，不需要带有$2^k$条目的代码本。我们仅需要一个矩阵即可</p>
+<p>我们可以假设生成矩阵$G$采取特定形式。事实上，如果我们在$G$上执行基本行操作（在$Z_2$上，这意味着我们将一行添加到另一行），我们不会更改代码中的码字集合。我们甚至可以在不从根本上改变代码属性的情况下对列进行排列。因此，使用高斯消除，我们可以假设$G$采取更简单的形式：</p>
+<script type="math/tex; mode=display">
+G=\left[I_{k \times k} S\right]，</script><p>其中$S$是$k \times(n-k)$。</p>
+<p>假设我们的矩阵$G$生成单纠错代码，因此没有权重1或2的码字，$G$的奇偶校验部分$S$必须满足以下2个条件：</p>
+<ul>
+<li>$S$中每行的权重必须至少为2，因为$I$部分的每一行正好有一个权重。</li>
+<li>没有两行$S$是相同的。否则，将这两行相加将给出一个权重2的码字。</li>
+</ul>
+<p>汉明编码是单个纠错线性块代码，具有$(n, k)=\left(2^m-1,2^m-1-m\right)$，其中$m=n-k$是代码中的检查位数。最简单的非平凡代码是$m=3$，即$(7,4)$ Hamming代码。</p>
+<p>之所以$k=2^m-1-m$</p>
+<pre><code> $2^m$减去汉明重量为0和1的码字
+</code></pre><p>我们知道如何用任何线性代码进行编码。由消息$m$生成的码字只是$c=m G$。但是解码怎么样？如果没有引入错误，第一个$k$位构成消息。但可能已经引入了错误。当只有一个错误时，正如我们现在所显示的那样，解码很容易。</p>
+<p>对于每个生成器矩阵$G=[I S]$，都有一个奇偶校验矩阵$H$定义</p>
+<script type="math/tex; mode=display">H=\left[\begin{array}{l}S \\ I\end{array}\right]</script><p>由于$S$的大小为$k \times(n-k)$，我们的单位矩阵大小为$(n-k) \times(n-k)$，$H$的大小为$n \times(n-k)$。重要的观察是$G H=S+S=0$，因此$c=m G$满足$c H=m G H=0$。这意味着，如果有错误，并且我们收到了$\tilde{c}=c+e_i$，我们可以通过计算$\tilde{c} H$找到错误$e_i$，因为这应该是$c H+e_i H=e_i H$。因此，$\tilde{c} H$必须是$H$的行之一，该行的索引指示哪个位已损坏。一旦我们知道哪个位已损坏，我们就可以恢复消息。</p>
 
   </div>
 </article>
