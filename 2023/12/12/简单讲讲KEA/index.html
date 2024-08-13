@@ -14,7 +14,7 @@
 <meta property="og:description" content="Assumption指数知识假设 (knowledge of exponent assumption, KEA)  是指给定 $p$ 阶群 $\mathbb{G}$ 和群 $\mathbb{G}_T$ 、双线性映射关系 $e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}$ 上生成元 $g$ 及 $g^\alp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-12T10:53:15.000Z">
-<meta property="article:modified_time" content="2024-08-10T17:24:58.346Z">
+<meta property="article:modified_time" content="2024-08-13T10:20:58.884Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Zero Knowledge Proof">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
 
   <div class="content e-content" itemprop="articleBody">
     <h2 id="Assumption"><a href="#Assumption" class="headerlink" title="Assumption"></a>Assumption</h2><p><strong>指数知识假设</strong> (knowledge of exponent assumption, KEA)  是指给定 $p$ 阶群 $\mathbb{G}$ 和群 $\mathbb{G}_T$ 、双线性映射关系 $e: \mathbb{G} \times \mathbb{G} \rightarrow \mathbb{G}_T 、 \mathbb{G}$ 上生成元 $g$ 及 $g^\alpha$, 在不知道 $a$ 的情况下难以构造 $\hat{c} 、 c$ 且 $\hat{c}=c^\alpha$, 其中 $c=g^a, \hat{c}=\left(g^\alpha\right)^a$. </p>
-<p><strong>$q$ 阶指数知识假设</strong> ( $q$-Power PKE, 即 $q$-PKE 假设)是指给定 $\left(g, g^x, \cdots, g^{x^q}, g^\alpha, g^{\alpha x}, \cdots, g^{\alpha x^q}\right)$, 在不知道 $a<em>0, a_1, \cdots, a_q$ 的情况下难以构造 $\hat{c} 、 c$ 且 $\hat{c}=c^\alpha$,其中 $c=\prod</em>{i=0}^q\left(g^{x^i}\right)^{a<em>i}, \hat{c}=\prod</em>{i=0}^q\left(g^{\alpha x^i}\right)^{a_i}$. 值得注意的是, $q$ - PKE 假设是一种不可证伪 (non-falsifiable)的假设.</p>
+<p><strong>$q$ 阶指数知识假设</strong> ( $q$-Power PKE, 即 $q$-PKE 假设)是指给定 $\left(g, g^x, \cdots, g^{x^q}, g^\alpha, g^{\alpha x}, \cdots, g^{\alpha x^q}\right)$, 在不知道 $a_0, a_1, \cdots, a_q$的情况下难以构造 $\hat{c} 、 c$ 且 $\hat{c}=c^\alpha$,其中 $c=\prod_{i=0}^q\left(g^{x^i}\right)^{a_i}, \hat{c}=\prod_{i=0}^q\left(g^{\alpha x^i}\right)^{a_i}$. 值得注意的是, $q$ - PKE 假设是一种不可证伪 (non-falsifiable)的假设.</p>
 <h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2><ol>
 <li><p>Alice 有一个值$a$，她想要 Bob 对其进行任意指数的求幂（这里 $a$ 是一个有限域群的生成元），唯一的要求是只能对  $a$ 进行求幂，为了保证这一点，她要:</p>
 <ul>

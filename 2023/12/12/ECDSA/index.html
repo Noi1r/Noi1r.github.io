@@ -186,19 +186,19 @@
 <li>选择模数长度 $N$ 使得 ${\displaystyle N&lt;L}$ 且 ${\displaystyle N\leq |H|}$，FIPS 186-4 规定 ${\displaystyle (L,N)}$ 必须为 (1024, 160)、(2048, 224)、(2048, 256) 或 (3072, 256) 其中一种。</li>
 <li>选择长度为 $N$ 比特的质数 $q$。</li>
 <li>选择长度为 $L$ 比特的质数 $p$ 使得 $<br>{\displaystyle p-1}$ 为 $q$ 的倍数。</li>
-<li>从 ${\displaystyle {2\ldots p-2}}$ 随机选择 $h$。计算 ${\displaystyle g:=h^{(p-1)/q}\mod p}$，当 $g=1$ 时需要重新产生不同的 $h$，通常会使用 ${\displaystyle h=2}$，即使数值很大时仍然可以非常有效率的计算这个模幂。</li>
+<li>从 ${\displaystyle \{2\ldots p-2\}}$ 随机选择 $h$。计算 ${\displaystyle g:=h^{(p-1)/q}\mod p}$，当 $g=1$ 时需要重新产生不同的 $h$，通常会使用 ${\displaystyle h=2}$，即使数值很大时仍然可以非常有效率的计算这个模幂。</li>
 </ol>
 <p>算法参数为 $(p,q,g)$，可被不同的用户共享。</p>
 <h4 id="用户密钥"><a href="#用户密钥" class="headerlink" title="用户密钥"></a>用户密钥</h4><p>给定一套算法参数后，第二阶段会为每位用户计算独立密钥组合：</p>
 <ol>
-<li>从 ${\displaystyle {1\ldots q-1}}$ 选择随机整数 $x$</li>
+<li>从 ${\displaystyle \{1\ldots q-1\}}$ 选择随机整数 $x$</li>
 <li>计算 ${\displaystyle y:=g^{x}\mod p}$</li>
 </ol>
 <p>其中<br>$x$ 是私钥、<br>$y$ 是公钥。</p>
 <h3 id="密钥分发"><a href="#密钥分发" class="headerlink" title="密钥分发"></a>密钥分发</h3><p>签名者需要透过可信任的管道发布公钥<br>$y$，并且安全地保护<br>$x$ 不被其他人知道。</p>
 <h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p>消息 $m$ 签名流程如下：</p>
 <ol>
-<li>从 ${\displaystyle {1\ldots q-1}}$ 选择随机整数 $k$</li>
+<li>从 ${\displaystyle \{1\ldots q-1\}}$ 选择随机整数 $k$</li>
 <li>计算 ${\displaystyle r:=\left(g^{k}{\bmod {\,}}p\right){\bmod {\,}}q}$，当出现 $r=0$ 状况时重新选择随机数 $k$</li>
 <li>计算 ${\displaystyle s:=\left(k^{-1}\left(H(m)+xr\right)\right){\bmod {\,}}q}$，当出现$s=0$ 状况时重新选择随机数 $k$.</li>
 </ol>
@@ -255,12 +255,12 @@ x = \frac{s_1s_2 +s_2H(m_1)-s_1H(m_2)}{s_1r_2-s_2r_1} \mod q</script><h4 id="代
 <blockquote>
 <p>Indeed, we assume that every nonzero element of the ring<br>$\mathbb {Z} /n\mathbb {Z}$  is invertible, so that $\mathbb {Z} /n\mathbb {Z}$  must be a field. It implies that $n$ must be prime</p>
 </blockquote>
-<p>Alice 从 ${\displaystyle {1\ldots n-1}}$ 选择随机整数 $d_A$, 作为私钥；计算$Q_A = d_A \times G$作为公钥。</p>
+<p>Alice 从 ${\displaystyle \{1\ldots n-1\}}$ 选择随机整数 $d_A$, 作为私钥；计算$Q_A = d_A \times G$作为公钥。</p>
 <h3 id="密钥分发-1"><a href="#密钥分发-1" class="headerlink" title="密钥分发"></a>密钥分发</h3><p>签名者需要透过可信任的管道发布公钥<br>$Q_A$，并且安全地保护<br>$d_A$ 不被其他人知道。</p>
 <h3 id="签名-1"><a href="#签名-1" class="headerlink" title="签名"></a>签名</h3><ol>
 <li>计算 $e = \text{HASH}(m)$，$\text{HASH}$ 是一个密码哈希函数。</li>
 <li>取 $z$ 为 e 最左边$|n|$比特，$|n|$ 为 $n$ 的比特长度。注意 $z$ 可以比 $n$ 大，但是不能比 $n$ 长。</li>
-<li>从 ${\displaystyle {1\ldots n-1}}$ 选择随机整数 $k$</li>
+<li>从 ${\displaystyle \{1\ldots n-1\}}$ 选择随机整数 $k$</li>
 <li>计算椭圆曲线上点 $(x_1,y_1)= k\times G$</li>
 <li>计算 $r = x_1 \mod n$，如果 $r=0$，回到step 3</li>
 <li>计算 $s = k^{-1}(z + rd_A )$，如果 $s=0$，回到step 3</li>

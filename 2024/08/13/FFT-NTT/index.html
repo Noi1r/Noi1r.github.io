@@ -14,7 +14,7 @@
 <meta property="og:description" content="$e^{i \theta}&#x3D;\cos (\theta)+i * \sin (\theta)$  FFT-Fast Fourier Transformation快速傅里叶变换（Fast Fourier Transform, FFT），是快速计算序列的离散傅立叶变换（DFT）及其逆变换的方法，将计算复杂度从 $O(n^2)$ 降低到 $O(n\log n)$ ，其中 $n$ 为序列的长度。在密码学场">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-13T06:21:46.000Z">
-<meta property="article:modified_time" content="2024-08-13T09:56:32.841Z">
+<meta property="article:modified_time" content="2024-08-13T10:05:44.704Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary">
@@ -182,16 +182,16 @@ C(x) = \sum_{i=0}^{2n} c_i x^i = \sum_{i=0}^{2n} \left( \sum_{j=0}^{i} a_j b_{i-
 <h3 id="Priliminary"><a href="#Priliminary" class="headerlink" title="Priliminary"></a>Priliminary</h3><h4 id="单位根"><a href="#单位根" class="headerlink" title="单位根"></a>单位根</h4><p>首先，我们需要引入一个复数 $w$ ，满足 $w^n = 1$ ，即 $w$ 是 $n$ 次单位根。考虑欧拉公式$e^{i \theta}=\cos (\theta)+i * \sin (\theta)$，我们可以得到 $w_n^k = e^{2\pi i k / n}, k\in [n]$ ，可以发现，复数的 $n$ 次单位根平分单位圆。<br>单位根还具有一些特殊的性质：</p>
 <ol>
 <li>$w_{dn}^{dk} = \cos (2\pi d k / dn)+i * \sin (2\pi d k / dn) = w_n^k$</li>
-<li>$w_n^{k+n/2} = \cos (2\pi k / n + \pi)+i <em> \sin (2\pi k / n + \pi) = - \cos (2\pi k / n ) - i </em> \sin (2\pi k / n + \pi) = -w_n^{k}$</li>
+<li>$w_n^{k+n/2} = \cos (2\pi k / n + \pi)+i * \sin (2\pi k / n + \pi) = - \cos (2\pi k / n ) - i  \sin (2\pi k / n + \pi) = -w_n^{k}$</li>
 <li>$w_n^{k+n} = \cos (2\pi k / n + 2\pi)+i * \sin (2\pi k / n + 2\pi) = w_n^{k}$</li>
 <li>$w_n^0 = 1$</li>
 </ol>
-<h4 id="DFT"><a href="#DFT" class="headerlink" title="DFT"></a>DFT</h4><p>已知 $A(x)$ 的系数为 $\left(a<em>0, a_1, \ldots, a</em>{n-1}\right)$, 对于 $k=0,1, \ldots, n-1$, 定义:</p>
+<h4 id="DFT"><a href="#DFT" class="headerlink" title="DFT"></a>DFT</h4><p>已知 $A(x)$ 的系数为 $\left(a_0, a_1, \ldots, a_{n-1}\right)$, 对于 $k=0,1, \ldots, n-1$, 定义:</p>
 <script type="math/tex; mode=display">
-y_k=A\left(w_n^k\right)=\sum_{i=0}^{n-1} a_i w_n^{k i}</script><p>其中向量 $y=\left(y<em>0, y_1, \ldots, y</em>{n-1}\right)$ 是系数向量 $a=\left(a<em>0, a_1, \ldots, a</em>{n-1}\right)$ 的离散傅立叶变换。</p>
-<h4 id="多项式系数表示法"><a href="#多项式系数表示法" class="headerlink" title="多项式系数表示法"></a>多项式系数表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 则 $A(x)=a_0+a_1 <em> x+\ldots,+a_d </em> x^d$<br>利用这种方法计算多项式卷积复杂度为 $O\left(d^2\right)$, 其实就是直接对应相乘（暴力）。<br>例如: $A(x)=1+2 x+x^2, B(x)=1-2 x+x^2$</p>
+y_k=A\left(w_n^k\right)=\sum_{i=0}^{n-1} a_i w_n^{k i}</script><p>其中向量 $y=(y_0, y_1, \ldots, y_{n-1})$ 是系数向量 $a=\left(a_0, a_1, \ldots, a_{n-1}\right)$ 的离散傅立叶变换。</p>
+<h4 id="多项式系数表示法"><a href="#多项式系数表示法" class="headerlink" title="多项式系数表示法"></a>多项式系数表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 则 $A(x)=a_0+a_1x+\ldots,+a_d x^d$<br>利用这种方法计算多项式卷积复杂度为 $O\left(d^2\right)$, 其实就是直接对应相乘（暴力）。<br>例如: $A(x)=1+2 x+x^2, B(x)=1-2 x+x^2$</p>
 <script type="math/tex; mode=display">
-A(x) B(x)=\left(+2 x+x^2\right)\left(1-2 x+x^2\right)=1-2 x^2+x^4</script><h4 id="多项式点值表示法"><a href="#多项式点值表示法" class="headerlink" title="多项式点值表示法"></a>多项式点值表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 我们知道该多项式在 $d+1$ 个点的值就可以唯一确定这个多项式。<br>因此，我们任取 $d+1$ 个点 $x_0,x_1,\ldots,x_d$，则 $A(x)$ 在这些点的值为 $A(x_0),A(x_1),\ldots,A(x_d)$，我们可以用这些点的值来表示多项式 $A(x)$。</p>
+A(x) B(x)=\left(1+2 x+x^2\right)\left(1-2 x+x^2\right)=1-2 x^2+x^4</script><h4 id="多项式点值表示法"><a href="#多项式点值表示法" class="headerlink" title="多项式点值表示法"></a>多项式点值表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 我们知道该多项式在 $d+1$ 个点的值就可以唯一确定这个多项式。<br>因此，我们任取 $d+1$ 个点 $x_0,x_1,\ldots,x_d$，则 $A(x)$ 在这些点的值为 $A(x_0),A(x_1),\ldots,A(x_d)$，我们可以用这些点的值来表示多项式 $A(x)$。</p>
 <script type="math/tex; mode=display">
 T = ((x_0,A(x_0)),(x_1,A(x_1)),\ldots,(x_d,A(x_d)))</script><p>在点值表示法下，多项式的乘法可以转化为点值的乘法，即 $A(x)B(x)$ 在 $d+1$ 个点的值为 $A(x_i)B(x_i)$ 的乘积，计算复杂度是 $O(d)$。但是要注意一个问题$A(x)B(x)$是一个 $2d$ 次多项式，因此我们需要找到 $2d+1$ 个点来表示这个多项式。</p>
 <p>因此，我们想到了一个方法，将多项式转化为点值表示，进行$O(d)$的乘法，然后再将点值表示的结果转化为多项式。但是这个转化的过程是如何进行的呢？如果我们采用普通求值的方法，复杂度仍然是 $O(d^2)$ 的。接下来，我们就开始逐步进行优化，引入FFT算法。</p>
@@ -201,7 +201,7 @@ F(x)=a_0+a_1 x+a_2 x^2+\ldots+a_{2n-1} x^{2n-1}=a_0+a_2 x^2+\ldots+a_{n-2} x^{n-
 <script type="math/tex; mode=display">
 FL(x)=a_0+a_2 x+\ldots+a_{n-2} x^{n/2-1}\\
 FR(x)=a_1+a_3 x+\ldots+a_{n-1} x^{n/2-1}\\
-F(x)=FL(x^2)+x FR(x^2)</script><p>如果$k&lt; n/2$，把$w<em>n^k$代入$F(x)$，我们可以得到：$F(w_n^k)=FL(w</em>{n}^{2k})+w<em>n^k FR(w</em>{n}^{2k})$，即$F(w<em>n^k)=FL(w</em>{n/2}^{k})+w<em>n^k FR(w</em>{n/2}^{k})$；如果$k&gt; n/2$，则有$F(w<em>n^k)=FL(w</em>{n/2}^{k-n/2})- w<em>n^{k-n/2} FR(w</em>{n/2}^{k-n/2})$。<br>如果我们知道了$FL(x)$和$FR(x)$在$w_{n/2}^{k}$处的值，我们就可以通过上述公式计算出$F(x)$在$w_n^k$处的值。<br>接着我们就可以利用<strong>分治</strong>思想，通过一个递归的算法来计算出$F(x)$ 在 $w_n^0, w_n^1, \ldots, w_n^{n-1}$ 处的点值表示。复杂度为$O(n\log n)$。</p>
+F(x)=FL(x^2)+x FR(x^2)</script><p>如果$k&lt; n/2$，把$w_n^k$代入$F(x)$，我们可以得到：$F(w_n^k)=FL(w_{n}^{2k})+w_n^k FR(w_{n}^{2k})$，即$F(w_n^k)=FL(w_{n/2}^{k})+w_n^k FR(w_{n/2}^{k})$；如果$k&gt; n/2$，则有$F(w_n^k)=FL(w_{n/2}^{k-n/2})- w_n^{k-n/2} FR(w_{n/2}^{k-n/2})$。<br>如果我们知道了$FL(x)$和$FR(x)$在$w_{n/2}^{k}$处的值，我们就可以通过上述公式计算出$F(x)$在$w_n^k$处的值。<br>接着我们就可以利用<strong>分治</strong>思想，通过一个递归的算法来计算出$F(x)$ 在 $w_n^0, w_n^1, \ldots, w_n^{n-1}$ 处的点值表示。复杂度为$O(n\log n)$。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">FFT</span>(<span class="params">P</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(P)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> P</span><br><span class="line">    w = <span class="number">1</span></span><br><span class="line">    wn = cmath.exp(<span class="number">2</span> * cmath.pi * <span class="number">1j</span> / n)</span><br><span class="line">    P0 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n, <span class="number">2</span>)]</span><br><span class="line">    P1 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n, <span class="number">2</span>)]</span><br><span class="line">    y0 = FFT(P0)</span><br><span class="line">    y1 = FFT(P1)</span><br><span class="line">    y = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(n // <span class="number">2</span>):</span><br><span class="line">        y[k] = y0[k] + w * y1[k]</span><br><span class="line">        y[k + n // <span class="number">2</span>] = y0[k] - w * y1[k]</span><br><span class="line">        w *= wn</span><br><span class="line">    <span class="keyword">return</span> y</span><br></pre></td></tr></table></figure>
 <h3 id="IFFT-Algorithm"><a href="#IFFT-Algorithm" class="headerlink" title="IFFT Algorithm"></a>IFFT Algorithm</h3><p>对于点值计算，其实就是计算一个矩阵乘法：</p>
 <script type="math/tex; mode=display">

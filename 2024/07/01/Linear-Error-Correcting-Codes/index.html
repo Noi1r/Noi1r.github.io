@@ -14,7 +14,7 @@
 <meta property="og:description" content="我们希望通过通道可靠地将消息（以位表示）传输到目的地。传输过程中可能会出现错误，我们希望检测和纠正这些传输错误。为了做到这一点，我们必须在传输的消息中引入一些冗余。我们看到Shannon’s Noisy Coding Theorem告诉我们，如果冗余度高于一定水平（受通道噪音约束），那么我们可以随着块长度的增加将错误概率（检测到发送的错误消息）减少到零。该证明是基于随机编码，这不是很实用。为了易于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-07-01T07:46:42.000Z">
-<meta property="article:modified_time" content="2024-08-12T05:09:01.177Z">
+<meta property="article:modified_time" content="2024-08-13T10:09:19.966Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="information theory">
 <meta name="twitter:card" content="summary">
@@ -176,7 +176,7 @@
 <p>在代码最多可以纠正t个错误的情况下，如果序列包含超过t个错误，解码器可能会解码到错误的信息序列。</p>
 <p>任意两个比特串之间的汉明距离$d_H$是2个字符串不同的比特数。例如，码字$c_1=(101101)$和$c_2=(100110)$之间的汉明距离$d_H$是3。表示$d^*$是代码$C$的任何两个不同码字之间的最小汉明距离</p>
 <script type="math/tex; mode=display">
-D^*=d_{\min }=\min _{c_i \neq c_j} d_H\left(c_i, c_j\right)</script><p>码字之间最小距离为$d^<em>$的代码可以检测$d^</em>-1$错误，并可以纠正$\frac{d^*-1}{2}$错误。因此，要纠正一个错误，代码的最小距离必须至少为3。</p>
+D^*=d_{\min }=\min _{c_i \neq c_j} d_H\left(c_i, c_j\right)</script><p>码字之间最小距离为$d^*$的代码可以检测$d^*-1$错误，并可以纠正$\frac{d^*-1}{2}$错误。因此，要纠正一个错误，代码的最小距离必须至少为3。</p>
 <p>线性码意味着$c\left(m+m^{\prime}\right)=c(m)+c\left(m^{\prime}\right)$，因此有<script type="math/tex">c(01101)=c(01000)+c(00100)+c(00001)=c\left(e_2\right)+c\left(e_3\right)+c\left(e_5\right)</script><br>$e_i, 1 \leq i \leq k$构成了消息空间的基础，$e_i$的码字完全描述了线性码。因此，不需要带有$2^k$条目的代码本。我们仅需要一个矩阵即可</p>
 <p>我们可以假设生成矩阵$G$采取特定形式。事实上，如果我们在$G$上执行基本行操作（在$Z_2$上，这意味着我们将一行添加到另一行），我们不会更改代码中的码字集合。我们甚至可以在不从根本上改变代码属性的情况下对列进行排列。因此，使用高斯消除，我们可以假设$G$采取更简单的形式：</p>
 <script type="math/tex; mode=display">
