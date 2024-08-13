@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>FFT &amp; NTT</title>
+      <link href="/2024/08/13/FFT-NTT/"/>
+      <url>/2024/08/13/FFT-NTT/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a href="https://www.cnblogs.com/Ning-H/p/12072626.html">https://www.cnblogs.com/Ning-H/p/12072626.html</a><br>[2] <a href="https://www.cnblogs.com/Ning-H/p/13693580.html">https://www.cnblogs.com/Ning-H/p/13693580.html</a><br>[3] <a href="https://www.cnblogs.com/pam-sh/p/15976275.html">https://www.cnblogs.com/pam-sh/p/15976275.html</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Mathematics </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Cyclotomic polynomial</title>
       <link href="/2024/08/12/Cyclotomic-polynomial/"/>
       <url>/2024/08/12/Cyclotomic-polynomial/</url>
