@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="最近在学习LDPC、MDPC码的时候，涉及到了很多多项式的知识，对有限域上的多项式又加深了一些理解，所以在这里记录一下，可能会比较乱，相当于是一个随笔。 Primitive Polynomial我们首先看wiki百科对于本原多项式的定义： In different branches of mathematics, primitive polynomial may refer to:  Primit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Polynomial in Finite Field">
-<meta property="og:url" content="http://example.com/2024/08/17/Polynomial-in-Finite-Field/index.html">
+<meta property="og:title" content="Primitive Polynomial &amp; Cyclotomic Coset">
+<meta property="og:url" content="http://example.com/2024/08/17/Primitive-Polynomial&Cyclotomic-Coset/index.html">
 <meta property="og:site_name" content="瓦楞纸">
 <meta property="og:description" content="最近在学习LDPC、MDPC码的时候，涉及到了很多多项式的知识，对有限域上的多项式又加深了一些理解，所以在这里记录一下，可能会比较乱，相当于是一个随笔。 Primitive Polynomial我们首先看wiki百科对于本原多项式的定义： In different branches of mathematics, primitive polynomial may refer to:  Primit">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-17T06:44:53.000Z">
-<meta property="article:modified_time" content="2024-08-19T13:56:37.748Z">
+<meta property="article:modified_time" content="2024-08-19T14:02:05.922Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@
       
     
     <!-- title -->
-    <title>Polynomial in Finite Field</title>
+    <title>Primitive Polynomial &amp; Cyclotomic Coset</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -107,24 +107,24 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/17/Polynomial-in-Finite-Field/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&text=Polynomial in Finite Field"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&is_video=false&description=Polynomial in Finite Field"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Polynomial in Finite Field&body=Check out this article: http://example.com/2024/08/17/Polynomial-in-Finite-Field/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&name=Polynomial in Finite Field&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&t=Polynomial in Finite Field"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&text=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&is_video=false&description=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Primitive Polynomial &amp; Cyclotomic Coset&body=Check out this article: http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&name=Primitive Polynomial &amp; Cyclotomic Coset&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&t=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Primitive-Polynomial"><span class="toc-number">1.</span> <span class="toc-text">Primitive Polynomial</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cyclotomic-Coset"><span class="toc-number">2.</span> <span class="toc-text">Cyclotomic Coset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">3.</span> <span class="toc-text">References</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Primitive-Polynomial"><span class="toc-number">1.</span> <span class="toc-text">Primitive Polynomial</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cyclotomic-Coset"><span class="toc-number">2.</span> <span class="toc-text">Cyclotomic Coset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%99%E4%BA%BA%E6%8C%87%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">仙人指路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
       </div>
     
   </span>
@@ -137,7 +137,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        Polynomial in Finite Field
+        Primitive Polynomial &amp; Cyclotomic Coset
     </h1>
 
 
@@ -218,7 +218,16 @@ C_7=\{7,11,13,14\} & m_7=x^4+x^3+1=m_{11}=m_{13}=m_{14}
 \end{aligned}</script><p>由上面我们又想到了一个等式：</p>
 <script type="math/tex; mode=display">
 m_1(x) m_3(x) m_5(x) m_7(x) = x^{16} - 1</script><p>$m_1(x),m_3(x),m_5(x),m_7(x)$并非都是本原多项式，其中只有$m_1(x), m_7(x)$是本原多项式（1和7与15互素）。注意这些多项式与分圆多项式之间的区别：分圆多项式应该是$m_1(x) m_7(x)$。这是不是又是一种快速求分圆多项式的方法呢？（尝试一下还真是，数学真是奇妙啊!）<br><strong>整理一下这个方法：首先我们要找到一个本原多项式，然后利用这个本原根生成不同分圆陪集的最小多项式，利用其中与$p^m-1$互素的多项式相乘，就可以得到分圆多项式。</strong></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Primitive_polynomial">https://en.wikipedia.org/wiki/Primitive_polynomial</a></p>
+<h2 id="仙人指路"><a href="#仙人指路" class="headerlink" title="仙人指路"></a>仙人指路</h2><p>之所以叫仙人指路是因为我是看到了这一个例子才理解了Cyclotomic Coset这个概念，放在这里仅供参考。</p>
+<p>Over GF(3) the polynomial $x^2+1$ is irreducible but not primitive because it divides $x^4-1$ : its roots generate a cyclic group of order 4 , while the multiplicative group of $\operatorname{GF}\left(3^2\right)$ is a cyclic group of order 8 . The polynomial $x^2+2 x+2$, on the other hand, is primitive. Denote one of its roots by $\alpha$. Then, because the natural numbers less than and relatively prime to $3^2-1=8$ are $1,3,5$, and 7 , the four primitive roots in $\mathrm{GF}\left(3^2\right)$ are $\alpha, \alpha^3=2 \alpha+1, \alpha^5=2 \alpha$, and $\alpha^7=\alpha+2$. The primitive roots $\alpha$ and $\alpha^3$ are algebraically conjugate. Indeed $x^2+2 x+2=(x-\alpha)(x-(2 \alpha+1))$. The remaining primitive roots $\alpha^5$ and $\alpha^7=\left(\alpha^5\right)^3$ are also algebraically conjugate and produce the second primitive polynomial: $x^2+x+2=(x-2 \alpha)(x-(\alpha+2))$.</p>
+<p>For degree $3, \operatorname{GF}\left(3^3\right)$ has $\varphi\left(3^3-1\right)=\varphi(26)=12$ primitive elements. As each primitive polynomial of degree 3 has three roots, all necessarily primitive, there are $12 / 3=4$ primitive polynomials of degree 3 . One primitive polynomial is $x^3+2 x+1$. Denoting one of its roots by $\gamma$, the algebraically conjugate elements are $\gamma^3$ and $\gamma^9$. The other primitive polynomials are associated with algebraically conjugate sets built on other primitive elements $\gamma^r$ with $r$ relatively prime to 26 :</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x^3+2 x+1 & =(x-\gamma)\left(x-\gamma^3\right)\left(x-\gamma^9\right) \\
+x^3+2 x^2+x+1 & =\left(x-\gamma^5\right)\left(x-\gamma^{5 \cdot 3}\right)\left(x-\gamma^{5 \cdot 9}\right)=\left(x-\gamma^5\right)\left(x-\gamma^{15}\right)\left(x-\gamma^{19}\right) \\
+x^3+x^2+2 x+1 & =\left(x-\gamma^7\right)\left(x-\gamma^{7 \cdot 3}\right)\left(x-\gamma^{7 \cdot 9}\right)=\left(x-\gamma^7\right)\left(x-\gamma^{21}\right)\left(x-\gamma^{11}\right) \\
+x^3+2 x^2+1 & =\left(x-\gamma^{17}\right)\left(x-\gamma^{17 \cdot 3}\right)\left(x-\gamma^{17 \cdot 9}\right)=\left(x-\gamma^{17}\right)\left(x-\gamma^{25}\right)\left(x-\gamma^{23}\right)
+\end{aligned}</script><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Primitive_polynomial">https://en.wikipedia.org/wiki/Primitive_polynomial</a><br>[2] <a target="_blank" rel="noopener" href="https://wuli.wiki/online/FldExp.html">https://wuli.wiki/online/FldExp.html</a><br>[3] Ouzan S, Be’ery Y. Moderate-density parity-check codes[J]. arXiv preprint arXiv:0911.3262, 2009.<br>[4] <a target="_blank" rel="noopener" href="https://user.eng.umd.edu/~abarg/626/">https://user.eng.umd.edu/~abarg/626/</a></p>
 
   </div>
 </article>
@@ -248,23 +257,23 @@ m_1(x) m_3(x) m_5(x) m_7(x) = x^{16} - 1</script><p>$m_1(x),m_3(x),m_5(x),m_7(x)
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Primitive-Polynomial"><span class="toc-number">1.</span> <span class="toc-text">Primitive Polynomial</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cyclotomic-Coset"><span class="toc-number">2.</span> <span class="toc-text">Cyclotomic Coset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">3.</span> <span class="toc-text">References</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Primitive-Polynomial"><span class="toc-number">1.</span> <span class="toc-text">Primitive Polynomial</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cyclotomic-Coset"><span class="toc-number">2.</span> <span class="toc-text">Cyclotomic Coset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%99%E4%BA%BA%E6%8C%87%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">仙人指路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
       </div>
     
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/17/Polynomial-in-Finite-Field/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&text=Polynomial in Finite Field"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&is_video=false&description=Polynomial in Finite Field"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Polynomial in Finite Field&body=Check out this article: http://example.com/2024/08/17/Polynomial-in-Finite-Field/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&title=Polynomial in Finite Field"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&name=Polynomial in Finite Field&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/17/Polynomial-in-Finite-Field/&t=Polynomial in Finite Field"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&text=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&is_video=false&description=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Primitive Polynomial &amp; Cyclotomic Coset&body=Check out this article: http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&title=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&name=Primitive Polynomial &amp; Cyclotomic Coset&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/17/Primitive-Polynomial&amp;Cyclotomic-Coset/&t=Primitive Polynomial &amp; Cyclotomic Coset"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
