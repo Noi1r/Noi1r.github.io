@@ -14,7 +14,7 @@
 <meta property="og:description" content="There are many schemes that advertise themselves as IND-secure, but what does that mean? In this post, we will explain the IND-CPA, IND-CCA1 and IND-CCA2 security notions. We will also discuss the dif">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-21T10:57:30.000Z">
-<meta property="article:modified_time" content="2024-08-21T11:20:11.799Z">
+<meta property="article:modified_time" content="2024-08-21T11:21:04.310Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Cryptography">
 <meta name="twitter:card" content="summary">
@@ -178,7 +178,7 @@
 <p>Algorithm: </p>
 <ol>
 <li>Challenger: $(pk,sk) \leftarrow \operatorname{Key-Gen}(1^n)$</li>
-<li>Adversary: choose two messages $M_0,M_1$ of equal length from message space \mathcal{M}$. Send $M_0,M_1$ to the challenger. Perform additional operations in polynomial time including calls to the encryption oracle.</li>
+<li>Adversary: choose two messages $M_0,M_1$ of equal length from message space $\mathcal{M}$. Send $M_0,M_1$ to the challenger. Perform additional operations in polynomial time including calls to the encryption oracle.</li>
 <li>Challenger: choose $b \leftarrow \{0,1\}$ and send $C^* \leftarrow \operatorname{Enc}(pk,M_b)$ to the adversary.</li>
 <li>Adversary: Perform additional operations in polynomial time including calls to the encryption oracle and output a guess $b’$ for $b$.</li>
 <li>Adversary wins if $b=b’$.</li>
@@ -188,7 +188,7 @@
 <p>Algorithm:</p>
 <ol>
 <li>Challenger: $(pk,sk) \leftarrow \operatorname{Key-Gen}(1^n)$</li>
-<li>Adversary: Perform additional operations in polynomial time including calls to the encryption and decryption oracles. choose two messages $M_0,M_1$ of equal length from message space \mathcal{M}$. Send $M_0,M_1$ to the challenger.</li>
+<li>Adversary: Perform additional operations in polynomial time including calls to the encryption and decryption oracles. choose two messages $M_0,M_1$ of equal length from message space $\mathcal{M}$. Send $M_0,M_1$ to the challenger.</li>
 <li>Challenger: choose $b \leftarrow \{0,1\}$ and send $C^* \leftarrow \operatorname{Enc}(pk,M_b)$ to the adversary.</li>
 <li>Adversary: Output a guess $b’$ for $b$.</li>
 <li>Adversary wins if $b=b’$.</li>
@@ -198,7 +198,7 @@
 <p>Algorithm:</p>
 <ol>
 <li>Challenger: $(pk,sk) \leftarrow \operatorname{Key-Gen}(1^n)$</li>
-<li>Adversary: perform additional operations in polynomial time including calls to the encryption and decryption oracles. choose two messages $M_0,M_1$ of equal length from message space \mathcal{M}$. Send $M_0,M_1$ to the challenger.</li>
+<li>Adversary: perform additional operations in polynomial time including calls to the encryption and decryption oracles. choose two messages $M_0,M_1$ of equal length from message space $\mathcal{M}$. Send $M_0,M_1$ to the challenger.</li>
 <li>Challenger: choose $b \leftarrow \{0,1\}$ and send $C^* \leftarrow \operatorname{Enc}(pk,M_b)$ to the adversary.</li>
 <li>Adversary: Perform additional operations in polynomial time including calls to the encryption and decryption oracles, and output a guess $b’$ for $b$.</li>
 <li>Adversary wins if $b=b’$.</li>
