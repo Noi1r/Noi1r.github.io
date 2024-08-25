@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Code-based cryptography I - Basic concepts and McElice system</title>
+      <link href="/2024/08/23/Code-based-cryptography-I-Basic-concepts-and-McElice-system/"/>
+      <url>/2024/08/23/Code-based-cryptography-I-Basic-concepts-and-McElice-system/</url>
+      
+        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="33d6c6941951bfac945ed2bd5af6769f9d60fffef1424418f99ca5a1b4844fa7">031d4e05f4069d686e37e2ca9868a429916f25b41b6a6a7ac6e59f05074264f454fdddb959569422621acbbf69331a94a8229d5a36ad8befb712e786941f9b317a3e380e2b87ebdb2a098b7d5dfb9f317707fffc9d38342f7960648e644f76e97fdbe8df8e6bee773703485e657457cc37f4bce3a39b35c68bf470e83ff3e070c88ea4d3e60c765db4a75866765ab3cc99f75310b68e0cb6095b20eab5c82047452658d47e2aa02e63eb98e4c3bcf966</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Cryptography </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Explanation of &#39;IND-&#39; Security Notions</title>
       <link href="/2024/08/21/Explanation-of-IND-Security-Notions/"/>
       <url>/2024/08/21/Explanation-of-IND-Security-Notions/</url>
