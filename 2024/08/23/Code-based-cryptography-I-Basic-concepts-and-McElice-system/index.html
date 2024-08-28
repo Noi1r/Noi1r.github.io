@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/imgs/cbe/coding_scheme.png">
 <meta property="article:published_time" content="2024-08-23T06:43:14.000Z">
-<meta property="article:modified_time" content="2024-08-27T03:39:22.425Z">
+<meta property="article:modified_time" content="2024-08-28T01:51:50.984Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Cryptography">
 <meta name="twitter:card" content="summary">
@@ -126,7 +126,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-correction-code"><span class="toc-number">1.</span> <span class="toc-text">Error correction code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-correction-code"><span class="toc-number">1.</span> <span class="toc-text">Error correction code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-code"><span class="toc-number">1.1.</span> <span class="toc-text">Linear code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decoding-problem"><span class="toc-number">1.2.</span> <span class="toc-text">Decoding problem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-McEliece-cryptosystem"><span class="toc-number">2.</span> <span class="toc-text">The McEliece cryptosystem</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Encryption"><span class="toc-number">2.1.</span> <span class="toc-text">Encryption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decryption"><span class="toc-number">2.2.</span> <span class="toc-text">Decryption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Security"><span class="toc-number">2.3.</span> <span class="toc-text">Security</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
       </div>
     
   </span>
@@ -177,7 +177,37 @@
 <li>分组码适用于一连串固定长度的数据包，而每一种分组码只能用于特定长度的数据包。实际用途中的分组码一般使用硬解码方式，所需时间为每一个数据包长度的多项式时间。</li>
 <li>卷积码适用于任意长度的比特流/符号流。接收方通常使用维特比算法将其软解码，但有时也会用其他算法。随着卷积码约束条件的长度增加，维特比解码的解码效率渐近最优；但作为代价，计算时间将以对数式增长。<br><img src="/imgs/cbe/coding_scheme.png" alt="error correction code"></li>
 </ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9EC2taInna4&amp;list=PL6hzlGxGIS1DcTZq6Fv1yq0_dmqDaNN4v">https://www.youtube.com/watch?v=9EC2taInna4&amp;list=PL6hzlGxGIS1DcTZq6Fv1yq0_dmqDaNN4v</a></p>
+<h3 id="Linear-code"><a href="#Linear-code" class="headerlink" title="Linear code"></a>Linear code</h3><p>长度为 $n$，维度为 $k$ 的线性码 $C$ 是 $\mathbb{F}_p$ 的 $k$ 维子空间。这样的代码称为q元(q-ary)码。C中的向量称为码字。码的大小是码字的数量，等于$q^k$。<br>线性码$C$有两种理解方式：</p>
+<ul>
+<li>生成矩阵(Geneartor matrix) $G, G\in \mathbb{F}_p^{k*n}$ 的 $k$ 个行向量张成的空间，$C = \{mG | m \in \mathbb{F}_p^k\}$。</li>
+<li>校验矩阵(Parity-check matrix) $H$, $C$为由$H$表示的线性变换 $\phi: \mathbb{F}_q^n \rightarrow \mathbb{F}_q^{n-k} $ 的核(kernel space)，$C = \{c \in \mathbb{F}_q^n | cH^T = 0\}$。$H$生成的码称为$C$的对偶码。</li>
+</ul>
+<p>线性码的任何线性组合仍然属于该码，因此有线性码的最小距离是最小非零码的汉明重量。</p>
+<script type="math/tex; mode=display">
+\min _{c,c_0 \in C, c \neq c_0} d\left(c, c_0\right)=\min _{c,c_0 \in C, c \neq c_0} d\left(c-c_0, 0\right)=\min _{c \in C, c \neq 0} d(c, 0)=d</script><h3 id="Decoding-problem"><a href="#Decoding-problem" class="headerlink" title="Decoding problem"></a>Decoding problem</h3><p>解码问题(Decoding problem)是指给定$x\in \mathbb{F}_p^n$，找到最接近$x$的码字$c\in C$。令$x=c+e$，$e$是错误向量，注意找到最接近$x$的码字等价于找到最小的汉明重量的错误向量$e$。</p>
+<ul>
+<li>如果 $x$ 中存在 $t$ 个错误，即错误向量 $e$ 的汉明重量是 $t$，这被称为 $t-$错误校正问题（t-error correcting problem）。</li>
+<li>存在许多具有快速解码算法的编码族，例如里德-所罗门码（Reed-Solomon codes）、戈帕码/交替码（Goppa codes/alternant codes）等。</li>
+<li><strong>通常的解码问题是困难的：最好的方法-信息集解码（Information-set decoding）需要指数级时间</strong>。</li>
+</ul>
+<h2 id="The-McEliece-cryptosystem"><a href="#The-McEliece-cryptosystem" class="headerlink" title="The McEliece cryptosystem"></a>The McEliece cryptosystem</h2><p>参考Robert McEliece 1978[2]，McEliece密码系统是一种基于编码的公钥密码系统，它的安全性基于解码问题的困难性。<br>设 $C$ 为长度为 $n$ 的二元 Goppa 码 $\Gamma$，其维数为 $k$，最小距离为 $2t+1$，其中 $t \approx (n-k) / \log_2(n)$；原始参数（1978年）为 $n=1024, k=524, t=50$：</p>
+<ul>
+<li>McEliece 密钥包含 $\Gamma$ 的生成矩阵 $G$，一个高效的 $\Gamma$ $t$ 错误校正解码算法；一个 $n \times n$ 的置换矩阵 $P$ 和一个非奇异的 $k \times k$ 矩阵 $S$。</li>
+<li>$n, k, t$ 是公开的；但是 $\Gamma, P, S$ 是随机生成的秘密。</li>
+<li>McEliece 公钥是 $k \times n$ 矩阵 $G^{\prime} = S G P$。</li>
+</ul>
+<h3 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h3><ul>
+<li>选择一个 $k$ 比特信息向量 $m$，将其编码为 $c = mG^{\prime}$；</li>
+<li>产生一个 $n$ 比特，重量为 $t$ 的随机向量 $e$，计算 $y = c + e$；</li>
+<li>发送 $y$。</li>
+</ul>
+<h3 id="Decryption"><a href="#Decryption" class="headerlink" title="Decryption"></a>Decryption</h3><ul>
+<li>接收到 $y$ 后，计算 $yP^{-1} = mG + eP^{-1}$；</li>
+<li>由于 $P$ 是置换矩阵，$eP^{-1}$ 仍然是一个重量为 $t$ 的向量；</li>
+<li>使用 $\Gamma$ 的 $t$ 错误校正解码算法，找到$mS$ 和 $m$。</li>
+</ul>
+<h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h3><p>攻击者面临的挑战是将  $y$  解码到由  $G{\prime}$  生成的码中最近的码字  $mG{\prime}$ 。如果  $G{\prime}$  不暴露任何特殊结构，这就是一般解码问题。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9EC2taInna4&amp;list=PL6hzlGxGIS1DcTZq6Fv1yq0_dmqDaNN4v">https://www.youtube.com/watch?v=9EC2taInna4&amp;list=PL6hzlGxGIS1DcTZq6Fv1yq0_dmqDaNN4v</a><br>[2] McEliece R J. A public-key cryptosystem based on algebraic[J]. Coding Thv, 1978, 4244: 114-116.</p>
 
   </div>
 </article>
@@ -207,7 +237,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-correction-code"><span class="toc-number">1.</span> <span class="toc-text">Error correction code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-correction-code"><span class="toc-number">1.</span> <span class="toc-text">Error correction code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-code"><span class="toc-number">1.1.</span> <span class="toc-text">Linear code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decoding-problem"><span class="toc-number">1.2.</span> <span class="toc-text">Decoding problem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-McEliece-cryptosystem"><span class="toc-number">2.</span> <span class="toc-text">The McEliece cryptosystem</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Encryption"><span class="toc-number">2.1.</span> <span class="toc-text">Encryption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decryption"><span class="toc-number">2.2.</span> <span class="toc-text">Decryption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Security"><span class="toc-number">2.3.</span> <span class="toc-text">Security</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
       </div>
     
 
