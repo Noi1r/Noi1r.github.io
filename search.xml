@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Combinatorial number system</title>
+      <link href="/2024/08/30/Combinatorial-number-system/"/>
+      <url>/2024/08/30/Combinatorial-number-system/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>组合数系统（Combinatorial number system）是一种将非负整数 $N$ 映射到$k$-组合（k-combination）的方法。<br>组合表示为严格递减序列 $c_k &gt; \dots &gt; c_2 &gt; c_1 \ge 0$，其中每个 $c_i$ 对应于给定k组合中所选元素的索引。<br>不同的数字对应于不同的$k$-组合。小于${\tbinom {n}{k}}$的数对应于 ${0, 1, …, n − 1}$ 的所有 $k$-组合。<br>对应关系不取决于 $k$-组合取自的集合的大小 $n$，因此它可以被解释为从 $N$ 到从 $N$ 取的 $k$-组合的映射，且该映射是双射。与$\left(c_k, \ldots, c_2, c_1\right)$对应的数字$N$</p><script type="math/tex; mode=display">N=\binom{c_k}{k}+\cdots+\binom{c_2}{2}+\binom{c_1}{1}</script><h2 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h2><p>在Code-based cryptography中，组合数系统用于将低汉明重量的错误向量映射到错误位置的集合，可以进行数据的压缩和解压缩。</p><h3 id="Signature-algorithm"><a href="#Signature-algorithm" class="headerlink" title="Signature algorithm"></a>Signature algorithm</h3><ul><li>hash the document $D$ into $s=h(D)$</li><li>compute $s_i=h([\cdots s \cdots \mid \cdot i \cdot])$ for $i=0,1,2 \ldots$</li><li>find $i_0$ the smallest value of $i$ such that $s_i$ is decodable</li><li>use our trapdoor function to compute $z$ such that $H z^T=s_{i_0}$</li><li>compute the index $I_z$ of $z$ in the space of words of weight 9</li><li>use $\left[\cdots I_z \cdots \mid \cdot i_0 \cdot\right]$ as a signature for D</li></ul><h3 id="Verification-algorithm-is-much-simpler-and-faster"><a href="#Verification-algorithm-is-much-simpler-and-faster" class="headerlink" title="Verification algorithm is much simpler (and faster)"></a>Verification algorithm is much simpler (and faster)</h3><ul><li>recover $z$ from its index $I_z$</li><li>compute $s_1=H z^T$ with the public key $H$</li><li>compute $s_2=h\left(\left[\cdots h(D) \cdots \mid \cdot i_0 \cdot\right]\right)$ with the public hash function</li><li>compare $s_1$ and $s_2$ : if they are equal the signature is valid</li></ul><p>其中，最初的$z$长度为$n=2^{16}$比特，而其中的1的个数仅为9，即$w=9$，所以我们可以将其压缩。<br>我们有$\tbinom{2^{16}}{9} \approx 2^{125.5}$，所以我们可以仅用126比特来索引$z$，而不是存储整个$z$。<br>令$i_1&lt; \ldots &lt; i_9$表示$z$非零位的位置。我们通过以下方式定义$z$的索引$I_z$：</p><script type="math/tex; mode=display">I_z=1+\binom{i_1}{1}+\binom{i_2}{2}+\ldots+\binom{i_9}{9}</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Mathematics </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Code-based cryptography II - Niederreiter system and schoolbook attaccks</title>
+      <link href="/2024/08/28/Code-based-cryptography-II-Niederreiter-system-and-schoolbook-attaccks/"/>
+      <url>/2024/08/28/Code-based-cryptography-II-Niederreiter-system-and-schoolbook-attaccks/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Systematic-form"><a href="#Systematic-form" class="headerlink" title="Systematic form"></a>Systematic form</h2><p><strong>系统生成矩阵 $G$</strong> 是形式为 $[I_k | P]$ 的矩阵，其中 $I_k$ 是 $k \times k$ 的单位矩阵，$P$ 是 $k \times (n-k)$ 的矩阵（冗余部分）。系统阵生成的码字前 $k$ 位是信息位，后 $n-k$ 位是校验位。<br><strong>系统校验矩阵 $H$</strong> 是形式为$[P^T | I_{n-k}]$的矩阵，即 $H$ 是 $n \times n-k$ 的矩阵，$P^T$ 是 $n-k \times k$ 的生成矩阵的$P$的转置，$I_{n-k}$ 是 $n-k \times n-k$ 的单位矩阵。</p><script type="math/tex; mode=display">H(\mathbf{m} G)^{T}=H G^{T} \mathbf{m}^{T}=\left(P^{T} \mid I_{n-k}\right)\left(I_k \mid P\right)^{T} \mathbf{m}^{T}=0 .</script><p>在存储和传输的时候我们可以只存储和传输 $P$，以节省空间。</p><h3 id="Different-views-on-decoding"><a href="#Different-views-on-decoding" class="headerlink" title="Different views on decoding"></a>Different views on decoding</h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Cryptography </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Code-based cryptography I - Basic concepts and McElice system</title>
       <link href="/2024/08/23/Code-based-cryptography-I-Basic-concepts-and-McElice-system/"/>
       <url>/2024/08/23/Code-based-cryptography-I-Basic-concepts-and-McElice-system/</url>
