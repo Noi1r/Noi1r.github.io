@@ -14,7 +14,7 @@
 <meta property="og:description" content="Introduction组合数系统（Combinatorial number system）是一种将非负整数 $N$ 映射到$k$-组合（k-combination）的方法。组合表示为严格递减序列 $c_k &gt; \dots &gt; c_2 &gt; c_1 \ge 0$，其中每个 $c_i$ 对应于给定k组合中所选元素的索引。不同的数字对应于不同的$k$-组合。小于${\tbinom {n">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-30T05:55:29.000Z">
-<meta property="article:modified_time" content="2024-08-30T06:11:20.318Z">
+<meta property="article:modified_time" content="2024-08-30T06:15:03.904Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary">
@@ -124,7 +124,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm-is-much-simpler-and-faster"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm is much simpler (and faster)</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -180,7 +180,7 @@ N=\binom{c_k}{k}+\cdots+\binom{c_2}{2}+\binom{c_1}{1}</script><h2 id="Applicatio
 <li>compute the index $I_z$ of $z$ in the space of words of weight 9</li>
 <li>use $\left[\cdots I_z \cdots \mid \cdot i_0 \cdot\right]$ as a signature for D</li>
 </ul>
-<h3 id="Verification-algorithm-is-much-simpler-and-faster"><a href="#Verification-algorithm-is-much-simpler-and-faster" class="headerlink" title="Verification algorithm is much simpler (and faster)"></a>Verification algorithm is much simpler (and faster)</h3><ul>
+<h3 id="Verification-algorithm"><a href="#Verification-algorithm" class="headerlink" title="Verification algorithm"></a>Verification algorithm</h3><ul>
 <li>recover $z$ from its index $I_z$</li>
 <li>compute $s_1=H z^T$ with the public key $H$</li>
 <li>compute $s_2=h\left(\left[\cdots h(D) \cdots \mid \cdot i_0 \cdot\right]\right)$ with the public hash function</li>
@@ -217,7 +217,7 @@ I_z=1+\binom{i_1}{1}+\binom{i_2}{2}+\ldots+\binom{i_9}{9}</script>
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm-is-much-simpler-and-faster"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm is much simpler (and faster)</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm</span></a></li></ol></li></ol>
       </div>
     
 
