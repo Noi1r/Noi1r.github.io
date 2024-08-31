@@ -14,7 +14,7 @@
 <meta property="og:description" content="IntroductionCombinatorial number system represents a non-negative natural numbers as sum of binomial coefficients, which is a correspondence between natural numbers (taken to include 0) N and k-combin">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-08-30T05:55:29.000Z">
-<meta property="article:modified_time" content="2024-08-31T05:09:35.152Z">
+<meta property="article:modified_time" content="2024-08-31T05:11:38.087Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Mathematics">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@ m + 1 = \binom{C_r}{r} + \cdots + \binom{C_1+j+\alpha} + \binom{C_1+j}{j} + \bin
 <script type="math/tex; mode=display">
 \sum B^\prime < \binom{C_B+1}{r} \leq \binom{C_A}{r} \leq \sum A^\prime</script><p>As $\sum A^\prime = \sum B^\prime$, we have a contradiction. So we have proved the uniqueness of the bijection between the natural numbers and the k-combinations.</p>
 <p><strong>Conclusion</strong>. We have proved the bijection between the natural numbers and the k-combinations.</p>
-<h2 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h2><p>In the CFS signature scheme[3], the combinatorial number system is used to compress the signature. The original signature is a word of length $n=2^{16}$ bits with weight $w=9$.<br>Since its low hamming weight, we obviouly have an intuition that we can compress it.<br>We totally have $\binom{2^{16}}{9} \approx 2^{125.5}$ kinds of words, so we can use 126 bits to index the word $z$ instead of storing the whole $z$.<br>As we proved above, we have $\binom{2^{16}}{9} \ge \sum_{i=1}^9\binom{2^{16}-i}{9-i}$, so we can use the position of the 1’s in $z$ to index $z$.<br>Let $i_1&lt;\ldots&lt;i_9$ denote the positions of the non-zero bits of $z$. We define the index $I_z$ of $z$ by:</p>
+<h2 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h2><p>In the CFS signature scheme[3], the combinatorial number system is used to compress the signature. The original signature is a word of length $n=2^{16}$ bits with weight $w=9$.<br>Since its low hamming weight, we obviouly have an intuition that we can compress it.<br>We totally have $\binom{2^{16}}{9} \approx 2^{125.5}$ kinds of words, so we can use 126 bits to index the word $z$ instead of storing the whole $z$.<br>As we proved above, we have $\binom{2^{16}}{9} = \sum_{i=0}^9\binom{2^{16}-1-i}{9-i}$, so we can use the position of the 1’s in $z$ to index $z$.<br>Let $i_1&lt;\ldots&lt;i_9$ denote the positions of the non-zero bits of $z$. We define the index $I_z$ of $z$ by:</p>
 <script type="math/tex; mode=display">
 I_z=1+\binom{i_1}{1}+\binom{i_2}{2}+\ldots+\binom{i_9}{9}</script><p>The full CFS signature scheme is as follows:</p>
 <h3 id="Signature-algorithm"><a href="#Signature-algorithm" class="headerlink" title="Signature algorithm"></a>Signature algorithm</h3><ul>
