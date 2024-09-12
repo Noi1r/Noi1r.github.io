@@ -316,6 +316,15 @@
   padding-right: 4rem;
   padding-left: 4rem;
 }
+.password-input {
+  display: block;
+  width: 300px;
+  height: 50px;
+  padding: 0.5rem;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
 body h1,
 body .h1 {
   display: block;
@@ -433,6 +442,15 @@ body th {
 body td {
   padding: 0 8px;
   border-bottom: none;
+}
+.password-input {
+  display: block;
+  width: 300px;
+  height: 50px;
+  padding: 0.5rem;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 @font-face {
   font-style: normal;
@@ -912,6 +930,16 @@ body {
     display: none;
   }
 }
+input[type="password"] {
+  display: block;
+  width: 600px;
+  height: 200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding-left: 100px /* 增加左侧内边距 */;
+}
 #footer-post {
   position: fixed;
   right: 0;
@@ -1046,6 +1074,12 @@ body {
 @media screen and (min-width: 500px) {
   #footer-post-container {
     display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  input[type="password"] {
+    width: 100% /* 在小屏幕下输入框占据整个屏幕宽度 */;
+    height: 100px;
   }
 }
 .post-list {
