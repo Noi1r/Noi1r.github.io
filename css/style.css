@@ -1079,7 +1079,8 @@ input[type="password"] {
 @media screen and (max-width: 600px) {
   input[type="password"] {
     width: 100% /* 在小屏幕下输入框占据整个屏幕宽度 */;
-    height: 100px;
+    height: 300px;
+    font-size: 8px;
   }
 }
 .post-list {
