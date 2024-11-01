@@ -6,17 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="The purpose of computing is insight, not numbers.  - Richard Hamming  I am a PhD student in the [Department of Computer Science and Engineering](https:&#x2F;&#x2F;www.cs.sjtu.edu.cn) at [Shanghai Jiao Tong Un">
+    <meta name="description" content="Suppose there is an $\mu$-variate low-degree polynomial, $\mathcal{G}: \mathbb{F}^\mu \rightarrow \mathbb{F}$ where the degree of each variable in $\mathcal{G}$ is at most $\ell$. Suppose that a verif">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sum-Check Protocol">
 <meta property="og:url" content="http://example.com/2024/10/31/Sum-Check-Protocol/index.html">
 <meta property="og:site_name" content="Lizheng Wang（王栗政）">
-<meta property="og:description" content="The purpose of computing is insight, not numbers.  - Richard Hamming  I am a PhD student in the [Department of Computer Science and Engineering](https:&#x2F;&#x2F;www.cs.sjtu.edu.cn) at [Shanghai Jiao Tong Un">
+<meta property="og:description" content="Suppose there is an $\mu$-variate low-degree polynomial, $\mathcal{G}: \mathbb{F}^\mu \rightarrow \mathbb{F}$ where the degree of each variable in $\mathcal{G}$ is at most $\ell$. Suppose that a verif">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/imgs/sumcheck.png">
 <meta property="article:published_time" content="2024-10-31T10:10:33.000Z">
-<meta property="article:modified_time" content="2024-10-31T10:10:33.091Z">
+<meta property="article:modified_time" content="2024-11-01T03:36:09.706Z">
 <meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="Zero Knowledge Proof">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/imgs/sumcheck.png">
     
     
       
@@ -124,6 +127,10 @@
     </div>
     
     
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof-of-Soundness"><span class="toc-number">1.</span> <span class="toc-text">Proof of Soundness</span></a></li></ol>
+      </div>
+    
   </span>
 </div>
 
@@ -155,13 +162,55 @@
       
 
       
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Zero-Knowledge-Proof/" rel="tag">Zero Knowledge Proof</a>
+    </div>
+
 
     </div>
   </header>
   
 
   <div class="content e-content" itemprop="articleBody">
-    
+    <p>Suppose there is an $\mu$-variate low-degree polynomial, $\mathcal{G}: \mathbb{F}^\mu \rightarrow \mathbb{F}$ where the degree of each variable in $\mathcal{G}$ is at most $\ell$. Suppose that a verifier $\mathcal{V}_{S C}$ is <strong>interested in checking a claim of the following form by an untrusted prover</strong> $\mathcal{P}_{S C}$ or <strong>the computationally bounded verifier wants to delegate the heavy computation to a unbounded prover</strong> :</p>
+<script type="math/tex; mode=display">
+T=\sum_{x_1 \in\{0,1\}} \sum_{x_2 \in\{0,1\}} \ldots \sum_{x_\mu \in\{0,1\}} \mathcal{G}\left(x_1, x_2, \ldots, x_\mu\right)</script><p>First, we can analyze the cost of the above computation. The number of terms in the above sum is $2^\mu$. The degree of the polynomial $\mathcal{G}$ is $\ell$ in each variable. Therefore, the degree of the polynomial $\mathcal{G}$ is at most $\mu \cdot \ell$. The cost of evaluating the polynomial $\mathcal{G}$ at a point is $O(\mu \cdot \ell)$. Therefore, the cost of evaluating the above sum is $O(2^\mu \cdot \mu \cdot \ell)$. It’s unaffordable to compute the above sum by the verifier $\mathcal{V}_{S C}$ itself.</p>
+<p>By using Sum-Check Protocol, the verifier can reduce the cost to just calculate a random point of the polynomial $\mathcal{G}$ and sample some random points. The complexity of the protocol is $O(\mu \cdot \ell)$.</p>
+<p><img src="/imgs/sumcheck.png" alt="alt text"></p>
+<p>We denote the sum-check protocol as $b \leftarrow\left\langle\mathcal{P}_{S C}, \mathcal{V}_{S C}(r)\right\rangle(\mathcal{G}, \mu, \ell, T)$. For any $\mu$-variate polynomial $\mathcal{G}$ with degree at most $\ell$ in each variable, the following properties hold.</p>
+<ul>
+<li>Completeness. If $T=\sum_{x \in\{0,1\}^\mu} \mathcal{G}(x)$, then for a correct $\mathcal{P}_{S C}$ and for all $r \in\{0,1\}^*$, $\operatorname{Pr}\left\{\left\langle\mathcal{P}_{S C}(\mathcal{G}), \mathcal{V}_{S C}(r)\right\rangle(\mu, \ell, T)=1\right\}=1$.</li>
+<li>Soundness. If $T \neq \sum_{x \in\{0,1\}^\mu} \mathcal{G}(x)$, then for any $\mathcal{P}_{S C}^{\star}$ and for all $r \in\{0,1\}^*$, $\operatorname{Pr}_r\left\{\left\langle\mathcal{P}_{S C}^{\star}(\mathcal{G}), \mathcal{V}_{S C}(r)\right\rangle(\mu, \ell, T)=1\right\} \leq \ell \cdot \mu /|\mathbb{F}|$.</li>
+<li>Succinctness. The communication between $\mathcal{P}_{S C}$ and $\mathcal{V}_{S C}$ is $O(\mu \cdot \ell)$ elements of $\mathbb{F}$.</li>
+</ul>
+<h3 id="Proof-of-Soundness"><a href="#Proof-of-Soundness" class="headerlink" title="Proof of Soundness"></a>Proof of Soundness</h3><p>In this section, we will prove the soundness of the sum-check protocol. We will show that if $T \neq \sum_{x \in\{0,1\}^\mu} \mathcal{G}$, then for any $\mathcal{P}_{S C}^{\star}$ and for all $r \in\{0,1\}^*$, $\operatorname{Pr}_r\left\{\left\langle\mathcal{P}_{S C}(\mathcal{G^\star}), \mathcal{V}_{S C}(r)\right\rangle(\mu, \ell, T)=1\right\} \leq \ell \cdot \mu /|\mathbb{F}|$.</p>
+<!-- Assume the polynomail satisfies the above condition is $\mathcal{G}(x)$.  -->
+<p>We can prove it by induction. </p>
+<p>The base case is $\mu=1$: Prover’s only message is a degree-$\ell$ polynomial $\mathcal{G}_1(x_1)$, and the verifier’s only message is a random point $r_1 \in \mathbb{F}$.</p>
+<p>The prover can forge a polynomial satisfy $T=\mathcal{G}_1(0)+\mathcal{G}_1(1)$. But the verifier checks the following equation:</p>
+<script type="math/tex; mode=display">
+\mathcal{G}_1(r_1)= \mathcal{G}(r_1)</script><p>By the Schwartz-Zippel lemma, the probability that the above equation holds is at most $\ell/|\mathbb{F}|$.</p>
+<p>Assume the statement holds for $\mu-1$. </p>
+<p>Let  $h_1\left(X_1\right)=\sum_{x_2, \ldots, x_v \in\{0,1\}^{\nu-1}} \mathcal{G}\left(X_1, x_2, \ldots, x_v\right)$. </p>
+<p>Suppose $\mathcal{P}$ sends a polynomial $\mathcal{G}_1$ satisfying $T=\mathcal{G}_1(0)+\mathcal{G}_1(1)$ and $\mathcal{G}_1(X_1)\not =h_1(X_1)$. Then because the degree of the degree of $\mathcal{G}_1-h_1$ is at most $\ell$, $\mathcal{G}_1(r_1)=h_1(r_1)$ with probability at most $\ell/|\mathbb{F}|$.</p>
+<p>Conditioned on $\mathcal{G}_1(r_1)=h_1(r_1)$, the verifier need to checks:</p>
+<script type="math/tex; mode=display">
+\mathcal{G}_1\left(r_1\right)=\sum_{\left(x_2, \ldots, x_v\right) \in\{0,1\}^{v-1}} \mathcal{G}\left(r_1, x_2, \ldots, x_v\right) .</script><p>By the induction hypothesis, the probability that the above equation holds is at most $\ell \cdot (\mu-1) /|\mathbb{F}|$.</p>
+<p>Therefore, the probability that the verifier reject is</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Pr(\mathcal{V} \text{ reject}) &\ge 1- \Pr(\mathcal{G}_1(r_1) =h_1(r_1)) - \Pr(\mathcal{G}_1\left(r_1\right)=\sum_{\left(x_2, \ldots, x_v\right) \in\{0,1\}^{v-1}} \mathcal{G}\left(r_1, x_2, \ldots, x_v\right) \mid \mathcal{G}_1(r_1)=h_1(r_1)) \\
+&\ge 1-\ell/|\mathbb{F}|-\ell \cdot (\mu-1) /|\mathbb{F}| \\
+&=1-\ell \cdot \mu /|\mathbb{F}|
+\end{aligned}</script><!-- Then we define two events:
+$$
+\begin{aligned}
+&E_i:=\text{event that } \mathcal{G}^\star_i(r_i) =\mathcal{G}_i(r_i) \\
+&W:=\text{event that Verifier accepts}
+\end{aligned}
+$$ -->
+
   </div>
 </article>
 
@@ -191,6 +240,10 @@
 
     
     
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof-of-Soundness"><span class="toc-number">1.</span> <span class="toc-text">Proof of Soundness</span></a></li></ol>
+      </div>
+    
 
     <div id="share-footer" style="display: none">
       <ul>
@@ -211,6 +264,8 @@
 
     <div id="actions-footer">
         <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
         
         <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
         <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
