@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="$e^{i \theta}&#x3D;\cos (\theta)+i * \sin (\theta)$  FFT-Fast Fourier Transformation快速傅里叶变换（Fast Fourier Transform, FFT），是快速计算序列的离散傅立叶变换（DFT）及其逆变换的方法，将计算复杂度从 $O(n^2)$ 降低到 $O(n\log n)$ ，其中 $n$ 为序列的长度。在密码学场">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFT &amp; NTT">
+<meta property="og:url" content="http://example.com/2024/08/13/FFT-NTT/index.html">
+<meta property="og:site_name" content="Lizheng Wang（王栗政）">
+<meta property="og:description" content="$e^{i \theta}&#x3D;\cos (\theta)+i * \sin (\theta)$  FFT-Fast Fourier Transformation快速傅里叶变换（Fast Fourier Transform, FFT），是快速计算序列的离散傅立叶变换（DFT）及其逆变换的方法，将计算复杂度从 $O(n^2)$ 降低到 $O(n\log n)$ ，其中 $n$ 为序列的长度。在密码学场">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-13T06:21:46.000Z">
+<meta property="article:modified_time" content="2024-11-05T14:13:54.383Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>FFT &amp; NTT</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/08/17/Primitive-Polynomial&Cyclotomic-Coset/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/08/12/Cyclotomic-polynomial/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/13/FFT-NTT/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/13/FFT-NTT/&text=FFT &amp; NTT"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/13/FFT-NTT/&is_video=false&description=FFT &amp; NTT"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=FFT &amp; NTT&body=Check out this article: http://example.com/2024/08/13/FFT-NTT/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/13/FFT-NTT/&name=FFT &amp; NTT&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/13/FFT-NTT/&t=FFT &amp; NTT"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FFT-Fast-Fourier-Transformation"><span class="toc-number">1.</span> <span class="toc-text">FFT-Fast Fourier Transformation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priliminary"><span class="toc-number">1.1.</span> <span class="toc-text">Priliminary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">单位根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DFT"><span class="toc-number">1.1.2.</span> <span class="toc-text">DFT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">多项式系数表示法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text">多项式点值表示法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FFT-Algorithm"><span class="toc-number">1.2.</span> <span class="toc-text">FFT Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IFFT-Algorithm"><span class="toc-number">1.3.</span> <span class="toc-text">IFFT Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%9D%B4%E8%9D%B6%E5%8F%98%E6%8D%A2"><span class="toc-number">1.4.</span> <span class="toc-text">蝴蝶变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT-Number-Theoretic-Transform"><span class="toc-number">2.</span> <span class="toc-text">NTT-Number Theoretic Transform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        FFT &amp; NTT
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-13T06:21:46.000Z" class="dt-published" itemprop="datePublished">2024-08-13</time>
+        
+        (Updated: <time datetime="2024-11-05T14:13:54.383Z" class="dt-updated" itemprop="dateModified">2024-11-05</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Mathematics/" rel="tag">Mathematics</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>$e^{i \theta}=\cos (\theta)+i * \sin (\theta)$</p>
+</blockquote>
+<h2 id="FFT-Fast-Fourier-Transformation"><a href="#FFT-Fast-Fourier-Transformation" class="headerlink" title="FFT-Fast Fourier Transformation"></a>FFT-Fast Fourier Transformation</h2><p>快速傅里叶变换（Fast Fourier Transform, FFT），是快速计算序列的离散傅立叶变换（DFT）及其逆变换的方法，将计算复杂度从 $O(n^2)$ 降低到 $O(n\log n)$ ，其中 $n$ 为序列的长度。在密码学场景下，就是为了加速多项式乘法。</p>
+<p>首先，我们考虑多项式:</p>
+<script type="math/tex; mode=display">
+A(x) = a_n x^n + a_{n-1} x^{n-1} + a_{n-2} x^{n-2} + \cdots + a_1 x + a_0
+B(x) = b_n x^n + b_{n-1} x^{n-1} + b_{n-2} x^{n-2} + \cdots + b_1 x + b_0</script><p>我们要计算 $C(x) = A(x) \cdot B(x)$ ，即两个多项式的乘积，那么我们可以想到的最简单的方法就是$O(N^2)$：将每一项依次分别相乘再相加。</p>
+<script type="math/tex; mode=display">
+C(x) = \sum_{i=0}^{2n} c_i x^i = \sum_{i=0}^{2n} \left( \sum_{j=0}^{i} a_j b_{i-j} \right) x^i</script><p>这样的时间复杂度肯定是不可接受的，所以我们需要寻找更快的方法。</p>
+<h3 id="Priliminary"><a href="#Priliminary" class="headerlink" title="Priliminary"></a>Priliminary</h3><h4 id="单位根"><a href="#单位根" class="headerlink" title="单位根"></a>单位根</h4><p>首先，我们需要引入一个复数 $w$ ，满足 $w^n = 1$ ，即 $w$ 是 $n$ 次单位根。考虑欧拉公式$e^{i \theta}=\cos (\theta)+i * \sin (\theta)$，我们可以得到 $w_n^k = e^{2\pi i k / n}, k\in [n]$ ，可以发现，复数的 $n$ 次单位根平分单位圆。<br>单位根还具有一些特殊的性质：</p>
+<ol>
+<li>$w_{dn}^{dk} = \cos (2\pi d k / dn)+i * \sin (2\pi d k / dn) = w_n^k$</li>
+<li>$w_n^{k+n/2} = \cos (2\pi k / n + \pi)+i * \sin (2\pi k / n + \pi) = - \cos (2\pi k / n ) - i  \sin (2\pi k / n + \pi) = -w_n^{k}$</li>
+<li>$w_n^{k+n} = \cos (2\pi k / n + 2\pi)+i * \sin (2\pi k / n + 2\pi) = w_n^{k}$</li>
+<li>$w_n^0 = 1$</li>
+</ol>
+<h4 id="DFT"><a href="#DFT" class="headerlink" title="DFT"></a>DFT</h4><p>已知 $A(x)$ 的系数为 $\left(a_0, a_1, \ldots, a_{n-1}\right)$, 对于 $k=0,1, \ldots, n-1$, 定义:</p>
+<script type="math/tex; mode=display">
+y_k=A\left(w_n^k\right)=\sum_{i=0}^{n-1} a_i w_n^{k i}</script><p>其中向量 $y=(y_0, y_1, \ldots, y_{n-1})$ 是系数向量 $a=\left(a_0, a_1, \ldots, a_{n-1}\right)$ 的离散傅立叶变换。</p>
+<h4 id="多项式系数表示法"><a href="#多项式系数表示法" class="headerlink" title="多项式系数表示法"></a>多项式系数表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 则 $A(x)=a_0+a_1x+\ldots,+a_d x^d$<br>利用这种方法计算多项式卷积复杂度为 $O\left(d^2\right)$, 其实就是直接对应相乘（暴力）。<br>例如: $A(x)=1+2 x+x^2, B(x)=1-2 x+x^2$</p>
+<script type="math/tex; mode=display">
+A(x) B(x)=\left(1+2 x+x^2\right)\left(1-2 x+x^2\right)=1-2 x^2+x^4</script><h4 id="多项式点值表示法"><a href="#多项式点值表示法" class="headerlink" title="多项式点值表示法"></a>多项式点值表示法</h4><p>设 $A(x)$ 表示一个d次多项式, 我们知道该多项式在 $d+1$ 个点的值就可以唯一确定这个多项式。<br>因此，我们任取 $d+1$ 个点 $x_0,x_1,\ldots,x_d$，则 $A(x)$ 在这些点的值为 $A(x_0),A(x_1),\ldots,A(x_d)$，我们可以用这些点的值来表示多项式 $A(x)$。</p>
+<script type="math/tex; mode=display">
+T = ((x_0,A(x_0)),(x_1,A(x_1)),\ldots,(x_d,A(x_d)))</script><p>在点值表示法下，多项式的乘法可以转化为点值的乘法，即 $A(x)B(x)$ 在 $d+1$ 个点的值为 $A(x_i)B(x_i)$ 的乘积，计算复杂度是 $O(d)$。但是要注意一个问题$A(x)B(x)$是一个 $2d$ 次多项式，因此我们需要找到 $2d+1$ 个点来表示这个多项式。</p>
+<p>因此，我们想到了一个方法，将多项式转化为点值表示，进行$O(d)$的乘法，然后再将点值表示的结果转化为多项式。但是这个转化的过程是如何进行的呢？如果我们采用普通求值的方法，复杂度仍然是 $O(d^2)$ 的。接下来，我们就开始逐步进行优化，引入FFT算法。</p>
+<h3 id="FFT-Algorithm"><a href="#FFT-Algorithm" class="headerlink" title="FFT Algorithm"></a>FFT Algorithm</h3><p>我们现在的首要问题是如何将多项式快速转化为点值表示，并且如何将点值表示的结果句快速转化为多项式，这就是<strong>单位根</strong>的作用了。我们观察我们手中的多项式 $F(x)$ ，假设$n=2^k$，我们可以将其分为奇数项和偶数项：</p>
+<script type="math/tex; mode=display">
+F(x)=a_0+a_1 x+a_2 x^2+\ldots+a_{2n-1} x^{2n-1}=a_0+a_2 x^2+\ldots+a_{n-2} x^{n-2}+x(a_1+a_3 x+\ldots+a_{n-1} x^{n-2})</script><p>将其转化为两个$n/2$次的多项式$FL(x)$和$FR(x)$</p>
+<script type="math/tex; mode=display">
+FL(x)=a_0+a_2 x+\ldots+a_{n-2} x^{n/2-1}\\
+FR(x)=a_1+a_3 x+\ldots+a_{n-1} x^{n/2-1}\\
+F(x)=FL(x^2)+x FR(x^2)</script><p>如果$k&lt; n/2$，把$w_n^k$代入$F(x)$，我们可以得到：$F(w_n^k)=FL(w_{n}^{2k})+w_n^k FR(w_{n}^{2k})$，即$F(w_n^k)=FL(w_{n/2}^{k})+w_n^k FR(w_{n/2}^{k})$；如果$k&gt; n/2$，则有$F(w_n^k)=FL(w_{n/2}^{k-n/2})- w_n^{k-n/2} FR(w_{n/2}^{k-n/2})$。<br>如果我们知道了$FL(x)$和$FR(x)$在$w_{n/2}^{k}$处的值，我们就可以通过上述公式计算出$F(x)$在$w_n^k$处的值。<br>接着我们就可以利用<strong>分治</strong>思想，通过一个递归的算法来计算出$F(x)$ 在 $w_n^0, w_n^1, \ldots, w_n^{n-1}$ 处的点值表示。复杂度为$O(n\log n)$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">FFT</span>(<span class="params">P</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(P)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> P</span><br><span class="line">    w = <span class="number">1</span></span><br><span class="line">    wn = cmath.exp(<span class="number">2</span> * cmath.pi * <span class="number">1j</span> / n)</span><br><span class="line">    P0 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n, <span class="number">2</span>)]</span><br><span class="line">    P1 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n, <span class="number">2</span>)]</span><br><span class="line">    y0 = FFT(P0)</span><br><span class="line">    y1 = FFT(P1)</span><br><span class="line">    y = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(n // <span class="number">2</span>):</span><br><span class="line">        y[k] = y0[k] + w * y1[k]</span><br><span class="line">        y[k + n // <span class="number">2</span>] = y0[k] - w * y1[k]</span><br><span class="line">        w *= wn</span><br><span class="line">    <span class="keyword">return</span> y</span><br></pre></td></tr></table></figure>
+<h3 id="IFFT-Algorithm"><a href="#IFFT-Algorithm" class="headerlink" title="IFFT Algorithm"></a>IFFT Algorithm</h3><p>对于点值计算，其实就是计算一个矩阵乘法：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+y_0\\
+y_1\\
+\vdots\\
+y_{n-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 & \cdots & 1\\
+1 & w_n & \cdots & w_n^{n-1}\\
+\vdots & \vdots & \ddots & \vdots\\
+w_n^{n-1} & w_n^{2(n-1)} & \cdots & w_n^{(n-1)(n-1)}
+\end{bmatrix}
+\begin{bmatrix}
+a_0\\
+a_1\\
+\vdots\\
+a_{n-1}
+\end{bmatrix}</script><p>中间的范德蒙矩阵就是一个DFT矩阵，有了正向的DFT，我们就可以通过逆矩阵来计算逆DFT，即IFFT，即</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+a_0\\
+a_1\\
+\vdots\\
+a_{n-1}
+\end{bmatrix}
+=
+\frac{1}{n}
+\begin{bmatrix}
+1 & 1 & \cdots & 1\\
+1 & w_n^{-1} & \cdots & w_n^{-(n-1)}\\
+\vdots & \vdots & \ddots & \vdots\\
+w_n^{-(n-1)} & w_n^{-2(n-1)} & \cdots & w_n^{-(n-1)(n-1)}
+\end{bmatrix}
+\begin{bmatrix}
+y_0\\
+y_1\\
+\vdots\\
+y_{n-1}
+\end{bmatrix}</script><p>这样我们就可以通过IFFT来将点值表示的多项式转化为系数表示的多项式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">IFFT_in</span>(<span class="params">P</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(P)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> P</span><br><span class="line">    w = <span class="number">1</span></span><br><span class="line">    wn = cmath.exp(-<span class="number">2</span> * cmath.pi * <span class="number">1j</span> / n)</span><br><span class="line">    P0 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n, <span class="number">2</span>)]</span><br><span class="line">    P1 = [P[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n, <span class="number">2</span>)]</span><br><span class="line">    y0 = IFFT(P0)</span><br><span class="line">    y1 = IFFT(P1)</span><br><span class="line">    y = [<span class="number">0</span>] * n</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(n // <span class="number">2</span>):</span><br><span class="line">        y[k] = y0[k] + w * y1[k]</span><br><span class="line">        y[k + n // <span class="number">2</span>] = y0[k] - w * y1[k]</span><br><span class="line">        w *= wn</span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">IFFT</span>(<span class="params">P</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(P)</span><br><span class="line">    y = IFFT_in(P)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        y[i] /= n</span><br><span class="line">    <span class="keyword">return</span> y</span><br></pre></td></tr></table></figure>
+<h3 id="蝴蝶变换"><a href="#蝴蝶变换" class="headerlink" title="蝴蝶变换"></a>蝴蝶变换</h3><p>蝴蝶变换是一个很简单的东西，其实就是我们分治的顺序转换为二进制之后，发现每一个数都是其二进制反过来。这样我们就可以通过一个循环来计算出所有的点值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rev</span>(<span class="params">i, n</span>):</span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n.bit_length() - <span class="number">1</span>):</span><br><span class="line">        result = (result &lt;&lt; <span class="number">1</span>) | (i &amp; <span class="number">1</span>)</span><br><span class="line">        i &gt;&gt;= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FFT</span>(<span class="params">P, IFFT=<span class="literal">False</span></span>):</span><br><span class="line">    n = <span class="built_in">len</span>(P)</span><br><span class="line">    log_n = n.bit_length() - <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Reorder P based on reversed bit indices</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        j = rev(i, n)</span><br><span class="line">        <span class="keyword">if</span> i &lt; j:</span><br><span class="line">            P[i], P[j] = P[j], P[i]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># FFT or IFFT computation</span></span><br><span class="line">    l = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> l &lt;= n:</span><br><span class="line">        angle = (<span class="number">2</span> * cmath.pi / l) * (-<span class="number">1</span> <span class="keyword">if</span> IFFT <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line">        wn = cmath.exp(angle * <span class="number">1j</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n, l):</span><br><span class="line">            w = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(i, i + l // <span class="number">2</span>):</span><br><span class="line">                u = P[k]</span><br><span class="line">                v = w * P[k + l // <span class="number">2</span>]</span><br><span class="line">                P[k] = u + v</span><br><span class="line">                P[k + l // <span class="number">2</span>] = u - v</span><br><span class="line">                w *= wn</span><br><span class="line">        l *= <span class="number">2</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Normalize if it&#x27;s IFFT</span></span><br><span class="line">    <span class="keyword">if</span> IFFT:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            P[i] /= n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> P</span><br></pre></td></tr></table></figure>
+<h2 id="NTT-Number-Theoretic-Transform"><a href="#NTT-Number-Theoretic-Transform" class="headerlink" title="NTT-Number Theoretic Transform"></a>NTT-Number Theoretic Transform</h2><p>NTT是FFT的一种变种，其实质是在模数为 $p$ 的情况下，将FFT的复数域转化为整数域。就是将单位根 $w_n$ 替换为 $g$，其中 $g$ 是模数 $p$ 的原根。这样我们就可以在整数域上进行FFT的计算，此处不再赘述。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Ning-H/p/12072626.html">https://www.cnblogs.com/Ning-H/p/12072626.html</a><br>[2] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Ning-H/p/13693580.html">https://www.cnblogs.com/Ning-H/p/13693580.html</a><br>[3] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/pam-sh/p/15976275.html">https://www.cnblogs.com/pam-sh/p/15976275.html</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FFT-Fast-Fourier-Transformation"><span class="toc-number">1.</span> <span class="toc-text">FFT-Fast Fourier Transformation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priliminary"><span class="toc-number">1.1.</span> <span class="toc-text">Priliminary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">单位根</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DFT"><span class="toc-number">1.1.2.</span> <span class="toc-text">DFT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">多项式系数表示法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text">多项式点值表示法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FFT-Algorithm"><span class="toc-number">1.2.</span> <span class="toc-text">FFT Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IFFT-Algorithm"><span class="toc-number">1.3.</span> <span class="toc-text">IFFT Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%9D%B4%E8%9D%B6%E5%8F%98%E6%8D%A2"><span class="toc-number">1.4.</span> <span class="toc-text">蝴蝶变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT-Number-Theoretic-Transform"><span class="toc-number">2.</span> <span class="toc-text">NTT-Number Theoretic Transform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/13/FFT-NTT/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/13/FFT-NTT/&text=FFT &amp; NTT"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/13/FFT-NTT/&is_video=false&description=FFT &amp; NTT"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=FFT &amp; NTT&body=Check out this article: http://example.com/2024/08/13/FFT-NTT/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/13/FFT-NTT/&title=FFT &amp; NTT"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/13/FFT-NTT/&name=FFT &amp; NTT&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/13/FFT-NTT/&t=FFT &amp; NTT"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="IntroductionCombinatorial number system represents a non-negative natural numbers as sum of binomial coefficients, which is a correspondence between natural numbers (taken to include 0) N and k-combin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Combinatorial number system">
+<meta property="og:url" content="http://example.com/2024/08/30/Combinatorial-number-system/index.html">
+<meta property="og:site_name" content="Lizheng Wang（王栗政）">
+<meta property="og:description" content="IntroductionCombinatorial number system represents a non-negative natural numbers as sum of binomial coefficients, which is a correspondence between natural numbers (taken to include 0) N and k-combin">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-30T05:55:29.000Z">
+<meta property="article:modified_time" content="2024-08-31T14:04:22.746Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Combinatorial number system</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/09/05/Theta-O-o-Omega-omega-in-Complexity/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/08/28/Code-based-cryptography-II-Niederreiter-system-and-schoolbook-attaccks/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/30/Combinatorial-number-system/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/30/Combinatorial-number-system/&text=Combinatorial number system"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/30/Combinatorial-number-system/&is_video=false&description=Combinatorial number system"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Combinatorial number system&body=Check out this article: http://example.com/2024/08/30/Combinatorial-number-system/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/30/Combinatorial-number-system/&name=Combinatorial number system&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/30/Combinatorial-number-system/&t=Combinatorial number system"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discussion"><span class="toc-number">3.</span> <span class="toc-text">Discussion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Combinatorial number system
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-30T05:55:29.000Z" class="dt-published" itemprop="datePublished">2024-08-30</time>
+        
+        (Updated: <time datetime="2024-08-31T14:04:22.746Z" class="dt-updated" itemprop="dateModified">2024-08-31</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Mathematics/" rel="tag">Mathematics</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Combinatorial number system represents a non-negative natural numbers as sum of binomial coefficients, which is a correspondence between natural numbers (taken to include 0) N and k-combinations.</p>
+<p>By restricting the number of binomial coefficients, say to r, any non-negative integer m can be represented uniquely as sum of r binomial coefficients. A different value of r would result in a different combinatorial number system.</p>
+<p><strong>Definition</strong>(Combinadics). $\forall m \geq 0, m \in \mathbb{N}_{\geq 0}$, there exist unique $r, C_r, \cdots, C_i, \cdots, C_1$ such that $C_i \geq 0$, and $C_j&gt;C_i$ for $j&gt;i$ and</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+m & =\sum_{i=1}^r\binom{C_i}{i} \\
+& =\binom{C_r}{r}+\binom{C_{r-1}}{r-1}+\cdots+\binom{C_i}{i}+\cdots+\binom{C_2}{2}+\binom{C_1}{1}
+\end{aligned}</script><p><strong>Lemma</strong>. Using <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pascal%27s_triangle">Pascal’s triangle</a>, we can get </p>
+<script type="math/tex; mode=display">
+\binom{n+1}{r}=\sum_{j=0}^r\binom{n-r+j}{j}=\sum_{j=0}^r\binom{n-j}{r-j}</script><p><strong>Proof</strong>. We prove it using the basic property of the Pascal’s triangle. That is every entry is the sum of two entries in the preceding row, one on the top and the other on the top-left of the current entry.</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\binom{n+1}{r}= & \binom{n}{r}+\binom{n}{r-1} \\ = & \binom{n}{r}+\binom{n-1}{r-1}+\binom{n-1}{r-2} \\ = & \binom{n}{r}+\binom{n-1}{r-1}+\binom{n-2}{r-2}+\binom{n-2}{r-3} \\ & \vdots \\ = & \binom{n}{r}+\binom{n-1}{r-1}+\cdots+\binom{n-r+i}{i}+\cdots+\binom{n-r+1}{1}+\binom{n-r}{0}\end{aligned}</script><p>as $\binom{n-r}{0}=1$, we have</p>
+<script type="math/tex; mode=display">
+\binom{n+1}{r}=\sum_{j=1}^r\binom{n-j}{r-j}+1 > \sum_{j=1}^r\binom{n-j}{r-j}</script><p>Then we can prove the bijection between the natural numbers and the k-combinations.<br><strong>Exsitence</strong>. We prove it using mathematical induction.</p>
+<ul>
+<li>Base case: $m=0$, we have <script type="math/tex; mode=display">
+0=\binom{r-1}{r} + \cdots + \binom{1}{2} + \binom{0}{1}</script></li>
+<li>Inductive hypothesis: Assume that the statement is true for $m$, we have<script type="math/tex; mode=display">
+m = \binom{C_r}{r} + \cdots + \binom{C_2}{2} + \binom{C_1}{1}</script></li>
+<li>Inductive step:  Add 1 to both sides of above equation, we have<script type="math/tex; mode=display">
+m + 1 = \binom{C_r}{r} + \cdots + \binom{C_2}{2} + \binom{C_1}{1} + 1</script>Assume the first $j C_i$ ‘s that are consective. That means $C_{l+1}=C_l+1$ for $1 \leq l&lt;j$, we have <script type="math/tex; mode=display">
+\binom{C_1+j-1}{j}+\cdots+\binom{C_1+1}{2}+\binom{C_1}{1}+1 = \binom{C_1+j}{j}</script>Then we have<script type="math/tex; mode=display">
+m + 1 = \binom{C_r}{r} + \cdots + \binom{C_1+j+\alpha} + \binom{C_1+j}{j} + \binom{j-2}{j-1} + \cdots + \binom{1}{2} + \binom{0}{1}</script>where $\alpha \ge 1$ means that it’s not consective with the first $j C_i$ ‘s.<br>So we have proved the existence of the bijection between the natural numbers and the k-combinations.</li>
+</ul>
+<p><strong>Uniqueness</strong>. We prove it by contradiction. Assume that there are two different representations of $m$ as sum of binomial coefficients, say</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+& \sum A=\binom{a_r}{r}+\cdots+\binom{a_2}{1}+\binom{a_1}{1} \\ 
+& \sum B=\binom{b_r}{r}+\cdots+\binom{b_2}{1}+\binom{b_1}{1}
+\end{aligned}</script><p>Consider sets $A^{\prime}=A-B$ and $B^{\prime}=B-A$, carrying elements of $A$ and $B$ that are not present in the other set.<br>Since $A$ and $B$ have equal sums:</p>
+<script type="math/tex; mode=display">
+\sum A^{\prime} = \sum B^{\prime}</script><p>As $A$ is not equal to $B$, we have $A^{\prime} \neq \emptyset$ and $B^{\prime} \neq \emptyset$.<br>Suppose $\binom{C_A}{r}$ and $\binom{C_B}{r}$ be the largest coefficients in $A^{\prime}$ and $B^{\prime}$ respectively.<br>Since $A^{\prime}$ and $B^{\prime}$ have no common elements, we have $C_A \neq C_B$.<br>Without loss of generality, assume $C_A &gt; C_B$, then we have $C_B + 1 \leq C_A$</p>
+<script type="math/tex; mode=display">
+\sum B^\prime < \binom{C_B+1}{r}</script><p>So we have</p>
+<script type="math/tex; mode=display">
+\sum B^\prime < \binom{C_B+1}{r} \leq \binom{C_A}{r} \leq \sum A^\prime</script><p>As $\sum A^\prime = \sum B^\prime$, we have a contradiction. So we have proved the uniqueness of the bijection between the natural numbers and the k-combinations.</p>
+<p><strong>Conclusion</strong>. We have proved the bijection between the natural numbers and the k-combinations.</p>
+<h2 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h2><p>In the CFS signature scheme[3], the combinatorial number system is used to compress the signature. The original signature is a word of length $n=2^{16}$ bits with weight $w=9$.<br>Since its low hamming weight, we obviouly have an intuition that we can compress it.<br>We totally have $\binom{2^{16}}{9} \approx 2^{125.5}$ kinds of words, so we can use 126 bits to index the word $z$ instead of storing the whole $z$.<br>As we proved above, we have $\binom{2^{16}}{9} = \sum_{i=0}^9\binom{2^{16}-1-i}{9-i}$, so we can use the position of the 1’s in $z$ to index $z$.<br>Let $i_1&lt;\ldots&lt;i_9$ denote the positions of the non-zero bits of $z$. We define the index $I_z$ of $z$ by:</p>
+<script type="math/tex; mode=display">
+I_z=1+\binom{i_1}{1}+\binom{i_2}{2}+\ldots+\binom{i_9}{9}</script><p>The full CFS signature scheme is as follows:</p>
+<h3 id="Signature-algorithm"><a href="#Signature-algorithm" class="headerlink" title="Signature algorithm"></a>Signature algorithm</h3><ul>
+<li>hash the document $D$ into $s=h(D)$</li>
+<li>compute $s_i=h([\cdots s \cdots \mid \cdot i \cdot])$ for $i=0,1,2 \ldots$</li>
+<li>find $i_0$ the smallest value of $i$ such that $s_i$ is decodable</li>
+<li>use our trapdoor function to compute $z$ such that $H z^T=s_{i_0}$</li>
+<li>compute the index $I_z$ of $z$ in the space of words of weight 9</li>
+<li>use $\left[\cdots I_z \cdots \mid \cdot i_0 \cdot\right]$ as a signature for D</li>
+</ul>
+<h3 id="Verification-algorithm"><a href="#Verification-algorithm" class="headerlink" title="Verification algorithm"></a>Verification algorithm</h3><ul>
+<li>recover $z$ from its index $I_z$</li>
+<li>compute $s_1=H z^T$ with the public key $H$</li>
+<li>compute $s_2=h\left(\left[\cdots h(D) \cdots \mid \cdot i_0 \cdot\right]\right)$ with the public hash function</li>
+<li>compare $s_1$ and $s_2$ : if they are equal the signature is valid</li>
+</ul>
+<h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><p>As we can see, there is a bijection between the index $I_z$ and the word $z$, so intuitively it’s a theoretical upper bound.<br>The easiest way to compress the signature is to use the 9 positions of the 1’s in $z$ to index $z$. Every position is $\log{2^{16}}=16$ bits, so we need $9 \times 16=144$ bits to index $z$.<br>We can think about why there are redundant $144-126=18$ bits here, and where does the redundancy come from?<br>I think the redundancy here comes from the possibility that the position of 1 in the back is smaller than the position of 1 in the front, but it does not exist in reality.<br>This is one of the redundancy situations, maybe there are other situations that we won’t discuss here.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a target="_blank" rel="noopener" href="http://math0.wvstateu.edu/~baker/cs405/code/Combinadics.html">http://math0.wvstateu.edu/~baker/cs405/code/Combinadics.html</a><br>[2] Siddique A B, Farid S, Tahir M. Proof of bijection for combinatorial number system[J]. arXiv preprint arXiv:1601.05794, 2016.<br>[3] Courtois N T, Finiasz M, Sendrier N. How to achieve a McEliece-based digital signature scheme[C]//Advances in Cryptology—ASIACRYPT 2001: 7th International Conference on the Theory and Application of Cryptology and Information Security Gold Coast, Australia, December 9–13, 2001 Proceedings 7. Springer Berlin Heidelberg, 2001: 157-174.<br>[4] Bernstein D J, Buchmann J, Dahmen E. Post-Quantum Cryptography. Mathematics and Statistics Springer-11649[R]. ZDB-2-SMA. Springer, Heidelberg, 2009.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applications"><span class="toc-number">2.</span> <span class="toc-text">Applications</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Signature-algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Signature algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verification-algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Verification algorithm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discussion"><span class="toc-number">3.</span> <span class="toc-text">Discussion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/30/Combinatorial-number-system/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/30/Combinatorial-number-system/&text=Combinatorial number system"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/30/Combinatorial-number-system/&is_video=false&description=Combinatorial number system"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Combinatorial number system&body=Check out this article: http://example.com/2024/08/30/Combinatorial-number-system/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/30/Combinatorial-number-system/&title=Combinatorial number system"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/30/Combinatorial-number-system/&name=Combinatorial number system&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/30/Combinatorial-number-system/&t=Combinatorial number system"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
