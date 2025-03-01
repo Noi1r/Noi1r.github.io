@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Φ_m(X) = Φ_δ(m)(X^(m/δ(m)))</title>
+      <link href="/2025/03/01/%CE%A6-m-X-%CE%A6-%CE%B4-m-X-m-%CE%B4-m/"/>
+      <url>/2025/03/01/%CE%A6-m-X-%CE%A6-%CE%B4-m-X-m-%CE%B4-m/</url>
+      
+        <content type="html"><![CDATA[<script type="math/tex; mode=display">\Phi_m(X) = \Phi_\delta(m)(X^{(m/\delta(m))})</script><p>其中</p><ul><li>$\Phi_m(X)$是第$m$个循环多项式</li><li>$\delta(m)$是$m$的根式(radical)，即$m$的不重复素因子的乘积</li></ul><p>将$m$分解为$m = p_1^{e_1} <em> p_2^{e_2} </em> … <em> p_r^{e_r}$，其中$p_i$是不同的素数，那么$\delta(m) = p_1</em>p_2<em>…</em>p_r$，是$m$的无平方因子部分。<br>要证明$\Phi_m(X) = \Phi_\delta(m)(X^{(m/\delta(m))})$，我们可以证明这两个多项式有相同的根。</p><p>设$\zeta_m$为本原$m$次单位根。根据循环多项式的定义：</p><p>$\Phi_m(X) = ∏_{(j,m)=1} (X - \zeta_m^j)$</p><p>其中$(j,m)=1$表示$j$与$m$互素。</p><p>我们需要证明的关键是：$X^{(m/\delta(m))} - \zeta_{\delta(m)}^j = 0$的解集合与本原$m$次单位根集合是相同的。</p><h3 id="首先证明-alpha是m次单位根"><a href="#首先证明-alpha是m次单位根" class="headerlink" title="首先证明\alpha是m次单位根"></a>首先证明\alpha是m次单位根</h3><p>已知$\alpha^{(m/\delta(m))} = \zeta$，且$\zeta$是本原$\delta(m)$次单位根，因此：</p><p>$\zeta^{\delta(m)} = 1$</p><p>所以： $\alpha^m = \alpha^{(m/\delta(m)·\delta(m))} = \zeta^{\delta(m)} = 1$<br>这证明了$\alpha$是$m$次单位根。</p><h3 id="证明-alpha-的阶恰好等于m"><a href="#证明-alpha-的阶恰好等于m" class="headerlink" title="证明$\alpha$的阶恰好等于m"></a>证明$\alpha$的阶恰好等于m</h3><p>假设$\alpha$的阶是$d$，即$d$是使得$\alpha^d = 1$的最小正整数。因为$\alpha^m = 1$，所以$d$必须整除$m$（记为$d|m$）。</p><p>我们需要证明$d = m$。通过反证法，假设$d &lt; m$。</p><p>因为$\alpha^d = 1$，我们可以推导：</p><p>$(\alpha^{(m/\delta(m))})^{(d·\delta(m)/m)} = \zeta^{(d·\delta(m)/m)} = 1$</p><p>由于$\zeta$是本原$\delta(m)$次单位根，上式表明$\delta(m)$必须整除$(d·\delta(m)/m)$，即：$\delta(m) |(d·\delta(m)/m)$</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Average- and worst-case complexity</title>
       <link href="/2024/11/10/Average-and-worst-case-complexity/"/>
       <url>/2024/11/10/Average-and-worst-case-complexity/</url>
