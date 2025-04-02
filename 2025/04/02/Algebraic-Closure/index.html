@@ -13,11 +13,15 @@
 <meta property="og:site_name" content="Lizheng Wang（王栗政）">
 <meta property="og:description" content="Recently, I’ve read some papers about the Elliptic Curve and found a general primitive - abelian variety. And when I was reading the paper, I found that the author mentioned the algebraic closure of a">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/imgs/algebraic_closure/algebraic.png">
+<meta property="og:image" content="http://example.com/imgs/algebraic_closure/trans.png">
+<meta property="og:image" content="http://example.com/imgs/algebraic_closure/diff.png">
 <meta property="article:published_time" content="2025-04-02T14:54:11.000Z">
-<meta property="article:modified_time" content="2025-04-02T16:02:51.652Z">
+<meta property="article:modified_time" content="2025-04-02T16:13:59.983Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/imgs/algebraic_closure/algebraic.png">
     
     
       
@@ -153,7 +157,7 @@
       
         <time datetime="2025-04-02T14:54:11.000Z" class="dt-published" itemprop="datePublished">2025-04-02</time>
         
-        (Updated: <time datetime="2025-04-02T16:02:51.652Z" class="dt-updated" itemprop="dateModified">2025-04-03</time>)
+        (Updated: <time datetime="2025-04-02T16:13:59.983Z" class="dt-updated" itemprop="dateModified">2025-04-03</time>)
         
       
     </div>
@@ -193,6 +197,12 @@ E=\bigcup_{F^{\prime} \in C} F^{\prime} .</script><p>As $E$ is a union of ascend
 <p>By Zorn’s Lemma, $\mathcal{X}$ has a maximal element, $\bar{F}$ Thus, $F^{\prime}$ is an algebraic closure of $F$, being a maximal algebraic extension.</p>
 <p><strong>Zorn’s Lemma.</strong> Let $P$ be a partially ordered set. If every chain in $P$ has an upper bound, then $P$ has a maximal element.</p>
 <p><strong>Lemma 1.</strong> Let $F$ be a field. Then $E$ is an algebraic closure of $F$ if and only if $E$ is a maximal algebraic extension of $F$.</p>
+<p><strong>Lemma 2.</strong> Let $E / F$ be an algebraic extension of fields. Then the cardinality $|E|$ of $E$ is at most $\max \left(\aleph_0,|F|\right)$.</p>
+<p><strong>Proof.</strong> Let $S$ be the set of nonconstant polynomials with coefficients in $F$. For every $P \in S$ the set of roots $r(P, E)=\{\alpha \in E \mid P(\alpha)=0\}$ is finite (details omitted). Moreover, the fact that $E$ is algebraic over $F$ implies that $E=\bigcup_{P \in S} r(P, E)$. It is clear that $S$ has cardinality bounded by $\max \left(\aleph_0,|F|\right)$ because it is a countable union of finite products of copies of $F$. Thus so does $E$.</p>
+<p>When I saw lemma2, I was confused. As everyone knows, the cardinality of the extension of fields must be larger than the base field. I finally realized that I hadn’t noticed “at most” and “max.”</p>
+<p>Then I thought about transcendental extensions and algebraic extensions.<br><img src="/imgs/algebraic_closure/algebraic.png" alt="alt text"></p>
+<p><img src="/imgs/algebraic_closure/trans.png" alt="alt text"></p>
+<p><img src="/imgs/algebraic_closure/diff.png" alt="alt text"></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Algebraic_closure">https://en.wikipedia.org/wiki/Algebraic_closure</a></p>
 <p>[2] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Field_extension">https://en.wikipedia.org/wiki/Field_extension</a></p>
 <p>[3] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=y9358yg9SmQ">https://www.youtube.com/watch?v=y9358yg9SmQ</a></p>
