@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="本篇博客利用prompt工程撰写（）  格密码承诺方案： Ajtai , BDLOP 和 ADBLOP在密码学领域，承诺方案 (Commitment Scheme) 扮演着至关重要的角色。它允许一方（承诺者）对某个值或声明进行承诺，同时保持该值的秘密性（隐藏性），并在稍后阶段向另一方（验证者）揭示该值（绑定性）。近年来，随着量子计算的兴起对传统公钥密码体系构成威胁，基于格的密码学 (Lattic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lattice based commitment scheme">
+<meta property="og:url" content="http://example.com/2025/05/13/Lattice-based-commitment-scheme/index.html">
+<meta property="og:site_name" content="Lizheng Wang（王栗政）">
+<meta property="og:description" content="本篇博客利用prompt工程撰写（）  格密码承诺方案： Ajtai , BDLOP 和 ADBLOP在密码学领域，承诺方案 (Commitment Scheme) 扮演着至关重要的角色。它允许一方（承诺者）对某个值或声明进行承诺，同时保持该值的秘密性（隐藏性），并在稍后阶段向另一方（验证者）揭示该值（绑定性）。近年来，随着量子计算的兴起对传统公钥密码体系构成威胁，基于格的密码学 (Lattic">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-05-13T11:55:54.000Z">
+<meta property="article:modified_time" content="2025-05-13T12:02:06.624Z">
+<meta property="article:author" content="Lizheng Wang">
+<meta property="article:tag" content="zkp, AIGC">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Lattice based commitment scheme</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/04/02/Algebraic-Closure/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/13/Lattice-based-commitment-scheme/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&text=Lattice based commitment scheme"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&is_video=false&description=Lattice based commitment scheme"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lattice based commitment scheme&body=Check out this article: http://example.com/2025/05/13/Lattice-based-commitment-scheme/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&name=Lattice based commitment scheme&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&t=Lattice based commitment scheme"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%BC%E5%AF%86%E7%A0%81%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%EF%BC%9A-Ajtai-BDLOP-%E5%92%8C-ADBLOP"><span class="toc-number">1.</span> <span class="toc-text">格密码承诺方案： Ajtai , BDLOP 和 ADBLOP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">承诺方案的核心属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajtai-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.</span> <span class="toc-text">Ajtai 承诺方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BDLOP-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">BDLOP 承诺方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lantern-%E7%9A%84-ABDLOP-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%EF%BC%9A%E8%9E%8D%E5%90%88%E4%B8%8E%E6%8F%90%E5%8D%87"><span class="toc-number">1.4.</span> <span class="toc-text">Lantern 的 ABDLOP 承诺方案：融合与提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.5.</span> <span class="toc-text">结论</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Lattice based commitment scheme
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lizheng Wang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-13T11:55:54.000Z" class="dt-published" itemprop="datePublished">2025-05-13</time>
+        
+        (Updated: <time datetime="2025-05-13T12:02:06.624Z" class="dt-updated" itemprop="dateModified">2025-05-13</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/zkp-AIGC/" rel="tag">zkp, AIGC</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>本篇博客利用prompt工程撰写（）</p>
+</blockquote>
+<h1 id="格密码承诺方案：-Ajtai-BDLOP-和-ADBLOP"><a href="#格密码承诺方案：-Ajtai-BDLOP-和-ADBLOP" class="headerlink" title="格密码承诺方案： Ajtai , BDLOP 和 ADBLOP"></a>格密码承诺方案： Ajtai , BDLOP 和 ADBLOP</h1><p>在密码学领域，承诺方案 (Commitment Scheme) 扮演着至关重要的角色。它允许一方（承诺者）对某个值或声明进行承诺，同时保持该值的秘密性（隐藏性），并在稍后阶段向另一方（验证者）揭示该值（绑定性）。近年来，随着量子计算的兴起对传统公钥密码体系构成威胁，基于格的密码学 (Lattice-based Cryptography) 因其抗量子特性而受到广泛关注。本文将探讨几种基于格的承诺方案，特别是 Lantern 提出的结合了 Ajtai 和 BDLOP 方案优势的新型 ABDLOP 方案。</p>
+<h2 id="承诺方案的核心属性"><a href="#承诺方案的核心属性" class="headerlink" title="承诺方案的核心属性"></a>承诺方案的核心属性</h2><p>一个安全的承诺方案通常需要满足两个基本属性：</p>
+<ol>
+<li><strong>隐藏性 (Hiding):</strong> 承诺本身不会泄露关于承诺值的任何信息。</li>
+<li><strong>绑定性 (Binding):</strong> 承诺者一旦做出承诺，就不能在揭示阶段改变承诺的值。</li>
+</ol>
+<h2 id="Ajtai-承诺方案"><a href="#Ajtai-承诺方案" class="headerlink" title="Ajtai 承诺方案"></a>Ajtai 承诺方案</h2><p>Ajtai 承诺方案是一种经典的基于格的方案。其核心思想是利用格中的短向量问题 (Shortest Vector Problem, SVP) 或最近向量问题 (Closest Vector Problem, CVP) 的困难性。</p>
+<p>在该方案中，承诺者想要承诺一个消息 $\mathbf{s}_1$。为此，他会选择一个随机向量 $\mathbf{s}_2$，其中 $\mathbf{s}_1$ 和 $\mathbf{s}_2$ 的范数（长度）都要求很小。承诺的计算方式如下：</p>
+<script type="math/tex; mode=display">
+\mathbf{A}_1 \mathbf{s}_1 + \mathbf{A}_2 \mathbf{s}_2 = \mathbf{t}</script><p>这里：</p>
+<ul>
+<li>$\mathbf{A}_1$ 和 $\mathbf{A}_2$ 是公开的矩阵。</li>
+<li>$\mathbf{s}_1$ 是要承诺的消息。</li>
+<li>$\mathbf{s}_2$ 是承诺者选择的随机值（也称为盲化因子）。</li>
+<li>$\mathbf{t}$ 是生成的承诺。</li>
+</ul>
+<p>为了揭示承诺，承诺者需要公开 $\mathbf{s}_1$ 和 $\mathbf{s}_2$。验证者可以通过检查等式是否成立以及 $\mathbf{s}_1$ 和 $\mathbf{s}_2$ 是否确实是“小”向量来验证承诺。由于找到满足该等式的其他短向量对 $(\mathbf{s}_1’, \mathbf{s}_2’)$ 非常困难，因此该方案具有绑定性。同时，由于存在许多可能的 $\mathbf{s}_2$ 可以生成相同的 $\mathbf{t}$（对于不同的 $\mathbf{s}_1$），因此方案也具有隐藏性。</p>
+<h2 id="BDLOP-承诺方案"><a href="#BDLOP-承诺方案" class="headerlink" title="BDLOP 承诺方案"></a>BDLOP 承诺方案</h2><p>BDLOP 承诺方案 ([BDL+18]) 是另一种重要的基于格的承诺方案。它允许承诺者对消息 $\mathbf{m}$ 进行承诺，并使用随机性 $\mathbf{s}$。其承诺形式如下：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{l}
+\mathbf{A} \\
+\mathbf{B}
+\end{array}\right] \mathbf{s} + \left[\begin{array}{c}
+\mathbf{0} \\
+\mathbf{m}
+\end{array}\right] = \left[\begin{array}{l}
+\mathbf{t}_A \\
+\mathbf{t}_B
+\end{array}\right]</script><p>这里：</p>
+<ul>
+<li>$\mathbf{A}$ 和 $\mathbf{B}$ 是公开的矩阵。</li>
+<li>$\mathbf{s}$ 是承诺者选择的随机向量。</li>
+<li>$\mathbf{m}$ 是要承诺的消息。</li>
+<li>$\mathbf{0}$ 是一个零向量。</li>
+<li>$\left[\begin{array}{l} \mathbf{t}_A \ \mathbf{t}_B \end{array}\right]$ 是生成的承诺。</li>
+</ul>
+<p>BDLOP 方案的一个有趣特性是它可以扩展到承诺多个消息。例如，如果除了 $\mathbf{m}$ 之外，还需要承诺另一个消息 $\mathbf{m}’$，可以使用公开的随机性 $\mathbf{B}’$ 来计算新的承诺部分：$\mathbf{B}’ \mathbf{s} + \mathbf{m}’ = \mathbf{t}_{B’}’$。那么，对 $(\mathbf{m}, \mathbf{m}’)$ 的组合承诺就变成了：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}
+\mathbf{A} \\
+\mathbf{B} \\
+\mathbf{B}'
+\end{array}\right] \mathbf{s} + \left[\begin{array}{c}
+\mathbf{0} \\
+\mathbf{m} \\
+\mathbf{m}'
+\end{array}\right] = \left[\begin{array}{c}
+\mathbf{t}_A \\
+\mathbf{t}_B \\
+\mathbf{t}_{B'}'
+\end{array}\right]</script><p>这种结构在需要对复杂数据结构进行承诺时非常有用。</p>
+<h2 id="Lantern-的-ABDLOP-承诺方案：融合与提升"><a href="#Lantern-的-ABDLOP-承诺方案：融合与提升" class="headerlink" title="Lantern 的 ABDLOP 承诺方案：融合与提升"></a>Lantern 的 ABDLOP 承诺方案：融合与提升</h2><p>为了追求更高的效率和灵活性，Lantern 提出了一种名为 ABDLOP 的新型承诺方案。顾名思义，ABDLOP 旨在结合 Ajtai 和 BDLOP 方案的优点。</p>
+<p>ABDLOP 方案的承诺形式如下：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}
+\mathbf{A}_1 \\
+\mathbf{0}
+\end{array}\right] \mathbf{s}_1 + \left[\begin{array}{c}
+\mathbf{A}_2 \\
+\mathbf{B}
+\end{array}\right] \mathbf{s}_2 + \left[\begin{array}{c}
+\mathbf{0} \\
+\mathbf{m}
+\end{array}\right] = \left[\begin{array}{c}
+\mathbf{t}_A \\
+\mathbf{t}_B
+\end{array}\right]</script><p>这里：</p>
+<ul>
+<li>$\mathbf{A}_1, \mathbf{A}_2, \mathbf{B}$ 是公开的矩阵。</li>
+<li>$\mathbf{s}_1$ 可以被看作是 Ajtai 方案中的消息部分，具有范数较小的特性。</li>
+<li>$\mathbf{s}_2$ 可以被看作是 Ajtai 方案中的随机性部分，同时也扮演着 BDLOP 方案中随机性的角色，同样具有范数较小的特性。</li>
+<li>$\mathbf{m}$ 是要承诺的附加消息，类似于 BDLOP 方案中的消息。</li>
+<li>$\mathbf{0}$ 是零向量。</li>
+<li>$\left[\begin{array}{c} \mathbf{t}_A \ \mathbf{t}_B \end{array}\right]$ 是生成的承诺。</li>
+</ul>
+<p>在揭示阶段，承诺者需要提供 $\mathbf{s}_1$ 和 $\mathbf{s}_2$ 来打开承诺。</p>
+<p>通过这种结构，ABDLOP 方案试图同时利用 Ajtai 方案中对短向量 $\mathbf{s}_1$ 的承诺能力，以及 BDLOP 方案中对附加消息 $\mathbf{m}$ 进行承诺的灵活性。这种融合可能在特定的应用场景下带来效率或功能上的优势。例如，$\mathbf{s}_1$ 可能代表一些核心的、需要强绑定性和隐藏性的秘密值，而 $\mathbf{m}$ 则可能是一些辅助数据。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>基于格的承诺方案是构建抗量子密码系统的重要基石。Ajtai 和 BDLOP 方案各自提供了独特的特性和优势。Lantern 提出的 ABDLOP 方案通过巧妙地结合这两种方案的元素，为设计更高效、更灵活的密码协议开辟了新的可能性。随着对基于格密码学的深入研究，我们可以期待未来出现更多创新的承诺方案，为数字安全领域提供更强大的保障。</p>
+<hr>
+<p><strong>参考文献：</strong></p>
+<ul>
+<li>[Ajt96] Ajtai, M. (1996). Generating hard instances of lattice problems (extended abstract). In Proceedings of the twenty-eighth annual ACM symposium on Theory of computing (pp. 99-108).</li>
+<li>[BDL+18] Baum, C., Damgård, I., Lyubashevsky, V., Oechsner, S., &amp; Peikert, C. (2018). Lattice-Based SNARGs and Their Application to Privacy-Preserving Computation. In Advances in Cryptology – ASIACRYPT 2018 (pp. 3-33). Springer. </li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%BC%E5%AF%86%E7%A0%81%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%EF%BC%9A-Ajtai-BDLOP-%E5%92%8C-ADBLOP"><span class="toc-number">1.</span> <span class="toc-text">格密码承诺方案： Ajtai , BDLOP 和 ADBLOP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">承诺方案的核心属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajtai-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.</span> <span class="toc-text">Ajtai 承诺方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BDLOP-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">BDLOP 承诺方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lantern-%E7%9A%84-ABDLOP-%E6%89%BF%E8%AF%BA%E6%96%B9%E6%A1%88%EF%BC%9A%E8%9E%8D%E5%90%88%E4%B8%8E%E6%8F%90%E5%8D%87"><span class="toc-number">1.4.</span> <span class="toc-text">Lantern 的 ABDLOP 承诺方案：融合与提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.5.</span> <span class="toc-text">结论</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/13/Lattice-based-commitment-scheme/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&text=Lattice based commitment scheme"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&is_video=false&description=Lattice based commitment scheme"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lattice based commitment scheme&body=Check out this article: http://example.com/2025/05/13/Lattice-based-commitment-scheme/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&title=Lattice based commitment scheme"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&name=Lattice based commitment scheme&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/13/Lattice-based-commitment-scheme/&t=Lattice based commitment scheme"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    Lizheng Wang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
