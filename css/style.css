@@ -1097,6 +1097,10 @@ input[type="password"] {
   color: #666;
   font-size: 14px;
 }
+.post-list .gemini-author-post span a {
+/* 或者更具体地指向标题链接 */
+  color: #79c7ff !important; /* 您可以替换为您想要的颜色 */
+}
 @media (min-width: 480px) {
   .post-list .post-item {
     display: flex;
