@@ -14,7 +14,7 @@
 <meta property="og:description" content="今天在刷校内论坛的时候，看到了关于黄杨某甜的讨论帖，提到“调查组已经尽力想取得原始购买记录了，但很可惜，就是没有，就是拿不出来（年代久远，还是在实体商店买的，拿不出凭证也可以理解）。所以他们换了个思路，说明当事人一家没有购买真货的记录。”忽然让我想起来了零知识证明中的指数知识假设（Knowledge-of-Exponent Assumption, KEA）。 回想起去年大概也是这个时间，在看Mar">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-23T01:09:56.000Z">
-<meta property="article:modified_time" content="2025-07-23T01:46:15.388Z">
+<meta property="article:modified_time" content="2025-07-23T01:48:48.457Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta property="article:tag" content="Zero-Knowledge Proof">
 <meta name="twitter:card" content="summary">
@@ -126,7 +126,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E7%9F%A5%E8%AF%86%E5%81%87%E8%AE%BE"><span class="toc-number">1.</span> <span class="toc-text">指数知识假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA-vs-%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA"><span class="toc-number">2.</span> <span class="toc-text">可证伪 vs. 不可证伪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.1.</span> <span class="toc-text">可证伪假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.2.</span> <span class="toc-text">不可证伪假设</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%80%9D%E8%80%83%EF%BC%9ANP-amp-co-NP"><span class="toc-number">3.</span> <span class="toc-text">进一步思考：NP &amp; co-NP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E7%9F%A5%E8%AF%86%E5%81%87%E8%AE%BE"><span class="toc-number">1.</span> <span class="toc-text">指数知识假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA-vs-%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA"><span class="toc-number">2.</span> <span class="toc-text">可证伪 vs. 不可证伪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.1.</span> <span class="toc-text">可证伪假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.2.</span> <span class="toc-text">不可证伪假设</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%80%9D%E8%80%83%EF%BC%9ANP-amp-co-NP"><span class="toc-number">3.</span> <span class="toc-text">进一步思考：NP &amp; co-NP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
       </div>
     
   </span>
@@ -153,7 +153,7 @@
       
         <time datetime="2025-07-23T01:09:56.000Z" class="dt-published" itemprop="datePublished">2025-07-23</time>
         
-        (Updated: <time datetime="2025-07-23T01:46:15.388Z" class="dt-updated" itemprop="dateModified">2025-07-23</time>)
+        (Updated: <time datetime="2025-07-23T01:48:48.457Z" class="dt-updated" itemprop="dateModified">2025-07-23</time>)
         
       
     </div>
@@ -198,6 +198,7 @@
 <p>困境：但如果这个公式是重言式，你要如何给我一个“简短的证明”呢？你不能把所有可能的赋值（指数级多）都列出来给我看。似乎没有一个简短的证据能让我快速信服“没有任何反例存在”。</p>
 <p>学术界普遍相信 NP ≠ co-NP，这正是“证明不存在比证明存在更困难”这一直觉的数学化身。它意味着，有些问题的“是”答案有简短证明，但其“否”答案却没有。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>可证伪性是科学哲学中的一个重要概念，它要求一个假设如果错了，必须能被实验或观察所证伪。在零知识证明中，KEA 假设是不可证伪的，因为攻击者 $\mathcal{A}$ 无法向我们证明它“不知道”对应的指数 $x$。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] <a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/6117/how-much-do-we-trust-kea1-assumption">https://crypto.stackexchange.com/questions/6117/how-much-do-we-trust-kea1-assumption</a><br>[2] <a target="_blank" rel="noopener" href="https://gemini.google.com">https://gemini.google.com</a></p>
 
   </div>
 </article>
@@ -229,7 +230,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E7%9F%A5%E8%AF%86%E5%81%87%E8%AE%BE"><span class="toc-number">1.</span> <span class="toc-text">指数知识假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA-vs-%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA"><span class="toc-number">2.</span> <span class="toc-text">可证伪 vs. 不可证伪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.1.</span> <span class="toc-text">可证伪假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.2.</span> <span class="toc-text">不可证伪假设</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%80%9D%E8%80%83%EF%BC%9ANP-amp-co-NP"><span class="toc-number">3.</span> <span class="toc-text">进一步思考：NP &amp; co-NP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E7%9F%A5%E8%AF%86%E5%81%87%E8%AE%BE"><span class="toc-number">1.</span> <span class="toc-text">指数知识假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA-vs-%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA"><span class="toc-number">2.</span> <span class="toc-text">可证伪 vs. 不可证伪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.1.</span> <span class="toc-text">可证伪假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AF%81%E4%BC%AA%E5%81%87%E8%AE%BE"><span class="toc-number">2.2.</span> <span class="toc-text">不可证伪假设</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%80%9D%E8%80%83%EF%BC%9ANP-amp-co-NP"><span class="toc-number">3.</span> <span class="toc-text">进一步思考：NP &amp; co-NP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
       </div>
     
 
