@@ -7,14 +7,14 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta property="og:type" content="article">
-<meta property="og:title" content="Notes on Zero Knowledge Range Proof">
-<meta property="og:url" content="http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/index.html">
+<meta property="og:title" content="A Summary of the Sumcheck Protocol">
+<meta property="og:url" content="http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/index.html">
 <meta property="og:site_name" content="Lizheng Wang（王栗政）">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-09-04T03:16:27.000Z">
-<meta property="article:modified_time" content="2025-09-04T03:18:34.057Z">
+<meta property="article:published_time" content="2025-09-22T04:31:51.000Z">
+<meta property="article:modified_time" content="2025-09-22T04:33:07.207Z">
 <meta property="article:author" content="Lizheng Wang">
-<meta property="article:tag" content="zero-knowledg proof">
+<meta property="article:tag" content="Zero Knowledge Proof">
 <meta name="twitter:card" content="summary">
     
     
@@ -35,7 +35,7 @@
       
     
     <!-- title -->
-    <title>Notes on Zero Knowledge Range Proof</title>
+    <title>A Summary of the Sumcheck Protocol</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -93,10 +93,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" aria-label="Next post" href="/2025/08/27/Notes-on-Multi-Scalar-Multiplication-MSM-Optimization/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -109,17 +107,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&text=Notes on Zero Knowledge Range Proof"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&is_video=false&description=Notes on Zero Knowledge Range Proof"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Notes on Zero Knowledge Range Proof&body=Check out this article: http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&name=Notes on Zero Knowledge Range Proof&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&t=Notes on Zero Knowledge Range Proof"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&text=A Summary of the Sumcheck Protocol"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&is_video=false&description=A Summary of the Sumcheck Protocol"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Summary of the Sumcheck Protocol&body=Check out this article: http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&name=A Summary of the Sumcheck Protocol&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&t=A Summary of the Sumcheck Protocol"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -135,7 +133,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        Notes on Zero Knowledge Range Proof
+        A Summary of the Sumcheck Protocol
     </h1>
 
 
@@ -147,9 +145,9 @@
       
     <div class="postdate">
       
-        <time datetime="2025-09-04T03:16:27.000Z" class="dt-published" itemprop="datePublished">2025-09-04</time>
+        <time datetime="2025-09-22T04:31:51.000Z" class="dt-published" itemprop="datePublished">2025-09-22</time>
         
-        (Updated: <time datetime="2025-09-04T03:18:34.057Z" class="dt-updated" itemprop="dateModified">2025-09-04</time>)
+        (Updated: <time datetime="2025-09-22T04:33:07.207Z" class="dt-updated" itemprop="dateModified">2025-09-22</time>)
         
       
     </div>
@@ -160,7 +158,7 @@
       
     <div class="article-tag">
         <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/zero-knowledg-proof/" rel="tag">zero-knowledg proof</a>
+        <a class="p-category" href="/tags/Zero-Knowledge-Proof/" rel="tag">Zero Knowledge Proof</a>
     </div>
 
 
@@ -172,8 +170,9 @@
     
 
 	<div class="row">
-    <embed src="/pdf/Notes_on_Zero_Knowledge_Range_Proof.pdf" width="100%" height="550" type="application/pdf">
+    <embed src="/pdf/A_Summary_of_the_Sumcheck_Protocol.pdf" width="100%" height="550" type="application/pdf">
 	</div>
+
 
 
 
@@ -209,17 +208,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&text=Notes on Zero Knowledge Range Proof"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&is_video=false&description=Notes on Zero Knowledge Range Proof"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Notes on Zero Knowledge Range Proof&body=Check out this article: http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&title=Notes on Zero Knowledge Range Proof"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&name=Notes on Zero Knowledge Range Proof&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/04/Notes-on-Zero-Knowledge-Range-Proof/&t=Notes on Zero Knowledge Range Proof"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&text=A Summary of the Sumcheck Protocol"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&is_video=false&description=A Summary of the Sumcheck Protocol"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Summary of the Sumcheck Protocol&body=Check out this article: http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&title=A Summary of the Sumcheck Protocol"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&name=A Summary of the Sumcheck Protocol&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/&t=A Summary of the Sumcheck Protocol"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
