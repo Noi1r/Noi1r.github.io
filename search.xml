@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>ZK中的几个random linear combination</title>
+      <link href="/2025/10/03/ZK%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AArandom-linear-combination/"/>
+      <url>/2025/10/03/ZK%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AArandom-linear-combination/</url>
+      
+        <content type="html"><![CDATA[<p>今天算是为很久之前产生的几个问题画上一个句号，之前一直没好好思考过这几个问题。</p><p>最初产生这个疑惑是某次讨论班讲spartan的时候，有同学提出为什么offline memory checking的压缩要引入两个随机数，为什么常数项也要有一个随机数，当时第一反应是和univariate sumcheck的某一个攻击有关，但是由于当时脑子十分模糊，所以也并没有进行深入思考。后来又遇见了GKR中的claim compression，也是随机数的问题，导致大脑习惯性回避（（（此处要感谢lou同学提出了这个问题，让我主动思考辨析了一下。</p><h1 id="Univariate-sumcheck"><a href="#Univariate-sumcheck" class="headerlink" title="Univariate sumcheck"></a>Univariate sumcheck</h1><p>首先先讨论一下univariate sumcheck，这也是我学zk最先接触的一个协议，因为读的第一篇论文是Marlin</p><p>Univariate sumcheck用到的一个最主要的lemma是，对于一个multiplicative subgroup $|\mathbb{H} |=n$，多项式$g(X) \in \mathbb{F}_{\leq n}[X]$</p><script type="math/tex; mode=display"> \sum_{x\in \mathbb{H}}g(X) = n g(0)</script><p>之后在做$f(X) \in \mathbb{F}[X]$时，有</p><script type="math/tex; mode=display"> \sum_{x\in \mathbb{H}}f(X) = Z_{V_\mathbb{H}}(X) Q(X) + X\cdot g(X) + g(0)</script><p>为什么要写作$X\cdot g(X)$呢？</p><p>如果不写作$X\cdot g(X)$，坏人🦹就可以在$g(X)$的常数项引入一些东西，使得最终证明出来的sum是malicious prover想要的那个，详见<a href="https://wanglizheng.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/">https://wanglizheng.com/2025/09/22/A-Summary-of-the-Sumcheck-Protocol/</a></p><h1 id="Offline-Memory-Checking"><a href="#Offline-Memory-Checking" class="headerlink" title="Offline Memory Checking"></a>Offline Memory Checking</h1><p>接下来简单讨论一下Offline Memory Checking，其中主要涉及的就是</p><p>Claim 1 ([STW23] Randomized Permutation Check). Let $A$ and $B$ be two multisets of tuples in $\mathbb{F}^3$. Define</p><script type="math/tex; mode=display">h_\gamma(a, v, t)=a \cdot \gamma^2+v \cdot \gamma+t, \quad H_{\tau, \gamma}(A)=\prod_{(a, v, t) \in A}\left(h_\gamma(a, v, t)-\tau\right) .</script><p>之前一直不理解，为什么要引入两个变量$\gamma,\tau$，还以为$\tau$的作用是和univariate sumcheck中的价值差不多，今天突发奇想思考了一下</p><p>$\gamma$的作用是用来将三个不同的元素压缩到一个元素$a \cdot \gamma^2+v \cdot \gamma+t$</p><p>$\tau$的作用是来做multiset equality check，如果去掉$\tau$，其实就相当于验证multiset equality check的随机点是0，很容易针对性的构造攻击。</p><h1 id="GKR"><a href="#GKR" class="headerlink" title="GKR"></a>GKR</h1><p>其实GKR里面在做层间的reduction的时候，会从一个点规约到两个点的evalution，为了解决这个问题，常用的方法是利用random linear combination，转化为$\alpha \tilde{V}_{i-1}(u) + \beta \tilde{V}_{i-1}(v)$，但是其实这里只要一个随机数就够了。</p><p>$\begin{aligned} &amp; \alpha_i \tilde{V}_i(u)+\tilde{V}_i(v) \ = &amp; \alpha_i \sum_{x, y \in\{0,1\}^{s_{i+1}}}\left(a \tilde{d} d_{i+1}(u, x, y)\left(\tilde{V}_{i+1}(x)+\tilde{V}_{i+1}(y)\right)+m \tilde{u} l t_{i+1}(u, x, y)\left(\tilde{V}_{i+1}(x) \tilde{V}_{i+1}(y)\right)\right) \ &amp; +\sum_{x, y \in\{0,1\}^{s_{i+1}}}\left(a \tilde{d} d_{i+1}(v, x, y)\left(\tilde{V}_{i+1}(x)+\tilde{V}_{i+1}(y)\right)+m \tilde{u} l t_{i+1}(v, x, y)\left(\tilde{V}_{i+1}(x) \tilde{V}_{i+1}(y)\right)\right) \ = &amp; \sum_{x, y \in\{0,1\}^{s_{i+1}}}\binom{\left(\left(\alpha_i a \tilde{d} d_{i+1}(u, x, y)+a \tilde{d} d_{i+1}(v, x, y)\right)\left(\tilde{V}_{i+1}(x)+\tilde{V}_{i+1}(y)\right)\right)}{+\left(\left(\alpha_i m \tilde{u} l t_{i+1}(u, x, y)+m \tilde{u} l t_{i+1}(v, x, y)\right)\left(\tilde{V}_{i+1}(x) \tilde{V}_{i+1}(y)\right)\right)}\end{aligned}$</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> zero knowledge proof </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Multiset Equality Based Lookup</title>
       <link href="/2025/10/01/Multiset-Equality-Based-Lookup/"/>
       <url>/2025/10/01/Multiset-Equality-Based-Lookup/</url>
