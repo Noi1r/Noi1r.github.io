@@ -14,8 +14,8 @@
 <meta property="og:description" content="Lizheng Wang (王栗政)Hi, I am currently a 2nd year PhD student in the Department of Computer Science and Engineering at Shanghai Jiao Tong University (SJTU), co-advised by Prof. Yu Yu and Prof. Yuncong">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/imgs/blog.jpeg">
-<meta property="article:published_time" content="2026-02-22T09:07:30.697Z">
-<meta property="article:modified_time" content="2026-02-22T09:07:30.697Z">
+<meta property="article:published_time" content="2026-02-22T12:00:47.229Z">
+<meta property="article:modified_time" content="2026-02-22T12:00:47.228Z">
 <meta property="article:author" content="Lizheng Wang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/imgs/blog.jpeg">
@@ -88,11 +88,7 @@
       <li class="icon">
         <a href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-2x"></i></a>
       </li>
-      <!--
-     --><li><a href="/">Home</a></li><!--
-   --><!--
-     --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
-   -->
+      
     </ul>
   </div>
 </header>
@@ -117,12 +113,8 @@
     padding: 0;
   }
 
-  #header {
-    display: none;
-  }
-  #footer {
-    display: none;
-  }
+  #header { display: none; }
+  #footer { display: none; }
 
   .about-home {
     width: 100%;
@@ -212,21 +204,22 @@
   }
 
   .about-wrap a {
-    color: #000072;
+    color: #1d4e89;
     text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
   }
 
-  .about-wrap a:hover {
-    text-decoration: underline;
+  .about-wrap a:hover,
+  .about-wrap a:focus {
+    color: #123a67;
+    border-bottom-color: currentColor;
   }
 
   .contact-note {
     margin: 0.75rem 0 1rem;
-    padding: 0.55rem 0.8rem;
-    border-left: 3px solid #99a9c6;
-    background: #f7f9fc;
-    color: #33425b;
-    font-size: 0.97rem;
+    font-style: italic;
+    color: #4a4a4a;
     line-height: 1.5;
   }
 
@@ -247,10 +240,6 @@
       margin: 0 auto 1rem;
     }
 
-    .contact-note {
-      padding: 0.5rem 0.7rem;
-      font-size: 0.95rem;
-    }
   }
 </style>
 
@@ -272,9 +261,9 @@
       <section class="about-main">
         <h2 id="Lizheng-Wang-王栗政"><a href="#Lizheng-Wang-王栗政" class="headerlink" title="Lizheng Wang (王栗政)"></a>Lizheng Wang (王栗政)</h2><p>Hi, I am currently a 2nd year PhD student in the <a target="_blank" rel="noopener" href="https://www.cs.sjtu.edu.cn">Department of Computer Science and Engineering</a> at <a target="_blank" rel="noopener" href="https://www.sjtu.edu.cn">Shanghai Jiao Tong University</a> (SJTU), co-advised by Prof. <a target="_blank" rel="noopener" href="http://yuyu.hk">Yu Yu</a> and Prof. <a target="_blank" rel="noopener" href="https://huyuncong.com">Yuncong Hu</a>. Currently, my research focuses on zero-knowledge proofs for machine learning.</p>
 <p>Email: <a href="mailto:lizhengwang1124@gmail.com">lizhengwang1124@gmail.com</a></p>
-<div class="contact-note">
+<p class="contact-note">
   Feel free to email me with any ideas or just to say hi! I am always open to discussing research, collaborations, or anything else.
-</div>
+</p>
 
 <h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><p>2024-Present: Ph.D. in Computer Science, Shanghai Jiao Tong University, advised by Prof. <a target="_blank" rel="noopener" href="http://yuyu.hk">Yu Yu</a> and Prof. <a target="_blank" rel="noopener" href="https://huyuncong.com">Yuncong Hu</a></p>
 <p>2020-2024: B.Eng. in Xidian University, advised by Prof. <a target="_blank" rel="noopener" href="https://web.xidian.edu.cn/lihui/index.html">Hui Li</a></p>
@@ -314,11 +303,7 @@
   <div class="footer-right">
     <nav>
       <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/Noi1r">Projects</a></li><!--
-     -->
+        
       </ul>
     </nav>
   </div>
