@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-  <meta name="description" content="Lizheng Wang - PhD student at SJTU. Research on zero-knowledge proofs for machine learning.">
+  <meta name="description" content="Lizheng Wang - PhD student at SJTU. Research on zero-knowledge proofs and applied cryptography.">
   <title>Lizheng Wang</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -65,10 +65,9 @@
       border-radius: 3px;
       vertical-align: middle;
     }
+
     /* publications */
-    .paper-item {
-      margin: 0 0 1.3rem;
-    }
+    .paper-item { margin: 0 0 1.3rem; }
     .paper-item:last-child { margin-bottom: 0.3rem; }
     .paper-title {
       font-weight: 700;
@@ -77,24 +76,14 @@
       line-height: 1.45;
       letter-spacing: -0.01em;
     }
-    .paper-meta {
-      margin: 0.2rem 0 0.25rem;
-    }
-    .paper-venue {
-      font-weight: 700;
-      color: #1f3b5b;
-    }
+    .paper-meta { margin: 0.2rem 0 0.25rem; }
+    .paper-venue { font-weight: 700; color: #1f3b5b; }
     .paper-venue::before { content: "["; }
     .paper-venue::after { content: "]"; }
-    a.paper-link {
-      border-bottom: none;
-    }
+    a.paper-link { border-bottom: none; }
     a.paper-link::before { content: "["; }
     a.paper-link::after { content: "]"; }
-    a.paper-link:hover {
-      border-bottom: none;
-      color: #123a67;
-    }
+    a.paper-link:hover { border-bottom: none; color: #123a67; }
     .paper-authors {
       margin: 0.25rem 0 0;
       font-size: 0.88em;
@@ -106,21 +95,19 @@
       font-weight: 600;
       color: #1f3b5b;
     }
-    .paper-desc {
-      margin: 0.35rem 0 0;
-      padding: 0.3rem 0 0.3rem 0.8rem;
+    .repo-stars {
+      display: inline-block;
+      margin-left: 0.3rem;
+      padding: 0 0.35rem;
+      color: #5b6470;
+      background: #f4f6f8;
+      border: 1px solid #d8dde3;
+      border-radius: 3px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      font-size: 0.84em;
-      color: #566474;
-      line-height: 1.65;
-      letter-spacing: 0.008em;
-      border-left: 2px solid #cbd5df;
-    }
-    .contact-note {
-      margin: 0.75rem 0 1rem;
-      font-style: italic;
-      color: #4a4a4a;
-      line-height: 1.5;
+      font-size: 0.78em;
+      font-weight: 600;
+      line-height: 1.45;
+      vertical-align: 0.08em;
     }
 
     /* intro: photo + text */
@@ -155,6 +142,122 @@
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     }
 
+    /* karting lap log */
+    .karting-board {
+      display: grid;
+      grid-template-columns: minmax(0, 0.88fr) minmax(390px, 1.12fr);
+      overflow: hidden;
+      margin: 0.7rem 0 1rem;
+      background: #202624;
+      color: #f3f4f1;
+      border-top: 3px solid #c84f2c;
+      border-radius: 3px;
+      box-shadow: 0 12px 30px rgba(24, 30, 27, 0.12);
+    }
+    .karting-grid-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      padding: 22px;
+      border-right: 1px solid #39423e;
+    }
+    .karting-grid-panel svg { display: block; width: 100%; height: auto; }
+    .kart-grid { color: #414b46; }
+    .kart-route {
+      fill: none;
+      stroke: #8a958f;
+      stroke-width: 1.5;
+      stroke-dasharray: 5 7;
+    }
+    .kart-pulse { fill: none; stroke: #c84f2c; stroke-width: 1; opacity: 0.55; }
+    .kart-dot { fill: #c84f2c; }
+    .kart-city,
+    .kart-coordinates,
+    .karting-note,
+    .karting-track header p,
+    .karting-address,
+    .karting-times dt {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    .kart-city { fill: #f3f4f1; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
+    .kart-coordinates { fill: #8e9892; font-size: 8px; }
+    .karting-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      color: #9aa39e;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .karting-note::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #c84f2c;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(200, 79, 44, 0.12);
+    }
+    .karting-records { display: grid; grid-template-rows: 1fr 1fr; }
+    .karting-track {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding: 25px 30px;
+    }
+    .karting-track + .karting-track { border-top: 1px solid #39423e; }
+    .karting-track header { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
+    .karting-track header p,
+    .karting-address {
+      margin: 0;
+      color: #9aa39e;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .karting-track h3 {
+      margin: 0.18rem 0 0;
+      color: #f3f4f1;
+      font-size: 1.18rem;
+      font-weight: 500;
+    }
+    .karting-track a {
+      color: #b8c0bc;
+      border-bottom: 0;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+    .karting-track a:hover { color: #ffffff; }
+    .karting-address { margin-top: 0.3rem; letter-spacing: 0.02em; text-transform: none; }
+    .karting-times {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 1rem 0 0;
+    }
+    .karting-times > div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 0.55rem;
+      border-top: 1px solid #39423e;
+    }
+    .karting-times dt { color: #9aa39e; font-size: 9px; text-transform: uppercase; }
+    .karting-times dd {
+      margin: 0;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .karting-times small { color: #9aa39e; font-size: 0.65rem; }
+
     @media (max-width: 720px) {
       body { padding: 14px; font-size: 16px; }
       .intro {
@@ -174,6 +277,16 @@
         margin: 0 auto 1rem;
       }
       .intro-text { text-align: left; }
+      .karting-board { grid-template-columns: 1fr; }
+      .karting-grid-panel {
+        min-height: 245px;
+        padding: 18px;
+        border-right: 0;
+        border-bottom: 1px solid #39423e;
+      }
+      .karting-grid-panel svg { max-height: 190px; }
+      .karting-track { padding: 22px; }
+      .karting-times { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -181,12 +294,8 @@
 
   <section class="intro">
     <div class="intro-text">
-<h2 id="Lizheng-Wang-王栗政"><a href="#Lizheng-Wang-王栗政" class="headerlink" title="Lizheng Wang (王栗政)"></a>Lizheng Wang (王栗政)</h2><p>Hi, I am currently a 2nd year PhD student in the <a target="_blank" rel="noopener" href="https://www.cs.sjtu.edu.cn">Department of Computer Science and Engineering</a> at <a target="_blank" rel="noopener" href="https://www.sjtu.edu.cn">Shanghai Jiao Tong University</a> (SJTU), co-advised by Prof. <a target="_blank" rel="noopener" href="http://yuyu.hk">Yu Yu</a> and Prof. <a target="_blank" rel="noopener" href="https://huyuncong.com">Yuncong Hu</a>. Currently, my research focuses on zero-knowledge proofs for machine learning.</p>
+<h2 id="Lizheng-Wang-王栗政"><a href="#Lizheng-Wang-王栗政" class="headerlink" title="Lizheng Wang (王栗政)"></a>Lizheng Wang (王栗政)</h2><p>Hi, I am a PhD student in the <a target="_blank" rel="noopener" href="https://www.cs.sjtu.edu.cn">Department of Computer Science and Engineering</a> at <a target="_blank" rel="noopener" href="https://www.sjtu.edu.cn">Shanghai Jiao Tong University</a> (SJTU), co-advised by Prof. <a target="_blank" rel="noopener" href="http://yuyu.hk">Yu Yu</a> and Prof. <a target="_blank" rel="noopener" href="https://huyuncong.com">Yuncong Hu</a>. My research focuses on zero-knowledge proofs, applied cryptography, and their applications.</p>
 <p>Email: <a href="mailto:lizhengwang1124+homepage@gmail.com">lizhengwang1124+homepage@gmail.com</a></p>
-<p class="contact-note">
-  Feel free to email me with any ideas or just to say hi! I am always open to discussing research, collaborations, or anything else.
-</p>
-
 </div>
     <div class="intro-photo"><img src="/imgs/blog.jpeg" width="450" height="300" alt="Lizheng Wang"></div>
   </section>
@@ -196,17 +305,6 @@
 <li>2020-2024: B.Eng. in Xidian University, advised by Prof. <a target="_blank" rel="noopener" href="https://web.xidian.edu.cn/lihui/index.html">Hui Li</a></li>
 </ul>
 <h2 id="Publications"><a href="#Publications" class="headerlink" title="Publications"></a>Publications</h2><div class="paper-item">
-  <div class="paper-title">Human-Readable Fingerprint for Large Language Models</div>
-  <div class="paper-meta">
-    <span class="paper-venue">NeurIPS 2024</span>
-    <a class="paper-link" target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.04828">paper</a>
-    <a class="paper-link" target="_blank" rel="noopener" href="https://github.com/LUMIA-Group/HuRef">code</a>
-  </div>
-  <div class="paper-authors">Boyi Zeng, <em>Lizheng Wang</em>, Yuncong Hu, Yi Xu, Chenghu Zhou, Xinbing Wang, Yu Yu, Zhouhan Lin</div>
-  <div class="paper-desc">We propose HuRef, a training-free fingerprinting method for LLM copyright protection. We discover that the direction of LLM parameter vectors remains stable across different training stages, and design three invariant terms to uniquely identify a model's base origin. The fingerprint is mapped to a human-readable image via StyleGAN2, with zero-knowledge proofs ensuring honest generation.</div>
-</div>
-
-<div class="paper-item">
   <div class="paper-title">zkAgent: Verifiable Agent Execution via One-Shot Complete LLM Inference Proof</div>
   <div class="paper-meta">
     <span class="paper-venue">CCS 2026</span>
@@ -214,32 +312,92 @@
     <a class="paper-link" target="_blank" rel="noopener" href="https://github.com/Noi1r">code</a>
   </div>
   <div class="paper-authors"><em>Lizheng Wang</em>, Hancheng Lou, Chongrong Li, Yu Yu, Yuncong Hu</div>
-  <div class="paper-desc">We present zkAgent, a system that uses zero-knowledge proofs to verify the entire agent execution including end-to-end LLM inference and tool interactions. By generating a single one-shot inference proof, zkAgent achieves a 294x speedup over prior work (zkGPT), reducing proving time to 1.05s/token for GPT-2 with 512 tokens, making verifiable agent execution practical for real-world deployment.</div>
+</div>
+
+<div class="paper-item">
+  <div class="paper-title">Human-Readable Fingerprint for Large Language Models</div>
+  <div class="paper-meta">
+    <span class="paper-venue">NeurIPS 2024</span>
+    <a class="paper-link" target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.04828">paper</a>
+    <a class="paper-link" target="_blank" rel="noopener" href="https://github.com/LUMIA-Group/HuRef">code</a>
+  </div>
+  <div class="paper-authors">Boyi Zeng, <em>Lizheng Wang</em>, Yuncong Hu, Yi Xu, Chenghu Zhou, Xinbing Wang, Yu Yu, Zhouhan Lin</div>
 </div>
 
 <h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><ul>
-<li><strong>Research Intern</strong>, <a target="_blank" rel="noopener" href="https://sqz.ac.cn">Shanghai Qi Zhi Institute</a><br>Research about High Throughput Signature Verification, 2024.3-2024.8</li>
+<li><strong>Research Intern</strong>, <a target="_blank" rel="noopener" href="https://sqz.ac.cn">Shanghai Qi Zhi Institute</a>, Mar 2024-Aug 2024<br>High-throughput signature verification.</li>
 </ul>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://crypto.sjtu.edu.cn">LatticeLab</a> @ sjtu.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="http://blog.blackbird.wang">Moxuan Wang</a> @ xidian.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="http://d33b4t0.com">Hao Jiang(d33b4t0)</a> @ iie.ac.cn</li>
-<li><a target="_blank" rel="noopener" href="http://zhangzihan.com">Zihan Zhang(Ghost1032)</a> @ sjtu.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="https://sh1k4ku.github.io/">Zhuo Huang(sh1k4ku)</a> @ sjtu.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="https://haveyoutall.github.io/">Yituo He</a> @ sjtu.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="https://www.tnyuzg.com/">Tianyu Zhang</a> @ illinois.edu</li>
-<li><a target="_blank" rel="noopener" href="https://lqvir.github.io/">Qi Liu</a> @ sjtu.edu.cn</li>
-<li><a target="_blank" rel="noopener" href="https://www.cameudis.com/">Yang Yang</a> @ sjtu.edu.cn</li>
+<h2 id="Grants"><a href="#Grants" class="headerlink" title="Grants"></a>Grants</h2><ul>
+<li><strong>Research and Implementation of Zero-Knowledge Proof Protocols</strong>, Jul 2025-Jul 2026<br>Funded by CSAC and Ant Group.</li>
+</ul>
+<h2 id="Selected-Awards"><a href="#Selected-Awards" class="headerlink" title="Selected Awards"></a>Selected Awards</h2><ul>
+<li><strong>National Scholarship</strong>, Ministry of Education of the People’s Republic of China, 2023</li>
+<li><strong>President Scholarship</strong>, the highest student honor at Xidian University, 2023</li>
+<li><strong>First Prize</strong>, National Cryptographic Competition, 2023</li>
+<li><strong>Most Innovative Award</strong>, National College Student Information Security Contest, 2023</li>
 </ul>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ul>
 <li><a href="/notes/MSM.pdf">Multi-Scalar Multiplication (MSM)</a></li>
-<li><a href="/notes/Quantum-Computing-for-Cryptographer.pdf">Quantum Computing for Cryptographer</a></li>
+<li><a href="/notes/Quantum-Computing-for-Cryptographer.pdf">Quantum Computing for Cryptographers</a></li>
 </ul>
 <h2 id="Interesting-Tools"><a href="#Interesting-Tools" class="headerlink" title="Interesting Tools"></a>Interesting Tools</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/Noi1r/proxy_tool">proxy_tool</a><br>One-liner shell helper to redirect proxy envs on remote SSH sessions to your local PC proxy, with auto client-IP detection.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Noi1r/beamer-skill">beamer-skill</a> · <a target="_blank" rel="noopener" href="https://ppt-dev.ub.ax/">online demo</a> · <a target="_blank" rel="noopener" href="https://github.com/Noi1r/beamer-skill/blob/main/example/zkagent_slides.pdf">[sample slide]</a><br>Give it a paper, and in ~10 minutes with ~6$ of Claude Opus 4.6[1M] tokens, it produces a presentation-ready Beamer slide deck you can almost directly use for your group seminar. Now also available as a hosted service at <a target="_blank" rel="noopener" href="https://ppt-dev.ub.ax/">ppt-dev.ub.ax</a> — upload a paper and get slides without any local setup.</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Noi1r/powerpoint-skill">powerpoint-skill</a><br>Same idea as beamer-skill but outputs .pptx — supports custom PowerPoint templates so slides match your own branding, with similar ~10 min / ~6$ cost.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Noi1r/beamer-skill">beamer-skill</a> <span class="repo-stars">★ 314</span></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Noi1r/powerpoint-skill">powerpoint-skill</a> <span class="repo-stars">★ 100</span></li>
 </ul>
+<h2 id="Karting-Lap-Log"><a href="#Karting-Lap-Log" class="headerlink" title="Karting Lap Log"></a>Karting Lap Log</h2><div class="karting-board">
+  <div class="karting-grid-panel">
+    <svg viewBox="0 0 420 250" role="img" aria-label="Relative locations of karting tracks in Xi'an and Shanghai">
+      <defs>
+        <pattern id="kart-grid" width="36" height="36" patternUnits="userSpaceOnUse">
+          <path d="M36 0H0V36" fill="none" stroke="currentColor" stroke-width="1" />
+        </pattern>
+      </defs>
+      <rect class="kart-grid" x="0" y="0" width="420" height="250" fill="url(#kart-grid)" />
+      <path class="kart-route" d="M145 105 C208 84 250 158 320 140" />
+      <circle class="kart-pulse" cx="145" cy="105" r="15" />
+      <circle class="kart-pulse" cx="320" cy="140" r="15" />
+      <circle class="kart-dot" cx="145" cy="105" r="5" />
+      <circle class="kart-dot" cx="320" cy="140" r="5" />
+      <text class="kart-city" x="124" y="82">XI'AN</text>
+      <text class="kart-coordinates" x="124" y="68">34.33°N · 108.86°E</text>
+      <text class="kart-city" x="287" y="174">SHANGHAI</text>
+      <text class="kart-coordinates" x="287" y="190">31.04°N · 121.49°E</text>
+    </svg>
+    <p class="karting-note">Personal timing archive</p>
+  </div>
+
+  <div class="karting-records">
+    <article class="karting-track">
+      <header>
+        <div>
+          <p>Shanghai · 上海</p>
+          <h3>Ruiqing Karting</h3>
+        </div>
+        <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%8A%E6%B5%B7%E9%94%90%E6%93%8E%E5%8D%A1%E4%B8%81%E8%BD%A6%E4%B8%BB%E9%A2%98%E4%B9%90%E5%9B%AD%20%E6%B5%A6%E6%B1%9F%E9%95%87%E6%B0%91%E8%81%94%E8%B7%AF701%E5%8F%B7">Map ↗</a>
+      </header>
+      <p class="karting-address">浦江镇民联路 701 号</p>
+      <dl class="karting-times">
+        <div><dt>200 cc</dt><dd>55.391 <small>s</small></dd></div>
+        <div><dt>270 cc</dt><dd>52.00 <small>s</small></dd></div>
+      </dl>
+    </article>
+
+    <article class="karting-track">
+      <header>
+        <div>
+          <p>Xi'an · 西安</p>
+          <h3>DAKA Karting</h3>
+        </div>
+        <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=%E8%A5%BF%E5%AE%89%E8%BE%BE%E5%8D%A1%E4%B8%81%E8%BD%A6%E6%AC%A2%E4%B9%90%E5%B7%A5%E5%8E%82%20%E4%B8%B0%E4%BA%A7%E8%B7%AF">Map ↗</a>
+      </header>
+      <p class="karting-address">未央区丰产路 · 达卡欢乐工厂</p>
+      <dl class="karting-times">
+        <div><dt>Single kart</dt><dd>1:01.645</dd></div>
+        <div><dt>4T</dt><dd>59.25 <small>s</small></dd></div>
+      </dl>
+    </article>
+  </div>
+</div>
 </main>
 </body>
 </html>
