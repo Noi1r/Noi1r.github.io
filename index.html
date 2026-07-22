@@ -5,27 +5,34 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
   <meta name="description" content="Lizheng Wang - PhD student at SJTU. Research on zero-knowledge proofs and applied cryptography.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <title>Lizheng Wang</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
       max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 48px 20px 56px;
       background: #ffffff;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "Times New Roman", "Songti SC", STSong, Times, serif;
       font-size: 17px;
-      line-height: 1.7;
-      letter-spacing: 0.01em;
-      color: #111111;
+      line-height: 1.58;
+      letter-spacing: 0;
+      font-kerning: normal;
+      color: #181818;
     }
-    h1, h2, h3, h4, h5, h6 { color: #000000; position: relative; letter-spacing: 0; }
+    h1, h2, h3, h4, h5, h6 {
+      position: relative;
+      color: #090909;
+      line-height: 1.18;
+      letter-spacing: -0.008em;
+    }
     h1 { font-size: 1.8rem; margin: 2rem 0 0.65rem; }
-    h2 { font-size: 1.45rem; margin: 1.5rem 0 0.55rem; }
-    h3, h4, h5 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; }
-    p { margin: 0.7rem 0; }
-    ul, ol { margin: 0.5rem 0 0.9rem; padding-left: 1.2rem; }
-    li { margin: 0.28rem 0; }
+    h2 { font-size: 1.42rem; margin: 2.05rem 0 0.7rem; }
+    h3, h4, h5 { font-size: 1.18rem; margin: 1.5rem 0 0.55rem; }
+    p { margin: 0.62rem 0; }
+    ul, ol { margin: 0.55rem 0 1rem; padding-left: 1.15rem; }
+    li { margin: 0.34rem 0; line-height: 1.52; }
     strong { font-weight: 700; color: #1f3b5b; }
     a {
       color: #1d4e89;
@@ -67,16 +74,17 @@
     }
 
     /* publications */
-    .paper-item { margin: 0 0 1.3rem; }
+    .paper-item { margin: 0 0 1.5rem; }
     .paper-item:last-child { margin-bottom: 0.3rem; }
     .paper-title {
       font-weight: 700;
-      font-size: 1.02em;
+      font-size: 1.06em;
       color: #1a2a3a;
-      line-height: 1.45;
-      letter-spacing: -0.01em;
+      line-height: 1.38;
+      letter-spacing: -0.006em;
+      text-wrap: balance;
     }
-    .paper-meta { margin: 0.2rem 0 0.25rem; }
+    .paper-meta { margin: 0.24rem 0 0.28rem; line-height: 1.4; }
     .paper-venue { font-weight: 700; color: #1f3b5b; }
     .paper-venue::before { content: "["; }
     .paper-venue::after { content: "]"; }
@@ -86,9 +94,9 @@
     a.paper-link:hover { border-bottom: none; color: #123a67; }
     .paper-authors {
       margin: 0.25rem 0 0;
-      font-size: 0.88em;
-      color: #4a5568;
-      line-height: 1.5;
+      font-size: 0.94em;
+      color: #4c5661;
+      line-height: 1.46;
     }
     .paper-authors em {
       font-style: normal;
@@ -121,8 +129,8 @@
       -webkit-box-pack: justify;
       -ms-flex-pack: justify;
       justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 0.5rem;
+      gap: 2.15rem;
+      margin-bottom: 1.35rem;
     }
     .intro-text {
       -webkit-box-flex: 1;
@@ -131,11 +139,14 @@
       min-width: 0;
     }
     .intro-text h2:first-child {
-      font-size: 1.85rem;
-      margin: 0 0 0.5rem;
+      font-size: 2.05rem;
+      margin: 0 0 0.65rem;
+      line-height: 1.08;
+      letter-spacing: -0.008em;
     }
+    .intro-text p { line-height: 1.58; }
     .intro-photo img {
-      width: 375px;
+      width: 360px;
       max-width: 32vw;
       height: auto;
       border-radius: 6px;
@@ -147,7 +158,7 @@
       display: grid;
       grid-template-columns: minmax(0, 0.88fr) minmax(390px, 1.12fr);
       overflow: hidden;
-      margin: 0.7rem 0 1rem;
+      margin: 0.95rem 0 1.5rem;
       background: #202624;
       color: #f3f4f1;
       border-top: 3px solid #c84f2c;
@@ -259,7 +270,12 @@
     .karting-times small { color: #9aa39e; font-size: 0.65rem; }
 
     @media (max-width: 720px) {
-      body { padding: 14px; font-size: 16px; }
+      body {
+        padding: 24px 16px 36px;
+        font-size: 16.5px;
+        line-height: 1.56;
+      }
+      h2 { margin-top: 1.9rem; }
       .intro {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -269,14 +285,19 @@
         -ms-flex-direction: column-reverse;
         flex-direction: column-reverse;
         text-align: center;
+        gap: 0.9rem;
+        margin-bottom: 1.25rem;
       }
       .intro-photo img {
         display: block;
-        width: 270px;
+        width: 260px;
         max-width: 100%;
-        margin: 0 auto 1rem;
+        margin: 0 auto;
       }
       .intro-text { text-align: left; }
+      .intro-text h2:first-child { font-size: 1.95rem; }
+      .intro + main > h2:first-child { margin-top: 0.8rem; }
+      .paper-item { margin-bottom: 1.35rem; }
       .karting-board { grid-template-columns: 1fr; }
       .karting-grid-panel {
         min-height: 245px;
