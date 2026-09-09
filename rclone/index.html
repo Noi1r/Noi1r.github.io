@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A personal rclone configuration for backing up a cryptography paper archive to Google Drive.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>rclone · Personal ePrint backup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { max-width: 760px; margin: auto; padding: 40px 22px; font: 18px/1.65 "Times New Roman", Times, serif; color: #181818; background: white; }
+    h1, h2 { line-height: 1.2; color: #1a2a3a; }
+    h1 { font-size: 2rem; } h2 { font-size: 1.4rem; margin-top: 1.8rem; }
+    a { color: #1d4e89; text-underline-offset: 3px; }
+    nav, footer { font-size: 1rem; } footer { margin-top: 2.5rem; border-top: 1px solid #ddd; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="/">Lizheng Wang</a></nav>
+  <main>
+    <h1>rclone</h1>
+    <p>Personal ePrint backup</p>
+    <p>This is Lizheng Wang’s personal configuration of the open-source <a href="https://rclone.org/">rclone</a> file-transfer program. It copies a research paper archive from a server to the owner’s Google Drive and runs daily to upload new or updated files.</p>
+    <h2>Google Drive access</h2>
+    <p>The application requests permission to view, modify, create, and delete Google Drive files. This permission supports finding the backup folder, comparing existing files, and uploading the archive. The configured daily backup uses copy operations: removing a source file does not remove its backup from Drive.</p>
+    <p>Authorization is granted directly through Google. The saved authorization lets the server run scheduled transfers without an interactive login each day. The owner can revoke access at any time in <a href="https://myaccount.google.com/connections">Google Account connections</a>.</p>
+    <h2>Personal use</h2>
+    <p>This configuration is for the owner’s use. It is not a public backup service and does not accept sign-ups or uploads from visitors. This page describes a personal deployment, not the rclone project or an official IACR service.</p>
+    <p><a href="privacy.html">Privacy policy</a></p>
+  </main>
+  <footer>Operated by <a href="/">Lizheng Wang</a>. Contact details are available on the personal website.</footer>
+</body>
+</html>

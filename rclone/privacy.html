@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Privacy policy for Lizheng Wang’s personal rclone ePrint backup configuration.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>Privacy policy · rclone personal ePrint backup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { max-width: 760px; margin: auto; padding: 40px 22px; font: 18px/1.65 "Times New Roman", Times, serif; color: #181818; background: white; }
+    h1, h2 { line-height: 1.2; color: #1a2a3a; }
+    h1 { font-size: 2rem; } h2 { font-size: 1.4rem; margin-top: 1.8rem; }
+    a { color: #1d4e89; text-underline-offset: 3px; }
+    nav, footer { font-size: 1rem; } footer { margin-top: 2.5rem; border-top: 1px solid #ddd; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="./">rclone · Personal ePrint backup</a></nav>
+  <main>
+    <h1>Privacy policy</h1>
+    <p>Effective September 9, 2026</p>
+    <p>This policy covers Lizheng Wang’s personal rclone configuration for backing up a research paper archive to Google Drive.</p>
+    <h2>Data accessed and purpose</h2>
+    <p>Google OAuth provides access and refresh tokens that allow the program to act on the authorized Drive account. The granted scope permits reading, creating, modifying, and deleting Drive files. The configured backup uses Drive folder and file metadata, such as names, sizes, modification times, and hashes, to locate the destination and compare files. Paper files are sent from the server to Google Drive when they need to be uploaded or updated.</p>
+    <p>Account information returned during authorization or connection checks may be used to identify the authorized account. This information and the Drive data are used only to configure and operate the owner’s backup.</p>
+    <h2>Storage and protection</h2>
+    <p>Authorization credentials are stored in the server’s rclone configuration with access restricted to its user account and system administrators. A temporary copy may be used on the owner’s computer during initial authorization and removed after setup. Transfer logs on the server may contain file paths, transfer statistics, and error messages. Credentials are not published on this website or intentionally written into transfer logs.</p>
+    <p>Source papers remain on the server; uploaded copies are stored in the owner’s Google Drive. Backup file transfers occur directly between the server and Google over encrypted connections.</p>
+    <h2>Sharing and limited use</h2>
+    <p>Google receives the files and metadata needed to provide Drive storage. The rclone project does not receive the owner’s authorization tokens or file contents through this configuration. The operator does not sell Google user data, use it for advertising, or use it to train general-purpose AI models.</p>
+    <p>Use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+    <h2>Retention and revocation</h2>
+    <p>Credentials are retained while the backup is in use and can be removed from the server configuration. Access can be revoked through <a href="https://myaccount.google.com/connections">Google Account connections</a>. Revoking access stops future authorized transfers; it does not delete files already stored on the server or in Drive. The owner controls deletion of those files and the local transfer logs.</p>
+    <h2>This website and contact</h2>
+    <p>These informational pages contain no application sign-in form, file-upload form, or analytics script. The website’s hosting and delivery providers, GitHub Pages and Cloudflare, may process normal web-request information to deliver the pages. This is separate from Google Drive authorization and backup transfers.</p>
+    <p>The operator is <a href="/">Lizheng Wang</a>. Contact details are available on the personal website. Changes to this configuration’s data practices will be reflected in this policy.</p>
+  </main>
+  <footer><a href="./">Application home page</a></footer>
+</body>
+</html>
